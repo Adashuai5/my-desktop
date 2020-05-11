@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import "./index.scss";
 function Dock() {
-  const list = [
-    "@/assets/image/Launchpad.png",
-    "@/assets/image/Finder.png",
-    "@/assets/image/PrefApp.png",
-    "@/assets/image/Calculator.png",
-  ];
+  const list = ["Launchpad.png", "Finder.png", "PrefApp.png", "Calculator.png"];
   const [dockList] = useState(list);
   return (
     <div className="App-Dock">
-      <img src="@/assets/image/Calculator.png" alt=""/>
       <ul>
         {dockList.map((item, index) => {
           return (
             <li key={index}>
-              <img src={item} alt="" />
+              <img src={require("../../assets/image/" + item)} alt="" />
             </li>
           );
         })}
