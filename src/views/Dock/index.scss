@@ -1,0 +1,30 @@
+.App-Dock {
+  transition: all 0.2s;
+  height: 0.1rem;
+  &:hover {
+    background-color: rgba(222, 223, 227, 0.6);
+    height: 5rem;
+    box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 50px;
+  }
+  li {
+    transition: all 0.3s ease-out;
+    margin: 10px;
+    display: inline-block;
+    padding: 0 20px;
+    position: relative;
+    top: 0;
+    img {
+      width: 50px;
+      height: 50px;
+      margin: 0;
+    }
+    &:hover {
+      transform: scale(1.2);
+      transform-origin: center center;
+      margin: 10px;
+      margin-top: -15px;
+      position: relative;
+    }
+  }
+}

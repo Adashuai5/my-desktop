@@ -12,6 +12,7 @@
     "@types/react-dom": "^16.9.8",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
+    "react-desktop": "^0.3.9",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "typescript": "^3.8.3"
