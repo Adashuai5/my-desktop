@@ -1,11 +1,12 @@
 .App {
+  transition: all 0.3s;
   position: relative;
-  min-width: 1500px;
   height: 100vh;
   background: url(../assets/image/sierra-4K.jpg) center/100% no-repeat;
-  .App-Finder {
-    display: flex;
-    transition: all 0.2s;
+  .AppFinder {
+    position: absolute;
+    width: 100%;
+    top: 0;
     height: 0.1rem;
     &:hover {
       height: 2rem;
@@ -18,10 +19,10 @@
     display: grid;
     grid-template-rows: auto 1fr auto;
   }
-  .App-Footer {
+  .AppFooter {
     position: absolute;
+    width: 100%;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    text-align: center;
   }
 }

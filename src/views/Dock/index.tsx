@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { dockEffect } from "./effect";
 import "./index.scss";
 function Dock() {
   const list = ["Launchpad.png", "Finder.png", "PrefApp.png", "Calculator.png"];
   const [dockList] = useState(list);
+  useEffect(() => {
+    dockEffect({ el: "Dock" });
+  });
   return (
-    <div className="App-Dock">
-      <ul>
+    <div className="AppDock">
+      <div>
         {dockList.map((item, index) => {
           return (
-            <li key={index}>
-              <img src={require("../../assets/image/" + item)} alt="" />
-            </li>
+            <img
+              src={require("../../assets/image/" + item)}
+              alt={item}
+              key={index}
+            />
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 }

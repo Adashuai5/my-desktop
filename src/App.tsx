@@ -5,8 +5,8 @@ import "./styles/App.scss";
 function App() {
   return (
     <div className="App">
-      <header className="App-Finder"></header>
-      <footer className="App-Footer">
+      <header className="AppFinder"></header>
+      <footer className="AppFooter">
         <Dock />
       </footer>
     </div>
