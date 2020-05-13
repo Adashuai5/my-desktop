@@ -6,6 +6,7 @@ export function dockEffect(config) {
    * cb: 回调函数(有监听事件就应该给回调函数)
    */
   const dockWrap = document.getElementsByClassName(config.el)[0];
+  const dockBackground = document.getElementsByClassName('DockBackground')[0];
   const toTag = config.toTag || "img";
   const img = dockWrap.getElementsByTagName(toTag);
   const imgAmount = img.length;
@@ -17,8 +18,8 @@ export function dockEffect(config) {
     for (i = 0; i < imgAmount; i++) {
       img[i].width = 76;
     }
+    dockBackground.width = imgAmount * 76
   }
-
   // 获取相对于HTML的y轴
   function getOffsetTop(el) {
     if (el.offsetParent == null) {
@@ -45,11 +46,13 @@ export function dockEffect(config) {
         img[i].width = 152 * imgScale;
       }
       config.cb && config.cb()
+      dockBackground.width = 0
+      for (i = 0; i < imgAmount; i++) {
+        dockBackground.width = dockBackground.width + img[i].width
+      }
     };
     dockWrap.onmouseleave = () => {
-      for (i = 0; i < imgAmount; i++) {
-        img[i].width = 152 * 0.5
-      }
+      initPage()
     }
   }
   function init() {

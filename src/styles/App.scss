@@ -1,8 +1,7 @@
 .App {
-  transition: all 0.3s;
   position: relative;
   height: 100vh;
-  background: url(../assets/image/sierra-4K.jpg) center/100% no-repeat;
+  background: url(../assets/image/sierra-4K.jpg) center/cover no-repeat;
   .AppFinder {
     position: absolute;
     width: 100%;

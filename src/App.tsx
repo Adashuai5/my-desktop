@@ -4,8 +4,8 @@ import "./styles/App.scss";
 
 function App() {
   const list = [
-    "Launchpad.png",
     "Finder.png",
+    "Launchpad.png",
     "PrefApp.png",
     "Terminal.png",
     "Calculator.png",
@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <header className="AppFinder"></header>
-      <div className="DockBackground"></div>
+      <img className="DockBackground"></img>
       <footer className="AppFooter">
         {dockList.map((item, index) => {
           return (
