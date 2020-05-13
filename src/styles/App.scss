@@ -14,7 +14,7 @@
         rgba(0, 0, 0, 0.18) 0px 0px 5px, rgba(0, 0, 0, 0.3) 0px 8px 50px;
     }
   }
-  .App-Main {
+  .AppMain {
     display: grid;
   }
   .AppFooter {
@@ -22,8 +22,6 @@
     bottom: 0;
     width: 100%;
     text-align: center;
-  }
-  .AppFooter {
     z-index: 2;
   }
   .DockBackground {
