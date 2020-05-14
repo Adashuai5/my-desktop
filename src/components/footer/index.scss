@@ -1,0 +1,58 @@
+.AppFooter {
+  position: absolute;
+  z-index: 2;
+  @each $member in top, bottom {
+    &.#{$member} {
+      width: 100%;
+      text-align: center;
+      img {
+        vertical-align: #{$member};
+      }
+    }
+  }
+  @each $member in left, right {
+    &.#{$member} {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+}
+.DockBackground {
+  position: absolute;
+  z-index: 1;
+  background-color: rgba(222, 223, 227, 0.7);
+  box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 50px;
+  @each $member in top, bottom {
+    &.#{$member} {
+      left: 50%;
+      transform: translateX(-50%);
+      height: 5rem;
+    }
+  }
+  @each $member in left, right {
+    &.#{$member} {
+      top: 50%;
+      transform: translateY(-50%);
+      width: 5rem;
+    }
+  }
+  &.top {
+    border-bottom-left-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
+  }
+  &.bottom {
+    border-top-left-radius: 0.4rem;
+    border-top-right-radius: 0.4rem;
+  }
+  &.left {
+    border-top-right-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
+  }
+  &.right {
+    border-top-left-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
+  }
+}
