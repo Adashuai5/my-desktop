@@ -12,12 +12,12 @@ const Footer = () => {
   const [dockList] = useState<string[]>(list);
 
   useEffect(() => {
-    dockEffect({ el: "AppFooter" });
+    dockEffect({ el: "AppDocker" });
   }, []);
   return (
     <>
       <img className="DockBackground"></img>
-      <footer className="AppFooter">
+      <footer className="AppDocker">
         {dockList.map((item, index) => {
           return (
             <img src={require("./image/" + item)} alt={item} key={index} />
