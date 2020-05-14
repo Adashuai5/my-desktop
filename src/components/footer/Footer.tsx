@@ -1,26 +1,59 @@
 import React, { useState, useEffect } from "react";
 import { dockEffect } from "./effect";
+import { Radio } from "antd";
+import "./index.scss";
 
 const Footer = () => {
-  const list: string[] = [
+  const [dockList] = useState<string[]>([
     "Finder.png",
     "Launchpad.png",
     "PrefApp.png",
     "Terminal.png",
     "Calculator.png",
-  ];
-  const [dockList] = useState<string[]>(list);
+  ]);
+  const positionMap = ["bottom", "top", "left", "right"];
+  const [position, setPosition] = useState<string>("bottom");
 
+  const [props, setProps] = useState<object>({
+    el: "AppFooter",
+    toTag: "img",
+    toTagLength: 76,
+    type: position,
+  });
   useEffect(() => {
-    dockEffect({ el: "AppFooter" });
+    dockEffect(props);
   }, []);
   return (
     <>
-      <img className="DockBackground"></img>
-      <footer className="AppFooter">
+      <Radio.Group
+        onChange={(e) => {
+          setPosition(e.target.value);
+          setProps({
+            el: "AppFooter",
+            toTag: "img",
+            toTagLength: 76,
+            type: e.target.value,
+          });
+        }}
+        value={position}
+      >
+        {positionMap.map((item, index) => {
+          return (
+            <Radio value={item} key={index + item}>
+              {item}
+            </Radio>
+          );
+        })}
+      </Radio.Group>
+      <img className={"DockBackground " + position}></img>
+      <footer className={"AppFooter " + position}>
         {dockList.map((item, index) => {
           return (
-            <img src={require("./image/" + item)} alt={item} key={index} />
+            <img
+              src={require("./image/" + item)}
+              alt={item}
+              key={index + item}
+            />
           );
         })}
       </footer>
