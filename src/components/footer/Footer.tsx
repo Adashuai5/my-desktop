@@ -16,6 +16,7 @@ const Footer = () => {
 
   const [props, setProps] = useState<object>({
     el: "AppFooter",
+    bg: "DockBackground",
     toTag: "img",
     toTagLength: 76,
     type: position,
@@ -26,10 +27,12 @@ const Footer = () => {
   return (
     <>
       <Radio.Group
+        style={{ position: "absolute" }}
         onChange={(e) => {
           setPosition(e.target.value);
           setProps({
             el: "AppFooter",
+            bg: "DockBackground",
             toTag: "img",
             toTagLength: 76,
             type: e.target.value,

@@ -12,11 +12,14 @@
   }
   @each $member in left, right {
     &.#{$member} {
-      height: 100%;
+      height: 100vh;
       display: flex;
       justify-content: center;
       flex-direction: column;
     }
+  }
+  &.right {
+    align-items: flex-end;
   }
 }
 .DockBackground {
@@ -53,6 +56,6 @@
   }
   &.right {
     border-top-left-radius: 0.4rem;
-    border-bottom-right-radius: 0.4rem;
+    border-bottom-left-radius: 0.4rem;
   }
 }

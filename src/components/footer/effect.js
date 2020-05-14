@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
 export function dockEffect(props) {
   /**
    * props
    * el: 对那个父元素里面的元素显示dock效果，ClassName(string)
+   * bg: dock背景，ClassName(string)
    * toTag: img(默认是查看对应元素的img)
    * toTagLength: img的宽度或高度基础值
    * type: 使用宽度还是高度
@@ -11,7 +12,7 @@ export function dockEffect(props) {
 
 
   const dockWrap = document.getElementsByClassName(props.el)[0];
-  const dockBackground = document.getElementsByClassName('DockBackground')[0];
+  const dockBackground = document.getElementsByClassName(props.bg)[0];
   const img = dockWrap.getElementsByTagName(props.toTag);
   const imgAmount = img.length;
   let imgScale = 0;
@@ -22,7 +23,7 @@ export function dockEffect(props) {
     for (i = 0; i < imgAmount; i++) {
       img[i].width = props.toTagLength;
     }
-    if (props.type === 'bottom' || 'top') {
+    if (props.type === 'bottom' || props.type === 'top') {
       dockBackground.width = imgAmount * props.toTagLength
     } else {
       dockBackground.height = imgAmount * props.toTagLength
@@ -49,7 +50,6 @@ export function dockEffect(props) {
             getOffset(dockWrap, 'top') +
             img[i].offsetHeight / 2 -
             e.clientY;
-          imgScale = 1 - Math.sqrt(x * x + y * y) / 380;
         } else {
           x = e.clientY - (img[i].offsetTop + props.toTagLength);
           y =
@@ -57,12 +57,13 @@ export function dockEffect(props) {
             getOffset(dockWrap, 'left') +
             img[i].offsetWidth / 2 -
             e.clientX;
-          imgScale = 1 - Math.sqrt(x * x + y * y) / 380;
         }
+        imgScale = 1 - Math.sqrt(x * x + y * y) / 380;
         if (imgScale < 0.5) {
           imgScale = 0.5;
         }
         img[i].width = props.toTagLength * 2 * imgScale;
+
       }
 
       if (props.type === 'bottom' || props.type === 'top') {
@@ -75,7 +76,6 @@ export function dockEffect(props) {
         for (i = 0; i < imgAmount; i++) {
           dockBackground.height = dockBackground.height + img[i].width
         }
-        console.log(dockBackground.height)
       }
     };
     dockWrap.onmouseleave = () => {
