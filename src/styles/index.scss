@@ -10,6 +10,15 @@ body {
     "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: black;
+  background: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: white;
+    background: black;
+  }
 }
 
 code {

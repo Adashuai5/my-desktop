@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { dockEffect } from "./effect";
-import { Radio } from "antd";
 import "./index.scss";
+import { useModal } from "../modal/UseModal";
+import { View, Radio } from "react-desktop/macOs";
 
-const Footer = () => {
+const Footer = React.memo(() => {
   const [dockList] = useState<string[]>([
     "Finder.png",
     "Launchpad.png",
@@ -24,32 +25,40 @@ const Footer = () => {
   useEffect(() => {
     dockEffect(props);
   }, [props]);
+  const { show, hide, RenderModal } = useModal();
   return (
     <>
-      <Radio.Group
-        style={{ position: "absolute" }}
-        onChange={(e) => {
-          setPosition(e.target.value);
-          setProps({
-            el: "AppFooter",
-            bg: "DockBackground",
-            toTag: "img",
-            toTagLength: 76,
-            type: e.target.value,
-          });
-        }}
-        value={position}
-      >
-        {positionMap.map((item, index) => {
-          return (
-            <Radio value={item} key={index + item}>
-              {item}
-            </Radio>
-          );
-        })}
-      </Radio.Group>
-      <img className={"DockBackground " + position}></img>
-      <footer className={"AppFooter " + position}>
+      <RenderModal>
+        <View horizontalAlignment="center" direction="column">
+          {positionMap.map((item, index) => {
+            return (
+              <Radio
+                key={index + item}
+                label={item}
+                name={item}
+                onChange={(e) => {
+                  setPosition(e.target.value);
+                  setProps({
+                    el: "AppFooter",
+                    bg: "DockBackground",
+                    toTag: "img",
+                    toTagLength: 76,
+                    type: e.target.value,
+                  });
+                }}
+                defaultValue={position}
+                defaultChecked
+              ></Radio>
+            );
+          })}
+        </View>
+      </RenderModal>
+      <div id="modal-root">
+        <button onClick={show}>打开</button>
+        <button onClick={hide}>关闭</button>
+      </div>
+      <img className={position} id="DockBackground"></img>
+      <footer className={position} id="AppFooter">
         {dockList.map((item, index) => {
           return (
             <img
@@ -62,6 +71,6 @@ const Footer = () => {
       </footer>
     </>
   );
-};
+});
 
 export default Footer;

@@ -1,4 +1,4 @@
-.AppFooter {
+#AppFooter {
   position: absolute;
   z-index: 2;
   @each $member in top, bottom {
@@ -22,7 +22,7 @@
     align-items: flex-end;
   }
 }
-.DockBackground {
+#DockBackground {
   position: absolute;
   z-index: 1;
   background-color: rgba(222, 223, 227, 0.7);

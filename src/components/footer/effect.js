@@ -2,8 +2,8 @@
 export function dockEffect(props) {
   /**
    * props
-   * el: 对那个父元素里面的元素显示dock效果，ClassName(string)
-   * bg: dock背景，ClassName(string)
+   * el: 对那个父元素里面的元素显示dock效果，Id(string)
+   * bg: dock背景，Id(string)
    * toTag: img(默认是查看对应元素的img)
    * toTagLength: img的宽度或高度基础值
    * type: 使用宽度还是高度
@@ -11,8 +11,8 @@ export function dockEffect(props) {
    */
 
 
-  const dockWrap = document.getElementsByClassName(props.el)[0];
-  const dockBackground = document.getElementsByClassName(props.bg)[0];
+  const dockWrap = document.getElementById(props.el);
+  const dockBackground = document.getElementById(props.bg);
   const img = dockWrap.getElementsByTagName(props.toTag);
   const imgAmount = img.length;
   let imgScale = 0;
@@ -44,21 +44,21 @@ export function dockEffect(props) {
       e = e || window.event;
       for (i = 0; i < imgAmount; i++) {
         if (props.type === 'bottom' || props.type === 'left') {
-          x = e.clientX - (img[i].offsetLeft + props.toTagLength);
+          x = e.clientX - (img[i].offsetLeft + props.toTagLength / 2);
           y =
             img[i].offsetTop +
             getOffset(dockWrap, 'top') +
             img[i].offsetHeight / 2 -
             e.clientY;
         } else {
-          x = e.clientY - (img[i].offsetTop + props.toTagLength);
+          x = e.clientY - (img[i].offsetTop + props.toTagLength / 2);
           y =
             img[i].offsetLeft +
             getOffset(dockWrap, 'left') +
             img[i].offsetWidth / 2 -
             e.clientX;
         }
-        imgScale = 1 - Math.sqrt(x * x + y * y) / 380;
+        imgScale = 1 - Math.sqrt(x * x + y * y) / (imgAmount * props.toTagLength);
         if (imgScale < 0.5) {
           imgScale = 0.5;
         }

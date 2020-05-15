@@ -1549,6 +1549,13 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
 
+"@types/radium@^0.24.2":
+  version "0.24.2"
+  resolved "https://registry.npm.taobao.org/@types/radium/download/@types/radium-0.24.2.tgz#a3cfa86122cbef363d9175660806c0c1574048ec"
+  integrity sha1-o8+oYSLL7zY9kXVmCAbAwVdASOw=
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-dom@*":
   version "16.9.7"
   resolved "https://registry.npm.taobao.org/@types/react-dom/download/@types/react-dom-16.9.7.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact-dom%2Fdownload%2F%40types%2Freact-dom-16.9.7.tgz#60844d48ce252d7b2dccf0c7bb937130e27c0cd2"
