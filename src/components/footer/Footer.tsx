@@ -1,9 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext, useReducer } from "react";
 import { dockEffect } from "./effect";
 import "./index.scss";
-import { useModal } from "../modal/UseModal";
-import { View, Radio } from "react-desktop/macOs";
+import { Setting } from "../setting/setting";
 
+export const FooterContext = createContext<any>([]);
+interface PositionAction {
+  name: string;
+  position: string;
+}
+interface lengthAction {
+  name: string;
+  length: number;
+}
+interface PropsAction {
+  name: string;
+  props: object;
+}
 const Footer = React.memo(() => {
   const [dockList] = useState<string[]>([
     "Finder.png",
@@ -12,51 +24,53 @@ const Footer = React.memo(() => {
     "Terminal.png",
     "Calculator.png",
   ]);
-  const positionMap = ["bottom", "top", "left", "right"];
-  const [position, setPosition] = useState<string>("bottom");
+  const positionReducer = (state: string, action: PositionAction) => {
+    switch (action.name) {
+      case "change":
+        return action.position;
+      default:
+        return state;
+    }
+  };
+  const propsReducer = (state: Object, action: PropsAction) => {
+    switch (action.name) {
+      case "change":
+        return action.props;
+      default:
+        return state;
+    }
+  };
+  const lengthReducer = (state: Object, action: lengthAction) => {
+    switch (action.name) {
+      case "change":
+        return action.length;
+      default:
+        return state;
+    }
+  };
 
-  const [props, setProps] = useState<object>({
+  const [position, setPosition] = useReducer(positionReducer, "bottom");
+
+  const [length, setLength] = useReducer(lengthReducer, 76);
+
+  const [props, setProps] = useReducer(propsReducer, {
     el: "AppFooter",
     bg: "DockBackground",
     toTag: "img",
-    toTagLength: 76,
+    toTagLength: length,
     type: position,
   });
+
   useEffect(() => {
     dockEffect(props);
   }, [props]);
-  const { show, hide, RenderModal } = useModal();
   return (
     <>
-      <RenderModal>
-        <View horizontalAlignment="center" direction="column">
-          {positionMap.map((item, index) => {
-            return (
-              <Radio
-                key={index + item}
-                label={item}
-                name={item}
-                onChange={(e) => {
-                  setPosition(e.target.value);
-                  setProps({
-                    el: "AppFooter",
-                    bg: "DockBackground",
-                    toTag: "img",
-                    toTagLength: 76,
-                    type: e.target.value,
-                  });
-                }}
-                defaultValue={position}
-                defaultChecked
-              ></Radio>
-            );
-          })}
-        </View>
-      </RenderModal>
-      <div id="modal-root">
-        <button onClick={show}>打开</button>
-        <button onClick={hide}>关闭</button>
-      </div>
+      <FooterContext.Provider
+        value={[position, setPosition, props, setProps, length, setLength]}
+      >
+        <Setting />
+      </FooterContext.Provider>
       <img className={position} id="DockBackground"></img>
       <footer className={position} id="AppFooter">
         {dockList.map((item, index) => {
