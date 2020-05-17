@@ -5,17 +5,18 @@ import { Setting } from "../setting/setting";
 
 export const FooterContext = createContext<any>([]);
 interface PositionAction {
-  name: string;
-  position: string;
-}
-interface lengthAction {
-  name: string;
-  length: number;
+  name: "change";
+  position: "bottom" | "top" | "left" | "right";
 }
 interface PropsAction {
-  name: string;
+  name: "change";
   props: object;
 }
+interface lengthAction {
+  name: "change";
+  length: number;
+}
+
 const Footer = React.memo(() => {
   const [dockList] = useState<string[]>([
     "Finder.png",

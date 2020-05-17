@@ -4,4 +4,7 @@ declare module "react-desktop/macOs" {
   export const TitleBar: JSX;
   export const Toolbar: JSX;
   export const Text: JSX;
+  export const Box: JSX;
+  export const ListView: JSX;
+  export const ListViewRow: JSX;
 }
