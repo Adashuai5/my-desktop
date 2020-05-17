@@ -1,0 +1,20 @@
+#modal-root {
+  .SettingView {
+    display: flex;
+    .leftSet {
+      .TitleBar {
+        border-top-right-radius: 0 !important;
+      }
+    }
+    .rightSet {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 20px;
+      width: 300px;
+      height: 500px;
+      background-color: #ececec;
+    }
+  }
+}

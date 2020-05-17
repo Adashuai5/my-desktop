@@ -60,18 +60,33 @@ const Footer = React.memo(() => {
     toTagLength: length,
     type: position,
   });
-
+  const [isSettingShow, setSettingShow] = useState(false);
+  const dockItemClick = (item: string, index: number) => {
+    switch (item) {
+      case "PrefApp.png":
+        setSettingShow(!isSettingShow);
+        return;
+    }
+  };
   useEffect(() => {
     dockEffect(props);
   }, [props]);
   return (
-    <>
+    <React.Fragment>
       <FooterContext.Provider
-        value={[position, setPosition, props, setProps, length, setLength]}
+        value={[
+          isSettingShow,
+          position,
+          setPosition,
+          props,
+          setProps,
+          length,
+          setLength,
+        ]}
       >
         <Setting />
       </FooterContext.Provider>
-      <img className={position} id="DockBackground"></img>
+      <img className={position} id="DockBackground" alt=""></img>
       <footer className={position} id="AppFooter">
         {dockList.map((item, index) => {
           return (
@@ -79,11 +94,12 @@ const Footer = React.memo(() => {
               src={require("./image/" + item)}
               alt={item}
               key={index + item}
+              onClick={() => dockItemClick(item, index)}
             />
           );
         })}
       </footer>
-    </>
+    </React.Fragment>
   );
 });
 
