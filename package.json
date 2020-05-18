@@ -1,5 +1,5 @@
 {
-  "name": "my-window",
+  "name": "my-desktop",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -39,5 +39,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://adashuai5.github.io/my-window"
+  "homepage": "https://adashuai5.github.io/my-desktop"
 }

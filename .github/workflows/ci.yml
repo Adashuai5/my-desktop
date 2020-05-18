@@ -1,4 +1,4 @@
-name: my-window
+name: my-desktop
 on:
   push:
     branches:
