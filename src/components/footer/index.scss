@@ -32,14 +32,12 @@
     &.#{$member} {
       left: 50%;
       transform: translateX(-50%);
-      height: 5rem;
     }
   }
   @each $member in left, right {
     &.#{$member} {
       top: 50%;
       transform: translateY(-50%);
-      width: 5rem;
     }
   }
   &.top {

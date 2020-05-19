@@ -7,9 +7,9 @@
         flex-direction: column;
         border-top-right-radius: 0 !important;
         border-bottom-left-radius: 5px;
-        padding: 11px 0 !important;
+        padding: 12px 0 !important;
         align-items: start !important;
-        border-right: 0.6px solid black;
+        border-right: 1px solid #bfbfbf;
         & > div {
           padding-left: 10px;
         }
@@ -28,16 +28,22 @@
     .rightSet {
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
-      display: flex;
       flex-direction: column;
       padding: 30px 60px;
-      width: 480px;
-      height: 460px;
+      width: 512px;
+      height: 469px;
       background-color: #ffffff;
       .divide {
         width: 100%;
-        border: 0.5px solid #bfbfbf;
+        border-top: 0.5px solid #bfbfbf;
         margin-bottom: 10px;
+      }
+      .options {
+        input {
+          margin: 10px 0;
+          text-decoration: none;
+          width: 256px;
+        }
       }
     }
   }

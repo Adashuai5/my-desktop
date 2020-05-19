@@ -25,8 +25,10 @@ export function dockEffect(props) {
     }
     if (props.type === 'bottom' || props.type === 'top') {
       dockBackground.width = imgAmount * props.toTagLength
+      dockBackground.height = props.toTagLength
     } else {
       dockBackground.height = imgAmount * props.toTagLength
+      dockBackground.width = props.toTagLength
     }
   }
   // 获取相对于HTML的y轴

@@ -26,6 +26,7 @@ export const Setting = React.memo(() => {
     length,
     setLength,
   ] = useContext(FooterContext);
+  const optionsMap = [{ title: "图标默认大小", value: length }];
   const [isFullscreen, setFullscreen] = useState(false);
   useEffect(isSettingShow ? show : hide, [isSettingShow]);
   const [selected, setTitle] = useState("通用");
@@ -46,18 +47,18 @@ export const Setting = React.memo(() => {
                 onResizeClick={() => setFullscreen(!isFullscreen)}
               >
                 <Toolbar
-                  height="22"
+                  height="24"
                   horizontalAlignment="center"
                   verticalAlignment="center"
                 />
-                <ListView className="ListView" width="200">
+                <ListView className="ListView" width="172">
                   {setListMap.map((item, index) => {
                     return (
                       <ListViewRow
                         key={item.title + index}
                         onClick={() => setTitle(item.title)}
                         background={selected === item.title ? "#bfbfbf" : null}
-                        padding="12px 20px"
+                        padding="11px 20px"
                       >
                         <svg
                           x="0px"
@@ -92,6 +93,37 @@ export const Setting = React.memo(() => {
                 {selected}
               </Text>
               <div className="divide"></div>
+              {optionsMap.map((item, index) => {
+                return (
+                  <div className="options" key={index + item.value}>
+                    <Text bold marginBottom="10px">
+                      {item.title}
+                    </Text>
+                    <input
+                      min="25"
+                      max="128"
+                      type="range"
+                      value={length}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setLength({
+                          name: "change",
+                          length: e.target.value,
+                        });
+                        setProps({
+                          name: "change",
+                          props: {
+                            ...props,
+                            toTagLength: e.target.value,
+                            type: position,
+                          },
+                        });
+                      }}
+                    />
+                    {item.value}
+                  </div>
+                );
+              })}
+
               <Text bold marginBottom="10px">
                 Dock 所在屏幕位置
               </Text>
