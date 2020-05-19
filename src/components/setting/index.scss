@@ -35,14 +35,32 @@
       background-color: #ffffff;
       .divide {
         width: 100%;
-        border-top: 0.5px solid #bfbfbf;
+        border-top: 0.5px solid #d9d9d9;
         margin-bottom: 10px;
       }
       .options {
         input {
-          margin: 10px 0;
-          text-decoration: none;
+          margin: 0 30px 20px 0;
           width: 256px;
+          -webkit-appearance: none;
+          &[type="range"] {
+            &:focus {
+              outline: none;
+            }
+            &::-webkit-slider-runnable-track {
+              height: 4px;
+              background-color: #d9d9d9;
+            }
+            &::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              height: 18px;
+              width: 18px;
+              margin-top: -8px; /*使滑块超出轨道部分的偏移量相等*/
+              background: #ffffff;
+              border-radius: 3px;
+              border: 0.6px solid #d9d9d9;
+            }
+          }
         }
       }
     }

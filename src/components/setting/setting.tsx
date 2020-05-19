@@ -89,7 +89,7 @@ export const Setting = React.memo(() => {
               </TitleBar>
             </View>
             <View className="rightSet">
-              <Text bold marginBottom="10px" size="18">
+              <Text bold marginBottom="10px" size="20">
                 {selected}
               </Text>
               <div className="divide"></div>
@@ -119,14 +119,12 @@ export const Setting = React.memo(() => {
                         });
                       }}
                     />
-                    {item.value}
+                    <span>{length}</span>
                   </div>
                 );
               })}
 
-              <Text bold marginBottom="10px">
-                Dock 所在屏幕位置
-              </Text>
+              <Text bold>Dock 所在屏幕位置</Text>
               <View>
                 {positionMap.map((item, index) => {
                   return (
