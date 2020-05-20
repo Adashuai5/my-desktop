@@ -1,5 +1,13 @@
-import React, { useContext, useState, useEffect, useCallback } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 import { useModal } from "../modal/UseModal";
+import { dragElement } from "./drag";
+
 import { FooterContext } from "../footer/Footer";
 import {
   View,
@@ -30,9 +38,87 @@ export const Setting = React.memo(() => {
   const [isFullscreen, setFullscreen] = useState(false);
   useEffect(isSettingShow ? show : hide, [isSettingShow]);
   const [selected, setTitle] = useState("通用");
+  const POSITION = { x: 0, y: 0 };
+  const [state, setState] = useState({
+    isDragging: false,
+    origin: POSITION,
+    position: { top: "50%", left: "50%" },
+  });
+  const handleMouseDown = useCallback(({ clientX, clientY }) => {
+    setState((state) => ({
+      ...state,
+      isDragging: true,
+      origin: {
+        x: clientX,
+        y: clientY,
+      },
+    }));
+  }, []);
+  const [dragEl, setDragEl] = useState(
+    document.getElementById("model-root") as HTMLDivElement
+  );
+  const handleMouseMove = useCallback(
+    ({ clientX, clientY }) => {
+      console.log(dragEl);
+      const position = {
+        top: clientY - state.origin.y,
+        left: clientX - state.origin.x,
+      };
+      // 控制拖拽物体的范围只能在浏览器视窗内，不允许出现滚动条
+      if (position.left < 0) {
+        position.left = 0;
+      } else if (position.left > window.innerWidth - dragEl.offsetWidth) {
+        position.left = window.innerWidth - dragEl.offsetWidth;
+      }
+      if (position.top < 0) {
+        position.top = 0;
+      } else if (position.top > window.innerHeight - dragEl.offsetHeight) {
+        position.top = window.innerHeight - dragEl.offsetHeight;
+      }
+      setState((state) => ({
+        ...state,
+        position: {
+          top: position.top + "px",
+          left: position.left + "px",
+        },
+      }));
+    },
+    [state.origin]
+  );
+  const handleMouseUp = useCallback(() => {
+    setState((state) => ({
+      ...state,
+      isDragging: false,
+    }));
+  }, []);
+  useEffect(() => {
+    if (state.isDragging) {
+      setDragEl(document.getElementById("model-root") as HTMLDivElement);
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    } else {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    }
+  }, [state.isDragging, handleMouseMove, handleMouseUp]);
+  const styles = useMemo(
+    () => ({
+      cursor: state.isDragging ? "-webkit-grabbing" : "-webkit-grab",
+      transition: state.isDragging ? "none" : "transform 500ms",
+      zIndex: state.isDragging ? 2 : 1,
+      top: state.position.top,
+      left: state.position.left,
+    }),
+    [state.isDragging]
+  );
   return (
     <React.Fragment>
-      <div id="modal-root">
+      <div
+        id="modal-root"
+        onMouseDown={handleMouseDown}
+        style={styles}
+        onMouseUp={handleMouseUp}
+      >
         <RenderModal>
           <div className="SettingView">
             <View className="leftSet">

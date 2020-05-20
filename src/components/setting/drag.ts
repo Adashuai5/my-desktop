@@ -1,7 +1,8 @@
-export function dragElement(dragEl: HTMLDivElement): void {
+export function dragElement(el: string): void {
   /**
-   * dragEl : 拖拽的元素
+   * el : 拖拽的元素
    */
+  const dragEl = document.getElementById(el) as HTMLDivElement;
   dragEl.style.left = "50%";
   dragEl.style.top = "50%";
   let x: number, y: number;
