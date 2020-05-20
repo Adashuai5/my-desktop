@@ -8,7 +8,7 @@
         border-top-right-radius: 0 !important;
         border-bottom-left-radius: 5px;
         padding: 12px 0 !important;
-        align-items: start !important;
+        align-items: flex-start !important;
         border-right: 1px solid #bfbfbf;
         & > div {
           padding-left: 10px;
@@ -31,11 +31,11 @@
       flex-direction: column;
       padding: 30px 60px;
       width: 512px;
-      height: 469px;
+      height: 468px;
       background-color: #ffffff;
       .divide {
         width: 100%;
-        border-top: 0.5px solid #d9d9d9;
+        border-top: 1px solid #bfbfbf;
         margin-bottom: 10px;
       }
       .options {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useReducer } from "react";
-import { dockEffect } from "./effect";
+import { dockEffect, Props } from "./effect";
 import "./index.scss";
 import { Setting } from "../setting/setting";
 
@@ -10,7 +10,7 @@ interface PositionAction {
 }
 interface PropsAction {
   name: "change";
-  props: object;
+  props: Props;
 }
 interface lengthAction {
   name: "change";
@@ -69,8 +69,9 @@ const Footer = React.memo(() => {
         return;
     }
   };
+
   useEffect(() => {
-    dockEffect(props);
+    dockEffect(props as Props);
   }, [props]);
   return (
     <React.Fragment>

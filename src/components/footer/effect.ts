@@ -1,5 +1,13 @@
 // import React, { useState, useEffect } from 'react';
-export function dockEffect(props) {
+export type Props = {
+  readonly el: string;
+  readonly bg: string;
+  readonly toTag: string;
+  toTagLength: number;
+  type: string;
+};
+
+export function dockEffect(props: Props): void {
   /**
    * props
    * el: 对那个父元素里面的元素显示dock效果，Id(string)
@@ -10,79 +18,84 @@ export function dockEffect(props) {
    * cb: 回调函数(有监听事件就应该给回调函数)
    */
 
-
-  const dockWrap = document.getElementById(props.el);
-  const dockBackground = document.getElementById(props.bg);
-  const img = dockWrap.getElementsByTagName(props.toTag);
+  const dockWrap =
+    document.getElementById(props.el) ||
+    document.getElementsByTagName("footer")[0];
+  const dockBackground = document.getElementById(props.bg) as HTMLImageElement;
+  const img = Array.from(
+    document.getElementsByTagName(props.toTag) as HTMLCollectionOf<
+      HTMLImageElement
+    >
+  );
   const imgAmount = img.length;
   let imgScale = 0;
   let x = 0,
     y = 0,
-    i = 0
+    i = 0;
   function initPage() {
     for (i = 0; i < imgAmount; i++) {
       img[i].width = props.toTagLength;
     }
-    if (props.type === 'bottom' || props.type === 'top') {
-      dockBackground.width = imgAmount * props.toTagLength
-      dockBackground.height = props.toTagLength
+    if (props.type === "bottom" || props.type === "top") {
+      dockBackground.width = imgAmount * props.toTagLength;
+      dockBackground.height = props.toTagLength;
     } else {
-      dockBackground.height = imgAmount * props.toTagLength
-      dockBackground.width = props.toTagLength
+      dockBackground.height = imgAmount * props.toTagLength;
+      dockBackground.width = props.toTagLength;
     }
   }
   // 获取相对于HTML的y轴
-  function getOffset(el, offset) {
-    const elOffset = offset === 'top' ? el.offsetTop : el.offsetLeft
+  function getOffset(el: HTMLElement, offset: "top" | "left"): number {
+    const elOffset = offset === "top" ? el.offsetTop : el.offsetLeft;
     if (el.offsetParent == null) {
       return elOffset;
     }
 
-    return elOffset + getOffset(el.offsetParent, offset);
+    return elOffset + getOffset(el.offsetParent as HTMLElement, offset);
   }
 
   function initEvent() {
     dockWrap.onmousemove = function (e) {
       e = e || window.event;
       for (i = 0; i < imgAmount; i++) {
-        if (props.type === 'bottom' || props.type === 'left') {
+        if (props.type === "bottom" || props.type === "left") {
           x = e.clientX - (img[i].offsetLeft + props.toTagLength / 2);
           y =
             img[i].offsetTop +
-            getOffset(dockWrap, 'top') +
+            getOffset(dockWrap, "top") +
             img[i].offsetHeight / 2 -
             e.clientY;
         } else {
           x = e.clientY - (img[i].offsetTop + props.toTagLength / 2);
           y =
             img[i].offsetLeft +
-            getOffset(dockWrap, 'left') +
+            getOffset(dockWrap, "left") +
             img[i].offsetWidth / 2 -
             e.clientX;
         }
-        imgScale = 1 - Math.sqrt(x * x + y * y) / (imgAmount * props.toTagLength);
+        imgScale =
+          1 - Math.sqrt(x * x + y * y) / (imgAmount * props.toTagLength);
         if (imgScale < 0.5) {
           imgScale = 0.5;
         }
         img[i].width = props.toTagLength * 2 * imgScale;
-
       }
 
-      if (props.type === 'bottom' || props.type === 'top') {
-        dockBackground.width = 0
+      if (props.type === "bottom" || props.type === "top") {
+        dockBackground.width = 0;
         for (i = 0; i < imgAmount; i++) {
-          dockBackground.width = dockBackground.width + img[i].width
+          dockBackground.width = dockBackground.width + img[i].width;
         }
       } else {
-        dockBackground.height = 0
+        dockBackground.height = 0;
         for (i = 0; i < imgAmount; i++) {
-          dockBackground.height = dockBackground.height + img[i].width
+          dockBackground.height = dockBackground.height + img[i].width;
         }
       }
     };
     dockWrap.onmouseleave = () => {
-      initPage()
-    }
+      initPage();
+    };
   }
   function init() {
     initPage();

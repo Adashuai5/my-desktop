@@ -128,9 +128,8 @@ export const Setting = React.memo(() => {
               <View>
                 {positionMap.map((item, index) => {
                   return (
-                    <div style={{ paddingRight: "24px" }}>
+                    <div style={{ paddingRight: "24px" }} key={index + item}>
                       <Radio
-                        key={index + item}
                         label={item}
                         name={item}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
