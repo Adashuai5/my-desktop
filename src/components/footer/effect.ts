@@ -15,12 +15,9 @@ export function dockEffect(props: Props): void {
    * toTag: img(默认是查看对应元素的img)
    * toTagLength: img的宽度或高度基础值
    * type: 使用宽度还是高度
-   * cb: 回调函数(有监听事件就应该给回调函数)
    */
 
-  const dockWrap =
-    document.getElementById(props.el) ||
-    document.getElementsByTagName("footer")[0];
+  const dockWrap = document.getElementById(props.el) as HTMLDivElement;
   const dockBackground = document.getElementById(props.bg) as HTMLImageElement;
   const img = Array.from(
     document.getElementsByTagName(props.toTag) as HTMLCollectionOf<

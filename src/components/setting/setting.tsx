@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import { useModal } from "../modal/UseModal";
 import { FooterContext } from "../footer/Footer";
 import {
