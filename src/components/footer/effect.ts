@@ -7,6 +7,16 @@ export type Props = {
   type: string;
 };
 
+// 获取相对于HTML的y轴
+export function getOffset(el: HTMLElement, offset: "top" | "left"): number {
+  const elOffset = offset === "top" ? el.offsetTop : el.offsetLeft;
+  if (el.offsetParent == null) {
+    return elOffset;
+  }
+
+  return elOffset + getOffset(el.offsetParent as HTMLElement, offset);
+}
+
 export function dockEffect(props: Props): void {
   /**
    * props
@@ -34,21 +44,12 @@ export function dockEffect(props: Props): void {
       img[i].width = props.toTagLength;
     }
     if (props.type === "bottom" || props.type === "top") {
-      dockBackground.width = (imgAmount-1) * props.toTagLength;
+      dockBackground.width = (imgAmount - 1) * props.toTagLength;
       dockBackground.height = props.toTagLength;
     } else {
-      dockBackground.height = (imgAmount-1) * props.toTagLength;
+      dockBackground.height = (imgAmount - 1) * props.toTagLength;
       dockBackground.width = props.toTagLength;
     }
-  }
-  // 获取相对于HTML的y轴
-  function getOffset(el: HTMLElement, offset: "top" | "left"): number {
-    const elOffset = offset === "top" ? el.offsetTop : el.offsetLeft;
-    if (el.offsetParent == null) {
-      return elOffset;
-    }
-
-    return elOffset + getOffset(el.offsetParent as HTMLElement, offset);
   }
 
   function initEvent() {

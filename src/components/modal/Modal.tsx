@@ -9,11 +9,16 @@ type Props = {
 };
 const Modal = React.memo(
   ({ children, closeModal, onDrag, onDragEnd }: Props) => {
-    const domEl = document.getElementById("modal-root");
+    const translation = {
+      x: (window.innerWidth - 684) / 2,
+      y: (window.innerHeight - 466) / 2,
+    };
+    const domEl = document.getElementById("modal-root") as HTMLDivElement;
+    const dragEl = document.getElementById("drag-modal") as HTMLDivElement;
     const [state, setState] = useState({
       isDragging: false,
       origin: { x: 0, y: 0 },
-      translation: { x: "50%", y: "50%" },
+      translation,
     });
 
     const handleMouseDown = useCallback(({ clientX, clientY }) => {
@@ -26,16 +31,22 @@ const Modal = React.memo(
 
     const handleMouseMove = useCallback(
       ({ clientX, clientY }) => {
-        const translation = {
-          x: clientX - state.origin.x + "px",
-          y: clientY - state.origin.y + "px",
-        };
-
+        let x = clientX - state.origin.x + state.translation.x;
+        let y = clientY - state.origin.y + state.translation.y;
+        if (x <= 0) {
+          x = 0;
+        } else if (x > window.innerWidth - dragEl.offsetWidth) {
+          x = window.innerWidth - dragEl.offsetWidth;
+        }
+        if (y <= 0) {
+          y = 0;
+        } else if (y > window.innerHeight - dragEl.offsetHeight) {
+          y = window.innerHeight - dragEl.offsetHeight;
+        }
         setState((state) => ({
           ...state,
-          translation,
+          translation: { x, y },
         }));
-
         onDrag({ translation, domEl });
       },
       [state.origin, onDrag, domEl]
@@ -62,17 +73,21 @@ const Modal = React.memo(
 
     const styles = useMemo(
       () => ({
-        cursor: state.isDragging ? "-webkit-grabbing" : "-webkit-grab",
-        transform: `translate(${state.translation.x}, ${state.translation.y})`,
+        left: `${state.translation.x}px`,
+        top: `${state.translation.y}px`,
         transition: state.isDragging ? "none" : "transform 500ms",
         zIndex: state.isDragging ? 2 : 1,
-        position: state.isDragging ? "absolute" : "relative",
+        position: "absolute",
       }),
       [state.isDragging, state.translation]
     );
     if (!domEl) return null;
     return ReactDOM.createPortal(
-      <div style={styles as object} onMouseDown={handleMouseDown}>
+      <div
+        style={styles as object}
+        onMouseDown={handleMouseDown}
+        id="drag-modal"
+      >
         {children}
       </div>,
       domEl
