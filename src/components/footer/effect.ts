@@ -34,10 +34,10 @@ export function dockEffect(props: Props): void {
       img[i].width = props.toTagLength;
     }
     if (props.type === "bottom" || props.type === "top") {
-      dockBackground.width = imgAmount * props.toTagLength;
+      dockBackground.width = (imgAmount-1) * props.toTagLength;
       dockBackground.height = props.toTagLength;
     } else {
-      dockBackground.height = imgAmount * props.toTagLength;
+      dockBackground.height = (imgAmount-1) * props.toTagLength;
       dockBackground.width = props.toTagLength;
     }
   }

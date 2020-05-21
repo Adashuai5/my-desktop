@@ -23,7 +23,8 @@
 
   #modal-root {
     position: absolute;
-    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
     box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
       rgba(0, 0, 0, 0.3) 0px 8px 50px;
   }
