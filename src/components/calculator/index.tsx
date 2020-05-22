@@ -9,7 +9,7 @@ export const Calculator = React.memo(() => {
   const keys: Array<string> = [
     "C",
     "+/-",
-    "%",
+    "％",
     "÷",
     "7",
     "8",
@@ -30,28 +30,34 @@ export const Calculator = React.memo(() => {
   const { show, hide, RenderModal } = useModal();
   const [isCalculatorShow] = useContext(FooterContext);
   const [isFullscreen, setFullscreen] = useState(false);
+  const [N1N2, setN1OrN2] = useState({ n1: "", n2: "" });
   const [operator, setOperator] = useState("");
   const [result, setResult] = useState("0");
-  const [N1N2, setN1OrN2] = useState({ n1: "", n2: "" });
 
   const getNumber = (name: "n1" | "n2", text: string): void => {
-    setN1OrN2({
+    const getN1N2 = {
       n1: name === "n1" ? N1N2[name] + text : N1N2.n1,
       n2: name === "n2" ? N1N2[name] + text : N1N2.n2,
-    });
+    };
+    setN1OrN2(getN1N2);
     setResult(
-      N1N2[name].length > 12
-        ? parseFloat(N1N2[name]).toPrecision(12)
-        : N1N2[name]
+      getN1N2[name].length > 12
+        ? parseFloat(getN1N2[name]).toPrecision(12)
+        : getN1N2[name]
     );
   };
   const removeZero = (text: string) => {
     text = /\.\d+?0+$/g.test(text) ? text.replace(/0+$/g, "") : text;
-    return text.replace(/\.0+$/g, "").replace(/\.0+e/, "e").replace(/0+e/, "e");
+    return text
+      .replace(/\.0+$/g, "")
+      .replace(/\.0+e/, "e")
+      .replace(/0+e/, "e")
+      .replace(/\.$/, "");
   };
   const getResult = (n1: string, n2: string, operator: string): string => {
     let numberN1: number = parseFloat(n1);
     let numberN2: number = parseFloat(n2);
+    let result1: number = parseFloat(result);
     if (operator === "+") {
       return (numberN1 + numberN2).toPrecision(12);
     } else if (operator === "-") {
@@ -63,34 +69,44 @@ export const Calculator = React.memo(() => {
         return "不是数字";
       }
       return (numberN1 / numberN2).toPrecision(12);
+    } else if (operator === "+/-") {
+      return (-(result1 || numberN1)).toPrecision(12);
+    } else if (operator === "％") {
+      return ((result1 || numberN1) / 100).toPrecision(12);
     }
-    return "";
+    return result;
   };
 
   const clickButton = useCallback(
     (event) => {
       if (event.target instanceof HTMLButtonElement) {
         let buttonText = event.target.textContent;
-
         if ("0123456789.".indexOf(buttonText) >= 0) {
           operator ? getNumber("n2", buttonText) : getNumber("n1", buttonText);
         } else if ("+-×÷".indexOf(buttonText) >= 0) {
           setN1OrN2({ n1: N1N2.n1 ? N1N2.n1 : result, n2: N1N2.n2 });
           setOperator(buttonText);
         } else if ("=".indexOf(buttonText) >= 0) {
-          setResult(removeZero(getResult(N1N2.n1, N1N2.n2, operator)));
-          setN1OrN2({ n1: "", n2: "" });
-          setOperator("");
+          if (N1N2.n1 && N1N2.n2) {
+            setResult(removeZero(getResult(N1N2.n1, N1N2.n2, operator)));
+            setN1OrN2({ n1: "", n2: "" });
+            setOperator("");
+          }
         } else if (buttonText === "C") {
           setResult("0");
           setN1OrN2({ n1: "", n2: "" });
           setOperator("");
+        } else if ("％'+/-'".indexOf(buttonText) >= 0) {
+          if (N1N2.n1 || result) {
+            setResult(removeZero(getResult(N1N2.n1, N1N2.n2, buttonText)));
+          }
         }
       }
     },
     [operator, N1N2, result]
   );
   useEffect(isCalculatorShow ? show : hide, [isCalculatorShow]);
+  useEffect(() => setResult(result), [result]);
   return (
     <React.Fragment>
       <RenderModal data={{ width: 410, height: 560 }}>
