@@ -13,7 +13,7 @@ const Modal = React.memo(
       x: (window.innerWidth - 684) / 2,
       y: (window.innerHeight - 466) / 2,
     };
-    const domEl = document.getElementById("modal-root") as HTMLDivElement;
+    const domEl = document.getElementById("main-view") as HTMLDivElement;
     const dragEl = document.getElementById("drag-modal") as HTMLDivElement;
     const [state, setState] = useState({
       isDragging: false,
@@ -75,7 +75,6 @@ const Modal = React.memo(
       () => ({
         left: `${state.translation.x}px`,
         top: `${state.translation.y}px`,
-        transition: state.isDragging ? "none" : "transform 500ms",
         zIndex: state.isDragging ? 2 : 1,
         position: "absolute",
       }),

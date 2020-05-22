@@ -1,65 +1,63 @@
-#modal-root {
-  .SettingView {
-    display: flex;
-    .leftSet {
-      .TitleBar {
-        display: flex;
-        flex-direction: column;
-        border-top-right-radius: 0 !important;
-        border-bottom-left-radius: 5px;
-        padding: 12px 0 !important;
-        align-items: flex-start !important;
-        border-right: 1px solid #bfbfbf;
-        & > div {
-          padding-left: 10px;
-        }
-        .ListView {
-          div {
-            overflow: inherit !important;
-            ul {
-              li {
-                margin: 0 !important;
-              }
+.SettingView {
+  display: flex;
+  .leftSet {
+    .TitleBar {
+      display: flex;
+      flex-direction: column;
+      border-top-right-radius: 0 !important;
+      border-bottom-left-radius: 5px;
+      padding: 12px 0 !important;
+      align-items: flex-start !important;
+      border-right: 1px solid #bfbfbf;
+      & > div {
+        padding-left: 10px;
+      }
+      .ListView {
+        div {
+          overflow: inherit !important;
+          ul {
+            li {
+              margin: 0 !important;
             }
           }
         }
       }
     }
-    .rightSet {
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-      flex-direction: column;
-      padding: 30px 60px;
-      width: 512px;
-      height: 468px;
-      background-color: #ffffff;
-      .divide {
-        width: 100%;
-        border-top: 1px solid #bfbfbf;
-        margin-bottom: 10px;
-      }
-      .options {
-        input {
-          margin: 0 30px 20px 0;
-          width: 256px;
-          -webkit-appearance: none;
-          &[type="range"] {
-            &:focus {
-              outline: none;
-            }
-            &::-webkit-slider-runnable-track {
-              height: 4px;
-              background-color: #d9d9d9;
-            }
-            &::-webkit-slider-thumb {
-              -webkit-appearance: none;
-              height: 18px;
-              width: 18px;
-              margin-top: -8px; /*使滑块超出轨道部分的偏移量相等*/
-              background: #ffffff;
-              border-radius: 3px;
-              border: 0.6px solid #d9d9d9;
-            }
+  }
+  .rightSet {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    flex-direction: column;
+    padding: 30px 60px;
+    width: 512px;
+    height: 468px;
+    background-color: #ffffff;
+    .divide {
+      width: 100%;
+      border-top: 1px solid #bfbfbf;
+      margin-bottom: 10px;
+    }
+    .options {
+      input {
+        margin: 0 30px 20px 0;
+        width: 256px;
+        -webkit-appearance: none;
+        &[type="range"] {
+          &:focus {
+            outline: none;
+          }
+          &::-webkit-slider-runnable-track {
+            height: 4px;
+            background-color: #d9d9d9;
+          }
+          &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            margin-top: -8px; /*使滑块超出轨道部分的偏移量相等*/
+            background: #ffffff;
+            border-radius: 3px;
+            border: 0.6px solid #d9d9d9;
           }
         }
       }
