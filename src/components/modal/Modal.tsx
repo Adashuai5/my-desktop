@@ -6,12 +6,13 @@ type Props = {
   closeModal: () => void;
   onDrag: (T: any) => void;
   onDragEnd: () => void;
+  data: { width: number; height: number };
 };
 const Modal = React.memo(
-  ({ children, closeModal, onDrag, onDragEnd }: Props) => {
+  ({ children, closeModal, onDrag, onDragEnd, data }: Props) => {
     const translation = {
-      x: (window.innerWidth - 684) / 2,
-      y: (window.innerHeight - 466) / 2,
+      x: (window.innerWidth - data.width) / 2,
+      y: (window.innerHeight - data.height) / 2,
     };
     const domEl = document.getElementById("main-view") as HTMLDivElement;
     const dragEl = document.getElementById("drag-modal") as HTMLDivElement;

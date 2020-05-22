@@ -9,10 +9,17 @@ export const useModal = () => {
   const show = () => setIsVisible(true);
   const hide = () => setIsVisible(false);
 
-  const RenderModal = ({ children }: { children: React.ReactChild }) => (
+  const RenderModal = ({
+    children,
+    data,
+  }: {
+    children: React.ReactChild;
+    data: { width: number; height: number };
+  }) => (
     <React.Fragment>
       {isVisible && (
         <Modal
+          data={data}
           closeModal={hide}
           onDrag={() => console.log("onDrag")}
           onDragEnd={() => console.log("onDragEnd")}

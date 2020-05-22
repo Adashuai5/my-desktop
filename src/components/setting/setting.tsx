@@ -31,7 +31,7 @@ export const Setting = React.memo(() => {
   const [selected, setTitle] = useState("通用");
   return (
     <React.Fragment>
-      <RenderModal>
+      <RenderModal data={{ width: 684, height: 466 }}>
         <div className="SettingView">
           <View className="leftSet">
             <TitleBar

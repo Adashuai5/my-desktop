@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext, useReducer } from "react";
 import { dockEffect, Props } from "./effect";
 import "./index.scss";
 import { Setting } from "../setting/setting";
+import { Calculator } from "../calculator/index";
 
 export const FooterContext = createContext<any>([]);
 interface PositionAction {
@@ -62,10 +63,14 @@ const Footer = React.memo(() => {
     type: position,
   });
   const [isSettingShow, setSettingShow] = useState(false);
+  const [isCalculatorShow, setCalculatorShow] = useState(false);
   const dockItemClick = (item: string, index: number) => {
     switch (item) {
       case "PrefApp.png":
         setSettingShow(!isSettingShow);
+        return;
+      case "Calculator.png":
+        setCalculatorShow(!isCalculatorShow);
         return;
     }
   };
@@ -87,6 +92,9 @@ const Footer = React.memo(() => {
         ]}
       >
         <Setting />
+      </FooterContext.Provider>
+      <FooterContext.Provider value={[isCalculatorShow]}>
+        <Calculator />
       </FooterContext.Provider>
       <img className={position} id="DockBackground" alt=""></img>
       <footer className={position} id="AppFooter">
