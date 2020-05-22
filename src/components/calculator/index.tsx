@@ -29,7 +29,6 @@ export const Calculator = React.memo(() => {
   ];
   const { show, hide, RenderModal } = useModal();
   const [isCalculatorShow] = useContext(FooterContext);
-  const [isFullscreen, setFullscreen] = useState(false);
   const [N1N2, setN1OrN2] = useState({ n1: "", n2: "" });
   const [operator, setOperator] = useState("");
   const [result, setResult] = useState("0");
@@ -42,7 +41,7 @@ export const Calculator = React.memo(() => {
     setN1OrN2(getN1N2);
     setResult(
       getN1N2[name].length > 12
-        ? parseFloat(getN1N2[name]).toPrecision(12)
+        ? removeZero(parseFloat(getN1N2[name]).toPrecision(12))
         : getN1N2[name]
     );
   };
@@ -116,11 +115,10 @@ export const Calculator = React.memo(() => {
               <TitleBar
                 transparent
                 controls
-                isFullscreen={isFullscreen}
+                isFullscreen={false}
                 onCloseClick={hide}
                 onMinimizeClick={hide}
                 onMaximizeClick={show}
-                onResizeClick={() => setFullscreen(!isFullscreen)}
               ></TitleBar>
             </View>
             <div className="output">
