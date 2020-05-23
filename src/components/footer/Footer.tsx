@@ -23,6 +23,7 @@ const Footer = React.memo(() => {
     "Finder.png",
     "Launchpad.png",
     "PrefApp.png",
+    "Chrome.png",
     "Terminal.png",
     "Calculator.png",
   ]);
@@ -64,8 +65,22 @@ const Footer = React.memo(() => {
   });
   const [isSettingShow, setSettingShow] = useState(false);
   const [isCalculatorShow, setCalculatorShow] = useState(false);
+  const [isChromeShow, setChromeShow] = useState(false);
   const dockItemClick = (item: string, index: number) => {
     switch (item) {
+      case "Chrome.png":
+        if (!isChromeShow) {
+          setChromeShow(true);
+          window.open(
+            "http://www.google.com",
+            "_blank",
+            "width=800,height=600,menubar=no,toolbar=no, status=no,scrollbars=yes"
+          );
+        } else {
+          window.close();
+          setChromeShow(false);
+        }
+        return;
       case "PrefApp.png":
         setSettingShow(!isSettingShow);
         return;

@@ -11,8 +11,8 @@ type Props = {
 const Modal = React.memo(
   ({ children, closeModal, onDrag, onDragEnd, data }: Props) => {
     const translation = {
-      x: (window.innerWidth - data.width) / 2,
-      y: (window.innerHeight - data.height) / 2,
+      x: data.width === -1 ? 0 : (window.innerWidth - data.width) / 2,
+      y: data.height === -1 ? 0 : (window.innerHeight - data.height) / 2,
     };
     const domEl = document.getElementById("main-view") as HTMLDivElement;
     const dragEl = document.getElementById("drag-modal") as HTMLDivElement;
