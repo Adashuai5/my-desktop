@@ -9,7 +9,7 @@ export const Calculator = React.memo(() => {
   const keys: Array<string> = [
     "C",
     "+/-",
-    "％",
+    "%",
     "÷",
     "7",
     "8",
@@ -28,7 +28,7 @@ export const Calculator = React.memo(() => {
     "=",
   ];
   const { show, hide, RenderModal } = useModal();
-  const [isCalculatorShow] = useContext(FooterContext);
+  const [isCalculatorShow, setCalculatorShow] = useContext(FooterContext);
   const [N1N2, setN1OrN2] = useState({ n1: "", n2: "" });
   const [operator, setOperator] = useState("");
   const [result, setResult] = useState("0");
@@ -69,9 +69,9 @@ export const Calculator = React.memo(() => {
       }
       return (numberN1 / numberN2).toPrecision(12);
     } else if (operator === "+/-") {
-      return (-(result1 || numberN1)).toPrecision(12);
-    } else if (operator === "％") {
-      return ((result1 || numberN1) / 100).toPrecision(12);
+      return (-(result1 || numberN1) || 0).toPrecision(12);
+    } else if (operator === "%") {
+      return ((result1 || numberN1) / 100 || 0).toPrecision(12);
     }
     return result;
   };
@@ -95,7 +95,7 @@ export const Calculator = React.memo(() => {
           setResult("0");
           setN1OrN2({ n1: "", n2: "" });
           setOperator("");
-        } else if ("％'+/-'".indexOf(buttonText) >= 0) {
+        } else if ("%'+/-'".indexOf(buttonText) >= 0) {
           if (N1N2.n1 || result) {
             setResult(removeZero(getResult(N1N2.n1, N1N2.n2, buttonText)));
           }
@@ -116,8 +116,14 @@ export const Calculator = React.memo(() => {
                 transparent
                 controls
                 isFullscreen={false}
-                onCloseClick={hide}
-                onMinimizeClick={hide}
+                onCloseClick={() => {
+                  hide();
+                  setCalculatorShow(!isCalculatorShow);
+                }}
+                onMinimizeClick={() => {
+                  hide();
+                  setCalculatorShow(!isCalculatorShow);
+                }}
                 onMaximizeClick={show}
               ></TitleBar>
             </View>

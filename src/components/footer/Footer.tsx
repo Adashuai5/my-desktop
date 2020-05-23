@@ -65,20 +65,20 @@ const Footer = React.memo(() => {
   });
   const [isSettingShow, setSettingShow] = useState(false);
   const [isCalculatorShow, setCalculatorShow] = useState(false);
-  const [isChromeShow, setChromeShow] = useState(false);
+  const [Chrome, setChrome] = useState("" as any);
   const dockItemClick = (item: string, index: number) => {
     switch (item) {
       case "Chrome.png":
-        if (!isChromeShow) {
-          setChromeShow(true);
-          window.open(
-            "http://www.google.com",
-            "_blank",
-            "width=800,height=600,menubar=no,toolbar=no, status=no,scrollbars=yes"
+        if (!Chrome) {
+          const chrome = window.open(
+            "http://www.google.com/",
+            "",
+            "width=1000,height=600,left=500,top=300,menubar=no,toolbar=no,status=no,scrollbars=yes"
           );
+          setChrome(chrome);
         } else {
-          window.close();
-          setChromeShow(false);
+          Chrome.close();
+          setChrome("");
         }
         return;
       case "PrefApp.png":
@@ -98,6 +98,7 @@ const Footer = React.memo(() => {
       <FooterContext.Provider
         value={[
           isSettingShow,
+          setSettingShow,
           position,
           setPosition,
           props,
@@ -108,7 +109,7 @@ const Footer = React.memo(() => {
       >
         <Setting />
       </FooterContext.Provider>
-      <FooterContext.Provider value={[isCalculatorShow]}>
+      <FooterContext.Provider value={[isCalculatorShow, setCalculatorShow]}>
         <Calculator />
       </FooterContext.Provider>
       <img className={position} id="DockBackground" alt=""></img>

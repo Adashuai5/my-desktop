@@ -19,6 +19,7 @@ export const Setting = React.memo(() => {
   const { show, hide, RenderModal } = useModal();
   const [
     isSettingShow,
+    setSettingShow,
     position,
     setPosition,
     props,
@@ -39,8 +40,14 @@ export const Setting = React.memo(() => {
               controls
               inset
               isFullscreen={false}
-              onCloseClick={hide}
-              onMinimizeClick={hide}
+              onCloseClick={() => {
+                hide();
+                setSettingShow(!isSettingShow);
+              }}
+              onMinimizeClick={() => {
+                hide();
+                setSettingShow(!isSettingShow);
+              }}
               onMaximizeClick={show}
             >
               <Toolbar
