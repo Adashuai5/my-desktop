@@ -19,6 +19,7 @@ const Modal = React.memo(
   ({ children, closeModal, onDrag, onDragEnd, data, id }: Props) => {
     const localPosition = localStorage.getItem(id) || null;
     const domEl = document.getElementById("main-view") as HTMLDivElement;
+    if (!domEl) return null;
     const dragEl = document.getElementById(id) as HTMLDivElement;
     const initPosition = localPosition
       ? JSON.parse(localPosition)
@@ -77,7 +78,7 @@ const Modal = React.memo(
     }, [onDragEnd]);
 
     useEffect(() => {
-      if (state.isDragging) {
+      if (state.isDragging || !closeModal) {
         window.addEventListener("mousemove", handleMouseMove);
         window.addEventListener("mouseup", handleMouseUp);
       } else {
@@ -96,7 +97,6 @@ const Modal = React.memo(
       }),
       [state.isDragging, state.position]
     );
-    if (!domEl) return null;
     return ReactDOM.createPortal(
       <div
         style={styles as CSSProperties}

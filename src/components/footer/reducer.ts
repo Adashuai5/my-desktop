@@ -29,7 +29,7 @@ export const propsReducer = (state: Object, action: PropsAction) => {
       return state;
   }
 };
-export const lengthReducer = (state: Object, action: LengthAction) => {
+export const lengthReducer = (state: number, action: LengthAction) => {
   switch (action.name) {
     case "change":
       return action.length;

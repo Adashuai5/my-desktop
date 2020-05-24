@@ -83,11 +83,13 @@ export const dockEffect = (props: Props): void => {
         dockBackground.width = 0;
         for (i = 0; i < imgAmount; i++) {
           dockBackground.width = dockBackground.width + img[i].width;
+          dockBackground.height = props.toTagLength;
         }
       } else {
         dockBackground.height = 0;
         for (i = 0; i < imgAmount; i++) {
           dockBackground.height = dockBackground.height + img[i].height;
+          dockBackground.width = props.toTagLength;
         }
       }
     };

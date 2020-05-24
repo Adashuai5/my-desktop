@@ -1,4 +1,9 @@
-import React, { useState, useEffect, createContext, useReducer } from "react";
+import React, {
+  useState,
+  useEffect,
+  createContext,
+  useReducer,
+} from "react";
 import { dockEffect, Props } from "./effect";
 import "./index.scss";
 import { Setting } from "../setting/setting";
@@ -27,7 +32,6 @@ const Footer = React.memo(() => {
   const [isSettingShow, setSettingShow] = useState(false);
   const [isCalculatorShow, setCalculatorShow] = useState(false);
   const [Chrome, setChrome] = useState("" as any);
-
   const dockItemClick = (item: string, index: number) => {
     switch (item) {
       case "Chrome.png":
@@ -54,7 +58,7 @@ const Footer = React.memo(() => {
 
   useEffect(() => {
     dockEffect(props as Props);
-  }, [props]);
+  }, [length, position]);
 
   return (
     <React.Fragment>
