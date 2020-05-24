@@ -33,7 +33,7 @@ export const Calculator = React.memo(() => {
   const [operator, setOperator] = useState("");
   const [result, setResult] = useState("0");
 
-  const getNumber = (name: "n1" | "n2", text: string): void => {
+  const getNumber = useCallback((name: "n1" | "n2", text: string): void => {
     const getN1N2 = {
       n1: name === "n1" ? N1N2[name] + text : N1N2.n1,
       n2: name === "n2" ? N1N2[name] + text : N1N2.n2,
@@ -44,7 +44,7 @@ export const Calculator = React.memo(() => {
         ? removeZero(parseFloat(getN1N2[name]).toPrecision(12))
         : getN1N2[name]
     );
-  };
+  }, [N1N2]);
   const removeZero = (text: string) => {
     text = /\.\d+?0+$/g.test(text) ? text.replace(/0+$/g, "") : text;
     return text
@@ -53,28 +53,31 @@ export const Calculator = React.memo(() => {
       .replace(/0+e/, "e")
       .replace(/\.$/, "");
   };
-  const getResult = (n1: string, n2: string, operator: string): string => {
-    let numberN1: number = parseFloat(n1);
-    let numberN2: number = parseFloat(n2);
-    let result1: number = parseFloat(result);
-    if (operator === "+") {
-      return (numberN1 + numberN2).toPrecision(12);
-    } else if (operator === "-") {
-      return (numberN1 - numberN2).toPrecision(12);
-    } else if (operator === "×") {
-      return (numberN1 * numberN2).toPrecision(12);
-    } else if (operator === "÷") {
-      if (numberN2 === 0) {
-        return "不是数字";
+  const getResult = useCallback(
+    (n1: string, n2: string, operator: string): string => {
+      let numberN1: number = parseFloat(n1);
+      let numberN2: number = parseFloat(n2);
+      let result1: number = parseFloat(result);
+      if (operator === "+") {
+        return (numberN1 + numberN2).toPrecision(12);
+      } else if (operator === "-") {
+        return (numberN1 - numberN2).toPrecision(12);
+      } else if (operator === "×") {
+        return (numberN1 * numberN2).toPrecision(12);
+      } else if (operator === "÷") {
+        if (numberN2 === 0) {
+          return "不是数字";
+        }
+        return (numberN1 / numberN2).toPrecision(12);
+      } else if (operator === "+/-") {
+        return (-(result1 || numberN1) || 0).toPrecision(12);
+      } else if (operator === "%") {
+        return ((result1 || numberN1) / 100 || 0).toPrecision(12);
       }
-      return (numberN1 / numberN2).toPrecision(12);
-    } else if (operator === "+/-") {
-      return (-(result1 || numberN1) || 0).toPrecision(12);
-    } else if (operator === "%") {
-      return ((result1 || numberN1) / 100 || 0).toPrecision(12);
-    }
-    return result;
-  };
+      return result;
+    },
+    [result]
+  );
 
   const clickButton = useCallback(
     (event) => {
@@ -102,7 +105,7 @@ export const Calculator = React.memo(() => {
         }
       }
     },
-    [operator, N1N2, result]
+    [operator, N1N2, result, getNumber, getResult]
   );
   useEffect(isCalculatorShow ? show : hide, [isCalculatorShow]);
   useEffect(() => setResult(result), [result]);

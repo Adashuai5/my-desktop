@@ -3,20 +3,8 @@ import { dockEffect, Props } from "./effect";
 import "./index.scss";
 import { Setting } from "../setting/setting";
 import { Calculator } from "../calculator/index";
-
+import { positionReducer, lengthReducer, propsReducer } from "./reducer";
 export const FooterContext = createContext<any>([]);
-interface PositionAction {
-  name: "change";
-  position: "bottom" | "top" | "left" | "right";
-}
-interface PropsAction {
-  name: "change";
-  props: Props;
-}
-interface lengthAction {
-  name: "change";
-  length: number;
-}
 
 const Footer = React.memo(() => {
   const [dockList] = useState<string[]>([
@@ -27,35 +15,8 @@ const Footer = React.memo(() => {
     "Terminal.png",
     "Calculator.png",
   ]);
-  const positionReducer = (state: string, action: PositionAction) => {
-    switch (action.name) {
-      case "change":
-        return action.position;
-      default:
-        return state;
-    }
-  };
-  const propsReducer = (state: Object, action: PropsAction) => {
-    switch (action.name) {
-      case "change":
-        return action.props;
-      default:
-        return state;
-    }
-  };
-  const lengthReducer = (state: Object, action: lengthAction) => {
-    switch (action.name) {
-      case "change":
-        return action.length;
-      default:
-        return state;
-    }
-  };
-
   const [position, setPosition] = useReducer(positionReducer, "bottom");
-
   const [length, setLength] = useReducer(lengthReducer, 76);
-
   const [props, setProps] = useReducer(propsReducer, {
     el: "AppFooter",
     bg: "DockBackground",
@@ -66,6 +27,7 @@ const Footer = React.memo(() => {
   const [isSettingShow, setSettingShow] = useState(false);
   const [isCalculatorShow, setCalculatorShow] = useState(false);
   const [Chrome, setChrome] = useState("" as any);
+
   const dockItemClick = (item: string, index: number) => {
     switch (item) {
       case "Chrome.png":
@@ -93,6 +55,7 @@ const Footer = React.memo(() => {
   useEffect(() => {
     dockEffect(props as Props);
   }, [props]);
+
   return (
     <React.Fragment>
       <FooterContext.Provider

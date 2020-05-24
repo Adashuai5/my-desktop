@@ -10,30 +10,32 @@ type Props = {
 };
 const Modal = React.memo(
   ({ children, closeModal, onDrag, onDragEnd, data }: Props) => {
-    const translation = {
-      x: data.width === -1 ? 0 : (window.innerWidth - data.width) / 2,
-      y: data.height === -1 ? 0 : (window.innerHeight - data.height) / 2,
-    };
     const domEl = document.getElementById("main-view") as HTMLDivElement;
     const dragEl = document.getElementById("drag-modal") as HTMLDivElement;
     const [state, setState] = useState({
       isDragging: false,
       origin: { x: 0, y: 0 },
-      translation,
+      position: {
+        x: data.width === -1 ? 0 : (window.innerWidth - data.width) / 2,
+        y: data.height === -1 ? 0 : (window.innerHeight - data.height) / 2,
+      },
     });
 
     const handleMouseDown = useCallback(({ clientX, clientY }) => {
       setState((state) => ({
         ...state,
         isDragging: true,
-        origin: { x: clientX, y: clientY },
+        origin: {
+          x: clientX - state.position.x,
+          y: clientY - state.position.y,
+        },
       }));
     }, []);
 
     const handleMouseMove = useCallback(
       ({ clientX, clientY }) => {
-        let x = clientX - state.origin.x + state.translation.x;
-        let y = clientY - state.origin.y + state.translation.y;
+        let x = clientX - state.origin.x;
+        let y = clientY - state.origin.y;
         if (x <= 0) {
           x = 0;
         } else if (x > window.innerWidth - dragEl.offsetWidth) {
@@ -44,13 +46,14 @@ const Modal = React.memo(
         } else if (y > window.innerHeight - dragEl.offsetHeight) {
           y = window.innerHeight - dragEl.offsetHeight;
         }
+        const newPosition = { x, y };
         setState((state) => ({
           ...state,
-          translation: { x, y },
+          position: newPosition,
         }));
-        onDrag({ translation, domEl });
+        onDrag({ newPosition, domEl });
       },
-      [state.origin, onDrag, domEl]
+      [state.origin, dragEl, onDrag, domEl]
     );
 
     const handleMouseUp = useCallback(() => {
@@ -74,12 +77,12 @@ const Modal = React.memo(
 
     const styles = useMemo(
       () => ({
-        left: `${state.translation.x}px`,
-        top: `${state.translation.y}px`,
+        left: `${state.position.x}px`,
+        top: `${state.position.y}px`,
         zIndex: state.isDragging ? 2 : 1,
         position: "absolute",
       }),
-      [state.isDragging, state.translation]
+      [state.isDragging, state.position]
     );
     if (!domEl) return null;
     return ReactDOM.createPortal(

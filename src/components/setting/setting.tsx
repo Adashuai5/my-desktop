@@ -14,9 +14,9 @@ import "./index.scss";
 /// <reference path="react-desktop.d.ts" />
 
 export const Setting = React.memo(() => {
+  const { show, hide, RenderModal } = useModal();
   const positionMap = ["bottom", "top", "left", "right"];
   const setListMap = [{ title: "通用" }];
-  const { show, hide, RenderModal } = useModal();
   const [
     isSettingShow,
     setSettingShow,
@@ -28,8 +28,8 @@ export const Setting = React.memo(() => {
     setLength,
   ] = useContext(FooterContext);
   const optionsMap = [{ title: "图标默认大小", value: length }];
-  useEffect(isSettingShow ? show : hide, [isSettingShow]);
   const [selected, setTitle] = useState("通用");
+  useEffect(isSettingShow ? show : hide, [isSettingShow]);
   return (
     <React.Fragment>
       <RenderModal data={{ width: 684, height: 466 }}>
