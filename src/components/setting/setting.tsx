@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, CSSProperties } from "react";
 import { useModal } from "../modal/UseModal";
 import { FooterContext } from "../footer/Footer";
 import {
@@ -69,7 +69,7 @@ export const Setting = React.memo(() => {
                       width="18"
                       height="12"
                       viewBox="0 0 18 16"
-                      style={{ marginRight: "6px" }}
+                      style={{ marginRight: "6px" } as CSSProperties}
                     >
                       <path
                         fill="#727476"
@@ -131,7 +131,10 @@ export const Setting = React.memo(() => {
           <View>
             {positionMap.map((item, index) => {
               return (
-                <div style={{ paddingRight: "24px" }} key={index + item}>
+                <div
+                  style={{ paddingRight: "24px" } as CSSProperties}
+                  key={index + item}
+                >
                   <Radio
                     label={item}
                     name={item}

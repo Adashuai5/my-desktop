@@ -1,5 +1,11 @@
 import ReactDOM from "react-dom";
-import React, { useState, useCallback, useMemo, useEffect } from "react";
+import React, {
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+  CSSProperties,
+} from "react";
 
 type Props = {
   children: React.ReactChild;
@@ -79,7 +85,7 @@ const Modal = React.memo(
         window.removeEventListener("mouseup", handleMouseUp);
         localStorage.setItem(id, JSON.stringify(state.position));
       }
-    }, [state.isDragging, handleMouseMove, handleMouseUp]);
+    }, [state.isDragging, handleMouseMove, handleMouseUp, id, state.position]);
 
     const styles = useMemo(
       () => ({
@@ -92,7 +98,11 @@ const Modal = React.memo(
     );
     if (!domEl) return null;
     return ReactDOM.createPortal(
-      <div style={styles as object} onMouseDown={handleMouseDown} id={id}>
+      <div
+        style={styles as CSSProperties}
+        onMouseDown={handleMouseDown}
+        id={id}
+      >
         {children}
       </div>,
       domEl

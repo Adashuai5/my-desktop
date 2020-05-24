@@ -17,7 +17,7 @@ export function getOffset(el: HTMLElement, offset: "top" | "left"): number {
   return elOffset + getOffset(el.offsetParent as HTMLElement, offset);
 }
 
-export function dockEffect(props: Props): void {
+export const dockEffect = (props: Props): void => {
   /**
    * props
    * el: 对那个父元素里面的元素显示dock效果，Id(string)
@@ -39,7 +39,7 @@ export function dockEffect(props: Props): void {
   let x = 0,
     y = 0,
     i = 0;
-  function initPage() {
+  const initPage = () => {
     for (i = 0; i < imgAmount; i++) {
       img[i].width = props.toTagLength;
     }
@@ -50,10 +50,10 @@ export function dockEffect(props: Props): void {
       dockBackground.height = (imgAmount - 1) * props.toTagLength;
       dockBackground.width = props.toTagLength;
     }
-  }
+  };
 
-  function initEvent() {
-    dockWrap.onmousemove = function (e) {
+  const initEvent = () => {
+    dockWrap.onmousemove = (e) => {
       e = e || window.event;
       for (i = 0; i < imgAmount; i++) {
         if (props.type === "bottom" || props.type === "left") {
@@ -87,18 +87,18 @@ export function dockEffect(props: Props): void {
       } else {
         dockBackground.height = 0;
         for (i = 0; i < imgAmount; i++) {
-          dockBackground.height = dockBackground.height + img[i].width;
+          dockBackground.height = dockBackground.height + img[i].height;
         }
       }
     };
     dockWrap.onmouseleave = () => {
       initPage();
     };
-  }
+  };
   function init() {
     initPage();
     initEvent();
   }
 
   init();
-}
+};

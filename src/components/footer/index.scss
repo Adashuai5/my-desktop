@@ -18,6 +18,9 @@
       flex-direction: column;
     }
   }
+  &.left {
+    align-items: flex-start;
+  }
   &.right {
     align-items: flex-end;
   }
