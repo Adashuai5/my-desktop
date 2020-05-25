@@ -1,13 +1,9 @@
-import React, {
-  useState,
-  useEffect,
-  createContext,
-  useReducer,
-} from "react";
+import React, { useState, useEffect, createContext, useReducer } from "react";
 import { dockEffect, Props } from "./effect";
 import "./index.scss";
 import { Setting } from "../setting/setting";
 import { Calculator } from "../calculator/index";
+import { Drawing } from "../Drawing/index";
 import { positionReducer, lengthReducer, propsReducer } from "./reducer";
 export const FooterContext = createContext<any>([]);
 
@@ -19,6 +15,7 @@ const Footer = React.memo(() => {
     "Chrome.png",
     "Terminal.png",
     "Calculator.png",
+    "Drawing.png",
   ]);
   const [position, setPosition] = useReducer(positionReducer, "bottom");
   const [length, setLength] = useReducer(lengthReducer, 76);
@@ -31,6 +28,7 @@ const Footer = React.memo(() => {
   });
   const [isSettingShow, setSettingShow] = useState(false);
   const [isCalculatorShow, setCalculatorShow] = useState(false);
+  const [isDrawingShow, setDrawingShow] = useState(false);
   const [Chrome, setChrome] = useState("" as any);
   const dockItemClick = (item: string, index: number) => {
     switch (item) {
@@ -52,6 +50,9 @@ const Footer = React.memo(() => {
         return;
       case "Calculator.png":
         setCalculatorShow(!isCalculatorShow);
+        return;
+      case "Drawing.png":
+        setDrawingShow(!isDrawingShow);
         return;
     }
   };
@@ -78,6 +79,9 @@ const Footer = React.memo(() => {
       </FooterContext.Provider>
       <FooterContext.Provider value={[isCalculatorShow, setCalculatorShow]}>
         <Calculator />
+      </FooterContext.Provider>
+      <FooterContext.Provider value={[isDrawingShow, setDrawingShow]}>
+        <Drawing />
       </FooterContext.Provider>
       <img className={position} id="DockBackground" alt=""></img>
       <footer className={position} id="AppFooter">

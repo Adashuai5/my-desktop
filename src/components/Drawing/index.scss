@@ -1,0 +1,11 @@
+#DrawingView {
+  width: 1200px;
+  height: 800px;
+  display: inline-block;
+  font-size: 2em;
+  .drawing {
+    background-color: #fff;
+    width: 100%;
+    height: calc(100% - 24px);
+  }
+}
