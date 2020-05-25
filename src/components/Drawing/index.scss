@@ -6,7 +6,8 @@
   #DrawingMove {
     height: 32px;
   }
-  .drawing {
+  #canvas {
+    display: block;
     background-color: #fff;
     width: 100%;
     height: calc(100% - 32px);
