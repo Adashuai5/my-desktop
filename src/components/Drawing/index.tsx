@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import { useModal } from "../modal/UseModal";
 import { FooterContext } from "../footer/Footer";
-import { View, TitleBar } from "react-desktop/macOs";
+import { TitleBar } from "react-desktop/macOs";
 import "./index.scss";
 /// <reference path="react-desktop.d.ts" />
 
@@ -19,22 +19,20 @@ export const Drawing = React.memo(() => {
       }}
     >
       <div className="drawing-wrapper">
-        <View>
-          <TitleBar
-            controls
-            id="DrawingMove"
-            isFullscreen={false}
-            onCloseClick={() => {
-              hide();
-              setDrawingShow(!isDrawingShow);
-            }}
-            onMinimizeClick={() => {
-              hide();
-              setDrawingShow(!isDrawingShow);
-            }}
-            onMaximizeClick={show}
-          ></TitleBar>
-        </View>
+        <TitleBar
+          controls
+          id="DrawingMove"
+          isFullscreen={false}
+          onCloseClick={() => {
+            hide();
+            setDrawingShow(!isDrawingShow);
+          }}
+          onMinimizeClick={() => {
+            hide();
+            setDrawingShow(!isDrawingShow);
+          }}
+          onMaximizeClick={show}
+        ></TitleBar>
         <div className="drawing"></div>
       </div>
     </RenderModal>

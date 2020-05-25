@@ -55,7 +55,7 @@ export const Setting = React.memo(() => {
           onMaximizeClick={show}
         ></TitleBar>
         <div className="mainSet">
-          <View className="leftSet" width="172">
+          <View className="leftSet">
             <ListView>
               {setListMap.map((item, index) => {
                 return (

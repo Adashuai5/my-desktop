@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import { useModal } from "../modal/UseModal";
 import { FooterContext } from "../footer/Footer";
-import { View, TitleBar } from "react-desktop/macOs";
+import { TitleBar } from "react-desktop/macOs";
 import "./index.scss";
 /// <reference path="react-desktop.d.ts" />
 
@@ -123,23 +123,21 @@ export const Calculator = React.memo(() => {
     >
       <React.Fragment>
         <div className="output-wrapper">
-          <View>
-            <TitleBar
-              id="calculatorMove"
-              transparent
-              controls
-              isFullscreen={false}
-              onCloseClick={() => {
-                hide();
-                setCalculatorShow(!isCalculatorShow);
-              }}
-              onMinimizeClick={() => {
-                hide();
-                setCalculatorShow(!isCalculatorShow);
-              }}
-              onMaximizeClick={show}
-            ></TitleBar>
-          </View>
+          <TitleBar
+            id="calculatorMove"
+            transparent
+            controls
+            isFullscreen={false}
+            onCloseClick={() => {
+              hide();
+              setCalculatorShow(!isCalculatorShow);
+            }}
+            onMinimizeClick={() => {
+              hide();
+              setCalculatorShow(!isCalculatorShow);
+            }}
+            onMaximizeClick={show}
+          ></TitleBar>
           <div className="output">
             <span>{result}</span>
           </div>
