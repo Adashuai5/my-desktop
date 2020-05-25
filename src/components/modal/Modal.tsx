@@ -33,16 +33,20 @@ const Modal = React.memo(
       position: initPosition,
     });
 
-    const handleMouseDown = useCallback(({ clientX, clientY }) => {
-      setState((state) => ({
-        ...state,
-        isDragging: true,
-        origin: {
-          x: clientX - state.position.x,
-          y: clientY - state.position.y,
-        },
-      }));
-    }, []);
+    const handleMouseDown = useCallback(
+      ({ clientX, clientY, target }) => {
+        if (moveEl && target !== moveEl) return;
+        setState((state) => ({
+          ...state,
+          isDragging: true,
+          origin: {
+            x: clientX - state.position.x,
+            y: clientY - state.position.y,
+          },
+        }));
+      },
+      [moveEl]
+    );
 
     const handleMouseMove = useCallback(
       ({ clientX, clientY, target }) => {
@@ -66,7 +70,7 @@ const Modal = React.memo(
         }));
         onDrag({ newPosition, domEl });
       },
-      [state.origin, dragEl, onDrag, domEl]
+      [state.origin, moveEl, dragEl, onDrag, domEl]
     );
 
     const handleMouseUp = useCallback(() => {
@@ -80,14 +84,15 @@ const Modal = React.memo(
 
     useEffect(() => {
       if (state.isDragging || !closeModal) {
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("mouseup", handleMouseUp);
+        domEl.addEventListener("mousemove", handleMouseMove);
+        domEl.addEventListener("mouseup", handleMouseUp);
       } else {
-        window.removeEventListener("mousemove", handleMouseMove);
-        window.removeEventListener("mouseup", handleMouseUp);
+        domEl.removeEventListener("mousemove", handleMouseMove);
+        domEl.removeEventListener("mouseup", handleMouseUp);
         localStorage.setItem(data.id, JSON.stringify(state.position));
       }
     }, [
+      domEl,
       closeModal,
       state.isDragging,
       handleMouseMove,

@@ -1,6 +1,7 @@
 #SettingView {
-  display: flex;
-  flex-direction: column;
+  #SettingMove{
+    height: 48px;
+  }
   .mainSet {
     display: flex;
     .leftSet {
@@ -20,11 +21,11 @@
       flex-direction: column;
       padding: 30px 60px;
       width: 512px;
-      height: 468px;
+      height: 420px;
       background-color: #ffffff;
       .divide {
         width: 100%;
-        border-top: 1px solid #bfbfbf;
+        border-top: 1px solid #f0f0f0;
         margin-bottom: 10px;
       }
       .options {

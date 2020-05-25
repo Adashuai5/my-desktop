@@ -4,11 +4,11 @@
   display: inline-block;
   font-size: 2em;
   #DrawingMove {
-    height: 30px;
+    height: 32px;
   }
   .drawing {
     background-color: #fff;
     width: 100%;
-    height: calc(100% - 24px);
+    height: calc(100% - 32px);
   }
 }

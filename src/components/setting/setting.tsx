@@ -5,7 +5,6 @@ import {
   View,
   Radio,
   TitleBar,
-  Toolbar,
   Text,
   ListView,
   ListViewRow,
@@ -40,29 +39,21 @@ export const Setting = React.memo(() => {
       }}
     >
       <React.Fragment>
-        <View>
-          <TitleBar
-            id="SettingMove"
-            controls
-            inset
-            isFullscreen={false}
-            onCloseClick={() => {
-              hide();
-              setSettingShow(!isSettingShow);
-            }}
-            onMinimizeClick={() => {
-              hide();
-              setSettingShow(!isSettingShow);
-            }}
-            onMaximizeClick={show}
-          >
-            <Toolbar
-              height="24"
-              horizontalAlignment="center"
-              verticalAlignment="center"
-            />
-          </TitleBar>
-        </View>
+        <TitleBar
+          id="SettingMove"
+          controls
+          inset
+          isFullscreen={false}
+          onCloseClick={() => {
+            hide();
+            setSettingShow(!isSettingShow);
+          }}
+          onMinimizeClick={() => {
+            hide();
+            setSettingShow(!isSettingShow);
+          }}
+          onMaximizeClick={show}
+        ></TitleBar>
         <div className="mainSet">
           <View className="leftSet" width="172">
             <ListView>

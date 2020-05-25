@@ -59,7 +59,7 @@ const Footer = React.memo(() => {
 
   useEffect(() => {
     dockEffect(props as Props);
-  }, [length, position]);
+  }, [length, position, props]);
 
   return (
     <React.Fragment>
