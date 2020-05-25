@@ -1,8 +1,11 @@
-#DrawingView {
+.drawing-wrapper {
   width: 1200px;
   height: 800px;
   display: inline-block;
   font-size: 2em;
+  #DrawingMove {
+    height: 30px;
+  }
   .drawing {
     background-color: #fff;
     width: 100%;

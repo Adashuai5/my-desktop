@@ -113,11 +113,19 @@ export const Calculator = React.memo(() => {
   useEffect(isCalculatorShow ? show : hide, [isCalculatorShow]);
   useEffect(() => setResult(result), [result]);
   return (
-    <RenderModal data={{ width: 410, height: 560 }} id="calculatorView">
+    <RenderModal
+      data={{
+        width: 410,
+        height: 560,
+        id: "calculatorView",
+        moveId: "calculatorMove",
+      }}
+    >
       <React.Fragment>
         <div className="output-wrapper">
           <View>
             <TitleBar
+              id="calculatorMove"
               transparent
               controls
               isFullscreen={false}

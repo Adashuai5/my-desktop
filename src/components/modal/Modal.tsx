@@ -12,15 +12,15 @@ type Props = {
   closeModal: () => void;
   onDrag: (T: any) => void;
   onDragEnd: () => void;
-  data: { width: number; height: number };
-  id: string;
+  data: { width: number; height: number; id: string; moveId: string };
 };
 const Modal = React.memo(
-  ({ children, closeModal, onDrag, onDragEnd, data, id }: Props) => {
-    const localPosition = localStorage.getItem(id) || null;
+  ({ children, closeModal, onDrag, onDragEnd, data }: Props) => {
+    const localPosition = localStorage.getItem(data.id) || null;
     const domEl = document.getElementById("main-view") as HTMLDivElement;
     if (!domEl) return null;
-    const dragEl = document.getElementById(id) as HTMLDivElement;
+    const dragEl = document.getElementById(data.id) as HTMLDivElement;
+    const moveEl = document.getElementById(data.moveId) as HTMLDivElement;
     const initPosition = localPosition
       ? JSON.parse(localPosition)
       : {
@@ -45,7 +45,8 @@ const Modal = React.memo(
     }, []);
 
     const handleMouseMove = useCallback(
-      ({ clientX, clientY }) => {
+      ({ clientX, clientY, target }) => {
+        if (target !== moveEl) return;
         let x = clientX - state.origin.x;
         let y = clientY - state.origin.y;
         if (x <= 0) {
@@ -84,9 +85,16 @@ const Modal = React.memo(
       } else {
         window.removeEventListener("mousemove", handleMouseMove);
         window.removeEventListener("mouseup", handleMouseUp);
-        localStorage.setItem(id, JSON.stringify(state.position));
+        localStorage.setItem(data.id, JSON.stringify(state.position));
       }
-    }, [state.isDragging, handleMouseMove, handleMouseUp, id, state.position]);
+    }, [
+      closeModal,
+      state.isDragging,
+      handleMouseMove,
+      handleMouseUp,
+      data.id,
+      state.position,
+    ]);
 
     const styles = useMemo(
       () => ({
@@ -101,7 +109,7 @@ const Modal = React.memo(
       <div
         style={styles as CSSProperties}
         onMouseDown={handleMouseDown}
-        id={id}
+        id={data.id}
       >
         {children}
       </div>,

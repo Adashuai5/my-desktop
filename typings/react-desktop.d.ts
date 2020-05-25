@@ -7,4 +7,5 @@ declare module "react-desktop/macOs" {
   export const Box: JSX;
   export const ListView: JSX;
   export const ListViewRow: JSX;
+  export const Window: JSX;
 }

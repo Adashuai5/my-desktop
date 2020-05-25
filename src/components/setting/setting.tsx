@@ -31,11 +31,18 @@ export const Setting = React.memo(() => {
   const [selected, setTitle] = useState("通用");
   useEffect(isSettingShow ? show : hide, [isSettingShow]);
   return (
-    <RenderModal data={{ width: 684, height: 466 }} id="SettingView">
+    <RenderModal
+      data={{
+        width: 684,
+        height: 466,
+        id: "SettingView",
+        moveId: "SettingMove",
+      }}
+    >
       <React.Fragment>
-        <View className="leftSet">
+        <View>
           <TitleBar
-            className="TitleBar"
+            id="SettingMove"
             controls
             inset
             isFullscreen={false}
@@ -54,7 +61,11 @@ export const Setting = React.memo(() => {
               horizontalAlignment="center"
               verticalAlignment="center"
             />
-            <ListView className="ListView" width="172">
+          </TitleBar>
+        </View>
+        <div className="mainSet">
+          <View className="leftSet" width="172">
+            <ListView>
               {setListMap.map((item, index) => {
                 return (
                   <ListViewRow
@@ -89,77 +100,77 @@ export const Setting = React.memo(() => {
                 );
               })}
             </ListView>
-          </TitleBar>
-        </View>
-        <View className="rightSet">
-          <Text bold marginBottom="10px" size="20">
-            {selected}
-          </Text>
-          <div className="divide"></div>
-          {optionsMap.map((item, index) => {
-            return (
-              <div className="options" key={index + item.value}>
-                <Text bold marginBottom="10px">
-                  {item.title}
-                </Text>
-                <input
-                  min="25"
-                  max="128"
-                  type="range"
-                  value={length}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setLength({
-                      name: "change",
-                      length: e.target.value,
-                    });
-                    setProps({
-                      name: "change",
-                      props: {
-                        ...props,
-                        toTagLength: e.target.value,
-                        type: position,
-                      },
-                    });
-                  }}
-                />
-                <span>{length}</span>
-              </div>
-            );
-          })}
-
-          <Text bold>Dock 所在屏幕位置</Text>
-          <View>
-            {positionMap.map((item, index) => {
+          </View>
+          <View className="rightSet">
+            <Text bold marginBottom="10px" size="20">
+              {selected}
+            </Text>
+            <div className="divide"></div>
+            {optionsMap.map((item, index) => {
               return (
-                <div
-                  style={{ paddingRight: "24px" } as CSSProperties}
-                  key={index + item}
-                >
-                  <Radio
-                    label={item}
-                    name={item}
+                <div className="options" key={index + item.value}>
+                  <Text bold marginBottom="10px">
+                    {item.title}
+                  </Text>
+                  <input
+                    min="25"
+                    max="128"
+                    type="range"
+                    value={length}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setPosition({
+                      setLength({
                         name: "change",
-                        position: e.target.value,
+                        length: e.target.value,
                       });
                       setProps({
                         name: "change",
                         props: {
                           ...props,
-                          toTagLength: length,
-                          type: e.target.value,
+                          toTagLength: e.target.value,
+                          type: position,
                         },
                       });
                     }}
-                    defaultValue={item}
-                    defaultChecked={item === position}
-                  ></Radio>
+                  />
+                  <span>{length}</span>
                 </div>
               );
             })}
+
+            <Text bold>Dock 所在屏幕位置</Text>
+            <View>
+              {positionMap.map((item, index) => {
+                return (
+                  <div
+                    style={{ paddingRight: "24px" } as CSSProperties}
+                    key={index + item}
+                  >
+                    <Radio
+                      label={item}
+                      name={item}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setPosition({
+                          name: "change",
+                          position: e.target.value,
+                        });
+                        setProps({
+                          name: "change",
+                          props: {
+                            ...props,
+                            toTagLength: length,
+                            type: e.target.value,
+                          },
+                        });
+                      }}
+                      defaultValue={item}
+                      defaultChecked={item === position}
+                    ></Radio>
+                  </div>
+                );
+              })}
+            </View>
           </View>
-        </View>
+        </div>
       </React.Fragment>
     </RenderModal>
   );

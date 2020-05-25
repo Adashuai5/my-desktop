@@ -10,12 +10,19 @@ export const Drawing = React.memo(() => {
   const [isDrawingShow, setDrawingShow] = useContext(FooterContext);
   useEffect(isDrawingShow ? show : hide, [isDrawingShow]);
   return (
-    <RenderModal data={{ width: 1000, height: 800 }} id="DrawingView">
-      <React.Fragment>
+    <RenderModal
+      data={{
+        width: 1000,
+        height: 800,
+        id: "DrawingView",
+        moveId: "DrawingMove",
+      }}
+    >
+      <div className="drawing-wrapper">
         <View>
           <TitleBar
-            style={{ height: "24px" }}
             controls
+            id="DrawingMove"
             isFullscreen={false}
             onCloseClick={() => {
               hide();
@@ -29,7 +36,7 @@ export const Drawing = React.memo(() => {
           ></TitleBar>
         </View>
         <div className="drawing"></div>
-      </React.Fragment>
+      </div>
     </RenderModal>
   );
 });

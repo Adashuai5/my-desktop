@@ -12,17 +12,14 @@ export const useModal = () => {
   const RenderModal = ({
     children,
     data,
-    id,
   }: {
     children: React.ReactChild;
-    data: { width: number; height: number };
-    id: string;
+    data: { width: number; height: number; id: string; moveId: string };
   }) => (
     <React.Fragment>
       {isVisible && (
         <Modal
           data={data}
-          id={id}
           closeModal={hide}
           onDrag={() => console.log("onDrag")}
           onDragEnd={() => console.log("onDragEnd")}
