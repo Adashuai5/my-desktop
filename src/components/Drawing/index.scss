@@ -1,15 +1,9 @@
 #DrawingView {
-  width: 1200px;
-  height: 800px;
-  display: inline-block;
-  font-size: 2em;
   #DrawingMove {
     height: 32px;
   }
   #canvas {
     display: block;
     background-color: #fff;
-    width: 100%;
-    height: calc(100% - 32px);
   }
 }
