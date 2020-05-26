@@ -34,8 +34,7 @@ const Modal = React.memo(
     });
 
     const handleMouseDown = useCallback(
-      ({ clientX, clientY, target }) => {
-        if (moveEl && target !== moveEl) return;
+      ({ clientX, clientY }) => {
         setState((state) => ({
           ...state,
           isDragging: true,
@@ -45,12 +44,12 @@ const Modal = React.memo(
           },
         }));
       },
-      [moveEl]
+      []
     );
 
     const handleMouseMove = useCallback(
       ({ clientX, clientY, target }) => {
-        if (target !== moveEl) return;
+        if (moveEl && target !== moveEl) return;
         let x = clientX - state.origin.x;
         let y = clientY - state.origin.y;
         if (x <= 0) {
