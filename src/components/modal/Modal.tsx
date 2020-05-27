@@ -14,13 +14,14 @@ type Props = {
   onDragEnd: () => void;
   data: { width: number; height: number; id: string; moveId: string };
 };
+
 const Modal = React.memo(
   ({ children, closeModal, onDrag, onDragEnd, data }: Props) => {
-    const localPosition = localStorage.getItem(data.id) || null;
     const domEl = document.getElementById("main-view") as HTMLDivElement;
     if (!domEl) return null;
     const dragEl = document.getElementById(data.id) as HTMLDivElement;
     const moveEl = document.getElementById(data.moveId) as HTMLDivElement;
+    const localPosition = localStorage.getItem(data.id) || null;
     const initPosition = localPosition
       ? JSON.parse(localPosition)
       : {
@@ -33,23 +34,20 @@ const Modal = React.memo(
       position: initPosition,
     });
 
-    const handleMouseDown = useCallback(
-      ({ clientX, clientY }) => {
-        setState((state) => ({
-          ...state,
-          isDragging: true,
-          origin: {
-            x: clientX - state.position.x,
-            y: clientY - state.position.y,
-          },
-        }));
-      },
-      []
-    );
+    const handleMouseDown = useCallback(({ clientX, clientY }) => {
+      setState((state) => ({
+        ...state,
+        isDragging: true,
+        origin: {
+          x: clientX - state.position.x,
+          y: clientY - state.position.y,
+        },
+      }));
+    }, []);
 
     const handleMouseMove = useCallback(
       ({ clientX, clientY, target }) => {
-        if (moveEl && target !== moveEl) return;
+        if (!state.isDragging || (moveEl && target !== moveEl)) return;
         let x = clientX - state.origin.x;
         let y = clientY - state.origin.y;
         if (x <= 0) {
@@ -69,36 +67,30 @@ const Modal = React.memo(
         }));
         onDrag({ newPosition, domEl });
       },
-      [state.origin, moveEl, dragEl, onDrag, domEl]
+      [state.isDragging, state.origin, moveEl, dragEl, onDrag, domEl]
     );
 
     const handleMouseUp = useCallback(() => {
-      setState((state) => ({
-        ...state,
-        isDragging: false,
-      }));
+      if (state.isDragging) {
+        setState((state) => ({
+          ...state,
+          isDragging: false,
+        }));
 
-      onDragEnd();
-    }, [onDragEnd]);
+        onDragEnd();
+      }
+    }, [state.isDragging, onDragEnd]);
 
     useEffect(() => {
-      if (state.isDragging || !closeModal) {
-        domEl.addEventListener("mousemove", handleMouseMove);
-        domEl.addEventListener("mouseup", handleMouseUp);
-      } else {
+      if (!domEl) return;
+      domEl.addEventListener("mousemove", handleMouseMove);
+      domEl.addEventListener("mouseup", handleMouseUp);
+      return () => {
         domEl.removeEventListener("mousemove", handleMouseMove);
         domEl.removeEventListener("mouseup", handleMouseUp);
         localStorage.setItem(data.id, JSON.stringify(state.position));
-      }
-    }, [
-      domEl,
-      closeModal,
-      state.isDragging,
-      handleMouseMove,
-      handleMouseUp,
-      data.id,
-      state.position,
-    ]);
+      };
+    }, [domEl, handleMouseMove, handleMouseUp, data.id, state.position]);
 
     const styles = useMemo(
       () => ({
@@ -109,6 +101,7 @@ const Modal = React.memo(
       }),
       [state.isDragging, state.position]
     );
+
     return ReactDOM.createPortal(
       <div
         style={styles as CSSProperties}
