@@ -11,6 +11,7 @@ type Coordinate = {
 };
 
 const Canvas = ({ width, height }: CanvasProps) => {
+  const colorMap = ["black", "red", "green", "blue"];
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [strokeStyle, setStrokeStyle] = useState("black");
   const [lineWidth, setLineWidth] = useState(5);
@@ -112,7 +113,57 @@ const Canvas = ({ width, height }: CanvasProps) => {
     };
   };
 
-  return <canvas id="canvas" ref={canvasRef} height={height} width={width} />;
+  const onColorsClick = useCallback(([e, color]) => {
+    if (e.target.className.includes("active")) return;
+    setStrokeStyle(color);
+    e.target.classList.add("active");
+    e.target.parentNode.childNodes.forEach((item: HTMLLIElement) => {
+      if (!item.matches("li") || item === e.target) return;
+      item.classList.remove("active");
+    });
+  }, []);
+
+  const onColorsChange = useCallback((e) => {
+    setStrokeStyle(e.target.value);
+  }, []);
+
+  const onSizesChange = useCallback((e) => {
+    setLineWidth(e.target.value);
+  }, []);
+
+  return (
+    <React.Fragment>
+      <canvas id="canvas" ref={canvasRef} height={height} width={width} />;
+      <ol className="colors">
+        {colorMap.map((color, index) => {
+          return (
+            <li
+              className={color === strokeStyle ? color + " active" : color}
+              key={index + color}
+              onClick={(e) => onColorsClick([e, color])}
+            ></li>
+          );
+        })}
+        <input
+          type="color"
+          value={strokeStyle}
+          onChange={onColorsChange}
+          id="currentColor"
+        />
+      </ol>
+      <div className="sizes">
+        <input
+          type="range"
+          id="range"
+          name="range"
+          min="1"
+          max="20"
+          value={lineWidth}
+          onChange={onSizesChange}
+        />
+      </div>
+    </React.Fragment>
+  );
 };
 
 Canvas.defaultProps = {
