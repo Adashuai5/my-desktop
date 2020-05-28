@@ -8,20 +8,26 @@
   }
   #toolbox {
     position: fixed;
-    left:50%;
-    left:50%;
-    width: 100px;
+    left: 3vw;
+    top: 12vh;
+    width: 120px;
     border-radius: 5px;
     display: flex;
+    flex-direction: column;
     background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px,
-    rgba(0, 0, 0, 0.18) 0px 0px 5px, rgba(0, 0, 0, 0.3) 0px 8px 50px;;
-    .tools{
+    box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 50px;
+    .tools {
+      padding-top: 20px;
+      display: flex;
+      width: 100%;
     }
     .colors {
+      text-align: center;
       li {
-        width: 20px;
-        height: 20px;
+        display: inline-block;
+        width: 24px;
+        height: 24px;
         box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
         margin: 10px;
         border-radius: 50%;
@@ -57,13 +63,15 @@
       }
     }
     .sizes {
+      margin: 20px 10px;
+      width: 100px;
+      border-top: 1px solid #e6e6e6;
       #range {
+        width: 100%;
         transform-origin: 75px 75px;
-        transform: rotate(90deg);
         cursor: pointer;
         -webkit-appearance: none; /*去除默认样式*/
         background-color: #ebeff4;
-        padding: 0;
         height: 4px;
         border: none;
         &::-webkit-slider-thumb {

@@ -4,4 +4,7 @@
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
+  &.active {
+    transform: scale(1.4);
+  }
 }

@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  CSSProperties,
+} from "react";
 import { Iconfont } from "../Iconfont";
 
 interface CanvasProps {
@@ -16,7 +22,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [strokeStyle, setStrokeStyle] = useState("black");
   const [lineWidth, setLineWidth] = useState(5);
-
+  const [eraserEnabled, setEraserEnabled] = useState(false);
   const [isPainting, setIsPainting] = useState(false);
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
     undefined
@@ -62,17 +68,40 @@ const Canvas = ({ width, height }: CanvasProps) => {
     [lineWidth, strokeStyle]
   );
 
+  const clearRect = useCallback(
+    (newMousePosition: Coordinate) => {
+      if (!canvasRef.current) {
+        return;
+      }
+      const canvas: HTMLCanvasElement = canvasRef.current;
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.clearRect(
+          newMousePosition.x - lineWidth / 2,
+          newMousePosition.y - lineWidth / 2,
+          lineWidth,
+          lineWidth
+        );
+      }
+    },
+    [lineWidth, strokeStyle]
+  );
+
   const paint = useCallback(
     (event: MouseEvent) => {
       if (isPainting) {
         const newMousePosition = getCoordinates(event);
         if (mousePosition && newMousePosition) {
-          drawLine(mousePosition, newMousePosition);
-          setMousePosition(newMousePosition);
+          if (eraserEnabled) {
+            clearRect(newMousePosition);
+          } else {
+            drawLine(mousePosition, newMousePosition);
+            setMousePosition(newMousePosition);
+          }
         }
       }
     },
-    [isPainting, mousePosition, drawLine]
+    [isPainting, eraserEnabled, mousePosition, drawLine, clearRect]
   );
 
   useEffect(() => {
@@ -114,12 +143,28 @@ const Canvas = ({ width, height }: CanvasProps) => {
     };
   };
 
-  const onColorsClick = useCallback(([e, color]) => {
-    if (e.target.className.includes("active")) return;
+  const onColorsClick = useCallback(([e, selector, color]) => {
+    const el = e.target;
+    if (el.className.includes("active")) return;
     setStrokeStyle(color);
-    e.target.classList.add("active");
-    e.target.parentNode.childNodes.forEach((item: HTMLLIElement) => {
-      if (!item.matches("li") || item === e.target) return;
+    el.classList.add("active");
+    el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
+      if (!item.matches(selector) || item === el) return;
+      item.classList.remove("active");
+    });
+  }, []);
+
+  const onToolsClick = useCallback((e) => {
+    const el = e.currentTarget;
+    if (el.classList[1]) return;
+    if (el.childNodes[0].href.baseVal.includes("xiangpi")) {
+      setEraserEnabled(true);
+    } else {
+      setEraserEnabled(false);
+    }
+    el.classList.add("active");
+    el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
+      if (!item.matches("svg") || item === el) return;
       item.classList.remove("active");
     });
   }, []);
@@ -137,8 +182,30 @@ const Canvas = ({ width, height }: CanvasProps) => {
       <canvas id="canvas" ref={canvasRef} height={height} width={width} />;
       <div id="toolbox">
         <div className="tools">
-          <Iconfont type="icon-huabi" />
-          <Iconfont type="icon-xiangpi" />
+          <Iconfont
+            className={!eraserEnabled ? "active" : ""}
+            type="icon-huabi"
+            style={{ width: "100%", fontSize: "32px" }}
+            onToolsClick={onToolsClick}
+          />
+          <Iconfont
+            className={eraserEnabled ? "active" : ""}
+            type="icon-xiangpi"
+            style={{ width: "100%", fontSize: "32px" }}
+            onToolsClick={onToolsClick}
+          />
+        </div>
+        <div className="sizes">
+          <input
+            style={{ backgroundColor: strokeStyle } as CSSProperties}
+            type="range"
+            id="range"
+            name="range"
+            min="1"
+            max="20"
+            value={lineWidth}
+            onChange={onSizesChange}
+          />
         </div>
         <ol className="colors">
           {colorMap.map((color, index) => {
@@ -146,7 +213,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
               <li
                 className={color === strokeStyle ? color + " active" : color}
                 key={index + color}
-                onClick={(e) => onColorsClick([e, color])}
+                onClick={(e) => onColorsClick([e, "li", color])}
               ></li>
             );
           })}
@@ -157,17 +224,6 @@ const Canvas = ({ width, height }: CanvasProps) => {
             id="currentColor"
           />
         </ol>
-        <div className="sizes">
-          <input
-            type="range"
-            id="range"
-            name="range"
-            min="1"
-            max="20"
-            value={lineWidth}
-            onChange={onSizesChange}
-          />
-        </div>
       </div>
     </React.Fragment>
   );
