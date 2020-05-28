@@ -20,6 +20,7 @@ type Coordinate = {
 const Canvas = ({ width, height }: CanvasProps) => {
   const colorMap = ["black", "red", "green", "blue"];
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isToolboxShow, setToolboxShow] = useState(true);
   const [strokeStyle, setStrokeStyle] = useState("black");
   const [lineWidth, setLineWidth] = useState(5);
   const [eraserEnabled, setEraserEnabled] = useState(false);
@@ -84,7 +85,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
         );
       }
     },
-    [lineWidth, strokeStyle]
+    [lineWidth]
   );
 
   const paint = useCallback(
@@ -177,22 +178,53 @@ const Canvas = ({ width, height }: CanvasProps) => {
     setLineWidth(e.target.value);
   }, []);
 
+  const toolboxShowClick = useCallback(
+    (e) => {
+      setToolboxShow(!isToolboxShow);
+    },
+    [isToolboxShow]
+  );
+
   return (
     <React.Fragment>
       <canvas id="canvas" ref={canvasRef} height={height} width={width} />;
-      <div id="toolbox">
+      <div
+        id="toolboxShow"
+        style={
+          {
+            borderRadius: isToolboxShow ? "" : "5px",
+          } as CSSProperties
+        }
+      >
+        <Iconfont
+          type={isToolboxShow ? "icon-upward_flat" : "icon-downward_flat"}
+          style={{
+            width: "100%",
+            fontSize: "32px",
+          }}
+          clickEvent={toolboxShowClick}
+        />
+      </div>
+      <div
+        id="toolbox"
+        style={
+          {
+            display: isToolboxShow ? "block" : "none",
+          } as CSSProperties
+        }
+      >
         <div className="tools">
           <Iconfont
             className={!eraserEnabled ? "active" : ""}
             type="icon-huabi"
             style={{ width: "100%", fontSize: "32px" }}
-            onToolsClick={onToolsClick}
+            clickEvent={onToolsClick}
           />
           <Iconfont
             className={eraserEnabled ? "active" : ""}
             type="icon-xiangpi"
             style={{ width: "100%", fontSize: "32px" }}
-            onToolsClick={onToolsClick}
+            clickEvent={onToolsClick}
           />
         </div>
         <div className="sizes">

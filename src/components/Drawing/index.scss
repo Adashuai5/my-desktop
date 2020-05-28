@@ -6,17 +6,29 @@
     display: block;
     background-color: #fff;
   }
+  #toolboxShow {
+    position: fixed;
+    left: 3vw;
+    top: calc(12vh - 32px);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 120px;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 50px;
+  }
   #toolbox {
     position: fixed;
     left: 3vw;
     top: 12vh;
     width: 120px;
-    border-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
-      rgba(0, 0, 0, 0.3) 0px 8px 50px;
+    box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 5px 5px,
+      rgba(0, 0, 0, 0.3) 0px 25px 50px;
     .tools {
       padding-top: 20px;
       display: flex;
