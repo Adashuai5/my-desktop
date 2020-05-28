@@ -1,5 +1,4 @@
 #DrawingView {
-  position: relative;
   #DrawingMove {
     height: 32px;
   }
@@ -7,70 +6,77 @@
     display: block;
     background-color: #fff;
   }
-  .colors {
-    position: absolute;
-    top: calc(50% - 95px);
-    left: 14px;
-    li {
-      width: 20px;
-      height: 20px;
-      box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
-      margin: 10px;
-      border-radius: 50%;
-      transition: all 0.3s;
-      cursor: pointer;
-      &.black {
-        background: black;
-      }
-      &.red {
-        background: red;
-      }
-      &.green {
-        background: green;
-      }
-      &.blue {
-        background: blue;
-      }
-      &.active {
-        transform: scale(1.2);
-        box-shadow: 0 0 3px rgba(0, 0, 0, 1);
-      }
+  #toolbox {
+    position: fixed;
+    left:50%;
+    left:50%;
+    width: 100px;
+    border-radius: 5px;
+    display: flex;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px,
+    rgba(0, 0, 0, 0.18) 0px 0px 5px, rgba(0, 0, 0, 0.3) 0px 8px 50px;;
+    .tools{
     }
-    #currentColor {
-      display: inline-block;
-      height: 40px;
-      width: 40px;
-      padding: 4px;
-      border: 1px solid #e6e6e6;
-      border-radius: 4px;
-      font-size: 0;
-      position: relative;
-      cursor: pointer;
-    }
-  }
-  .sizes {
-    position: absolute;
-    top: 5%;
-    right: 50px;
-    #range {
-      transform-origin: 75px 75px;
-      transform: rotate(90deg);
-      cursor: pointer;
-      -webkit-appearance: none; /*去除默认样式*/
-      background-color: #ebeff4;
-      padding: 0;
-      height: 4px;
-      border: none;
-      &::-webkit-slider-thumb {
-        -webkit-appearance: none; /*去除默认样式*/
-        cursor: default;
-        top: 0;
-        height: 20px;
+    .colors {
+      li {
         width: 20px;
-        transform: translateY(0px);
-        background: #fff;
-        border-radius: 15px;
-        border: 5px solid deepskyblue;
+        height: 20px;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+        margin: 10px;
+        border-radius: 50%;
+        transition: all 0.3s;
+        cursor: pointer;
+        &.black {
+          background: black;
+        }
+        &.red {
+          background: red;
+        }
+        &.green {
+          background: green;
+        }
+        &.blue {
+          background: blue;
+        }
+        &.active {
+          transform: scale(1.2);
+          box-shadow: 0 0 3px rgba(0, 0, 0, 1);
+        }
+      }
+      #currentColor {
+        display: inline-block;
+        height: 40px;
+        width: 40px;
+        padding: 4px;
+        border: 1px solid #e6e6e6;
+        border-radius: 4px;
+        font-size: 0;
+        position: relative;
+        cursor: pointer;
+      }
+    }
+    .sizes {
+      #range {
+        transform-origin: 75px 75px;
+        transform: rotate(90deg);
+        cursor: pointer;
+        -webkit-appearance: none; /*去除默认样式*/
+        background-color: #ebeff4;
+        padding: 0;
+        height: 4px;
+        border: none;
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none; /*去除默认样式*/
+          cursor: default;
+          top: 0;
+          height: 20px;
+          width: 20px;
+          transform: translateY(0px);
+          background: #fff;
+          border-radius: 15px;
+          border: 5px solid deepskyblue;
+        }
       }
     }
   }

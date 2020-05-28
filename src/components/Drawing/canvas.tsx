@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Iconfont } from "../Iconfont";
 
 interface CanvasProps {
   width: number;
@@ -134,33 +135,39 @@ const Canvas = ({ width, height }: CanvasProps) => {
   return (
     <React.Fragment>
       <canvas id="canvas" ref={canvasRef} height={height} width={width} />;
-      <ol className="colors">
-        {colorMap.map((color, index) => {
-          return (
-            <li
-              className={color === strokeStyle ? color + " active" : color}
-              key={index + color}
-              onClick={(e) => onColorsClick([e, color])}
-            ></li>
-          );
-        })}
-        <input
-          type="color"
-          value={strokeStyle}
-          onChange={onColorsChange}
-          id="currentColor"
-        />
-      </ol>
-      <div className="sizes">
-        <input
-          type="range"
-          id="range"
-          name="range"
-          min="1"
-          max="20"
-          value={lineWidth}
-          onChange={onSizesChange}
-        />
+      <div id="toolbox">
+        <div className="tools">
+          <Iconfont type="icon-huabi" />
+          <Iconfont type="icon-xiangpi" />
+        </div>
+        <ol className="colors">
+          {colorMap.map((color, index) => {
+            return (
+              <li
+                className={color === strokeStyle ? color + " active" : color}
+                key={index + color}
+                onClick={(e) => onColorsClick([e, color])}
+              ></li>
+            );
+          })}
+          <input
+            type="color"
+            value={strokeStyle}
+            onChange={onColorsChange}
+            id="currentColor"
+          />
+        </ol>
+        <div className="sizes">
+          <input
+            type="range"
+            id="range"
+            name="range"
+            min="1"
+            max="20"
+            value={lineWidth}
+            onChange={onSizesChange}
+          />
+        </div>
       </div>
     </React.Fragment>
   );
