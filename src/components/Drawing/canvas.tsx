@@ -40,26 +40,26 @@ const Canvas = ({ width, height }: CanvasProps) => {
     };
   }, [startPaint]);
 
-  const drawLine = (
-    originalMousePosition: Coordinate,
-    newMousePosition: Coordinate
-  ) => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    const context = canvas.getContext("2d");
-    if (context) {
-      context.strokeStyle = strokeStyle;
-      context.lineJoin = "round";
-      context.lineWidth = lineWidth;
-      context.beginPath();
-      context.moveTo(originalMousePosition.x, originalMousePosition.y);
-      context.lineTo(newMousePosition.x, newMousePosition.y);
-      context.closePath();
-      context.stroke();
-    }
-  };
+  const drawLine = useCallback(
+    (originalMousePosition: Coordinate, newMousePosition: Coordinate) => {
+      if (!canvasRef.current) {
+        return;
+      }
+      const canvas: HTMLCanvasElement = canvasRef.current;
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.strokeStyle = strokeStyle;
+        context.lineJoin = "round";
+        context.lineWidth = lineWidth;
+        context.beginPath();
+        context.moveTo(originalMousePosition.x, originalMousePosition.y);
+        context.lineTo(newMousePosition.x, newMousePosition.y);
+        context.closePath();
+        context.stroke();
+      }
+    },
+    [lineWidth, strokeStyle]
+  );
 
   const paint = useCallback(
     (event: MouseEvent) => {
