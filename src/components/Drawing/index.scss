@@ -6,7 +6,7 @@
     display: block;
     background-color: #fff;
   }
-  #toolboxShow {
+  #toolbox-show {
     cursor: pointer;
     position: fixed;
     left: 3vw;
@@ -18,9 +18,9 @@
     box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
       rgba(0, 0, 0, 0.3) 0px 8px 50px;
   }
+
   #toolbox {
     position: fixed;
-    transition: 0.3s height;
     left: 3vw;
     top: 12vh;
     width: 120px;
@@ -110,6 +110,27 @@
           border: 5px solid deepskyblue;
         }
       }
+    }
+  }
+
+  .toolbox-enter {
+    opacity: 0;
+    &-active {
+      opacity: 1;
+      transition: opacity 2000ms;
+    }
+    &-done {
+      opacity: 1;
+    }
+  }
+  .toolbox-exit {
+    opacity: 1;
+    &-active {
+      opacity: 0;
+      transition: opacity 2000ms;
+    }
+    &-done {
+      opacity: 0;
     }
   }
 }

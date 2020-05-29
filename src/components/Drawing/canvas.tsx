@@ -6,7 +6,7 @@ import React, {
   CSSProperties,
 } from "react";
 import { Iconfont } from "../Iconfont";
-
+import { CSSTransition } from "react-transition-group";
 interface CanvasProps {
   width: number;
   height: number;
@@ -189,7 +189,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
     <React.Fragment>
       <canvas id="canvas" ref={canvasRef} height={height} width={width} />;
       <div
-        id="toolboxShow"
+        id="toolbox-show"
         style={
           {
             borderRadius: isToolboxShow ? "" : "5px",
@@ -205,59 +205,58 @@ const Canvas = ({ width, height }: CanvasProps) => {
           clickEvent={toolboxShowClick}
         />
       </div>
-      <div
-        id="toolbox"
-        style={
-          {
-            height: isToolboxShow ? "300px" : "0px",
-            visibility: isToolboxShow ? "visible" : "hidden",
-          } as CSSProperties
-        }
+      <CSSTransition
+        in={isToolboxShow} //用于判断是否出现的状态
+        timeout={300} //动画持续时间
+        classNames="toolbox" //className值，防止重复
+        unmountOnExit
       >
-        <div className="tools">
-          <Iconfont
-            className={!eraserEnabled ? "active" : ""}
-            type="icon-huabi"
-            style={{ fontSize: "50px" }}
-            clickEvent={onToolsClick}
-          />
-          <Iconfont
-            className={eraserEnabled ? "active" : ""}
-            type="icon-xiangpi"
-            style={{ fontSize: "50px" }}
-            clickEvent={onToolsClick}
-          />
+        <div id="toolbox">
+          <div className="tools">
+            <Iconfont
+              className={!eraserEnabled ? "active" : ""}
+              type="icon-huabi"
+              style={{ fontSize: "50px" }}
+              clickEvent={onToolsClick}
+            />
+            <Iconfont
+              className={eraserEnabled ? "active" : ""}
+              type="icon-xiangpi"
+              style={{ fontSize: "50px" }}
+              clickEvent={onToolsClick}
+            />
+          </div>
+          <div className="sizes">
+            <input
+              style={{ backgroundColor: strokeStyle } as CSSProperties}
+              type="range"
+              id="range"
+              name="range"
+              min="1"
+              max="20"
+              value={lineWidth}
+              onChange={onSizesChange}
+            />
+          </div>
+          <ol className="colors">
+            {colorMap.map((color, index) => {
+              return (
+                <li
+                  className={color === strokeStyle ? color + " active" : color}
+                  key={index + color}
+                  onClick={(e) => onColorsClick([e, "li", color])}
+                ></li>
+              );
+            })}
+            <input
+              type="color"
+              value={strokeStyle}
+              onChange={onColorsChange}
+              id="currentColor"
+            />
+          </ol>
         </div>
-        <div className="sizes">
-          <input
-            style={{ backgroundColor: strokeStyle } as CSSProperties}
-            type="range"
-            id="range"
-            name="range"
-            min="1"
-            max="20"
-            value={lineWidth}
-            onChange={onSizesChange}
-          />
-        </div>
-        <ol className="colors">
-          {colorMap.map((color, index) => {
-            return (
-              <li
-                className={color === strokeStyle ? color + " active" : color}
-                key={index + color}
-                onClick={(e) => onColorsClick([e, "li", color])}
-              ></li>
-            );
-          })}
-          <input
-            type="color"
-            value={strokeStyle}
-            onChange={onColorsChange}
-            id="currentColor"
-          />
-        </ol>
-      </div>
+      </CSSTransition>
     </React.Fragment>
   );
 };
