@@ -19,6 +19,13 @@ type Coordinate = {
 
 const Canvas = ({ width, height }: CanvasProps) => {
   const colorMap = ["black", "red", "green", "blue"];
+  const optionsMap = [
+    "canvas_save",
+    "canvas_clear",
+    "turn_left_flat",
+    "turn_right_flat",
+  ];
+  const toolsMap = ["canvas_paint", "canvas_eraser"];
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isToolboxShow, setToolboxShow] = useState(true);
   const [strokeStyle, setStrokeStyle] = useState("black");
@@ -155,14 +162,25 @@ const Canvas = ({ width, height }: CanvasProps) => {
     });
   }, []);
 
-  const onToolsClick = useCallback((e) => {
+  const onToolsClick = useCallback(([e, toolName]) => {
     const el = e.currentTarget;
     if (el.classList[1]) return;
-    if (el.childNodes[0].href.baseVal.includes("xiangpi")) {
-      setEraserEnabled(true);
-    } else {
-      setEraserEnabled(false);
-    }
+    toolName === "canvas_eraser"
+      ? setEraserEnabled(true)
+      : setEraserEnabled(false);
+    el.classList.add("active");
+    el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
+      if (!item.matches("svg") || item === el) return;
+      item.classList.remove("active");
+    });
+  }, []);
+
+  const onOptionsClick = useCallback(([e, toolName]) => {
+    const el = e.currentTarget;
+    if (el.classList[1]) return;
+    toolName === "canvas_eraser"
+      ? setEraserEnabled(true)
+      : setEraserEnabled(false);
     el.classList.add("active");
     el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
       if (!item.matches("svg") || item === el) return;
@@ -212,23 +230,49 @@ const Canvas = ({ width, height }: CanvasProps) => {
         unmountOnExit
       >
         <div id="toolbox">
+          <span>Options</span>
+          <div className="options">
+            {optionsMap.map((option, index) => {
+              return (
+                <Iconfont
+                  key={index + option}
+                  className={option}
+                  type={"icon-" + option}
+                  style={{ fontSize: "50px" }}
+                  clickEvent={(e) => onOptionsClick([e, option])}
+                />
+              );
+            })}
+          </div>
+          <span>Toolbox</span>
           <div className="tools">
-            <Iconfont
-              className={!eraserEnabled ? "active" : ""}
-              type="icon-huabi"
-              style={{ fontSize: "50px" }}
-              clickEvent={onToolsClick}
-            />
-            <Iconfont
-              className={eraserEnabled ? "active" : ""}
-              type="icon-xiangpi"
-              style={{ fontSize: "50px" }}
-              clickEvent={onToolsClick}
-            />
+            {toolsMap.map((tool, index) => {
+              return (
+                <Iconfont
+                  key={index + tool}
+                  className={
+                    tool === "canvas_eraser"
+                      ? eraserEnabled
+                        ? "active"
+                        : ""
+                      : !eraserEnabled
+                      ? "active"
+                      : ""
+                  }
+                  type={"icon-" + tool}
+                  style={{ fontSize: "50px" }}
+                  clickEvent={(e) => onToolsClick([e, tool])}
+                />
+              );
+            })}
           </div>
           <div className="sizes">
             <input
-              style={{ backgroundColor: strokeStyle } as CSSProperties}
+              style={
+                {
+                  backgroundColor: eraserEnabled ? "#ebeff4" : strokeStyle,
+                } as CSSProperties
+              }
               type="range"
               id="range"
               name="range"

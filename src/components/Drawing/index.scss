@@ -21,18 +21,20 @@
 
   #toolbox {
     position: fixed;
+    padding: 10px 0;
     left: 3vw;
     top: 12vh;
     width: 120px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     display: flex;
+    text-align: center;
     flex-direction: column;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 5px 5px,
       rgba(0, 0, 0, 0.3) 0px 25px 50px;
     .tools {
-      padding-top: 20px;
+      padding: 10px 0 0;
       display: flex;
       width: 100%;
       .icon-font {
@@ -46,8 +48,38 @@
         }
       }
     }
+    .options {
+      width: 100%;
+      .canvas_save {
+        margin-left: 10px;
+        margin-top: 10px;
+        border-right: 1px solid #e6e6e6;
+        border-bottom: 1px solid #e6e6e6;
+      }
+      .canvas_clear {
+        margin-right: 10px;
+        margin-top: 10px;
+        border-bottom: 1px solid #e6e6e6;
+      }
+      .turn_left_flat {
+        margin-left: 10px;
+        margin-bottom: 10px;
+        border-right: 1px solid #e6e6e6;
+      }
+      .turn_right_flat {
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+      .icon-font {
+        cursor: pointer;
+        padding: 5px;
+        width: 50px;
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.31);
+        }
+      }
+    }
     .colors {
-      text-align: center;
       li {
         display: inline-block;
         width: 24px;
@@ -87,15 +119,16 @@
       }
     }
     .sizes {
-      margin: 20px 10px;
+      margin: 10px;
       width: 100px;
+      padding-bottom: 10px;
       border-top: 1px solid #e6e6e6;
+      border-bottom: 1px solid #e6e6e6;
       #range {
         width: 100%;
         transform-origin: 75px 75px;
         cursor: pointer;
         -webkit-appearance: none; /*去除默认样式*/
-        background-color: #ebeff4;
         height: 4px;
         border: none;
         &::-webkit-slider-thumb {
@@ -117,7 +150,7 @@
     opacity: 0;
     &-active {
       opacity: 1;
-      transition: opacity 2000ms;
+      transition: opacity 1200ms;
     }
     &-done {
       opacity: 1;
@@ -127,7 +160,7 @@
     opacity: 1;
     &-active {
       opacity: 0;
-      transition: opacity 2000ms;
+      transition: opacity 1200ms;
     }
     &-done {
       opacity: 0;
