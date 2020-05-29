@@ -7,6 +7,7 @@
     background-color: #fff;
   }
   #toolboxShow {
+    cursor: pointer;
     position: fixed;
     left: 3vw;
     top: calc(12vh - 32px);
@@ -19,6 +20,7 @@
   }
   #toolbox {
     position: fixed;
+    transition: 0.3s height;
     left: 3vw;
     top: 12vh;
     width: 120px;
@@ -33,6 +35,16 @@
       padding-top: 20px;
       display: flex;
       width: 100%;
+      .icon-font {
+        cursor: pointer;
+        margin: auto;
+        padding: 10px;
+        transition: all 0.3s;
+        &.active {
+          background-color: rgba(0, 0, 0, 0.31);
+          border-radius: 4px;
+        }
+      }
     }
     .colors {
       text-align: center;

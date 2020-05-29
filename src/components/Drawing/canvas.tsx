@@ -209,7 +209,8 @@ const Canvas = ({ width, height }: CanvasProps) => {
         id="toolbox"
         style={
           {
-            display: isToolboxShow ? "block" : "none",
+            height: isToolboxShow ? "300px" : "0px",
+            visibility: isToolboxShow ? "visible" : "hidden",
           } as CSSProperties
         }
       >
@@ -217,13 +218,13 @@ const Canvas = ({ width, height }: CanvasProps) => {
           <Iconfont
             className={!eraserEnabled ? "active" : ""}
             type="icon-huabi"
-            style={{ width: "100%", fontSize: "32px" }}
+            style={{ fontSize: "50px" }}
             clickEvent={onToolsClick}
           />
           <Iconfont
             className={eraserEnabled ? "active" : ""}
             type="icon-xiangpi"
-            style={{ width: "100%", fontSize: "32px" }}
+            style={{ fontSize: "50px" }}
             clickEvent={onToolsClick}
           />
         </div>
