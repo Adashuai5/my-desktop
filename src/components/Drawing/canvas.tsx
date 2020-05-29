@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import { Iconfont } from "../Iconfont";
 import { CSSTransition } from "react-transition-group";
+import { useDialog } from "../Dialog/index";
+
 interface CanvasProps {
   width: number;
   height: number;
@@ -17,7 +19,17 @@ type Coordinate = {
   y: number;
 };
 
+interface ClearRectOptions {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 const Canvas = ({ width, height }: CanvasProps) => {
+  const { showDialog, hideDialog, RenderDialog } = useDialog();
+  const [isClearDialogShow, setClearDialogShow] = useState(false);
+  useEffect(isClearDialogShow ? showDialog : hideDialog, [isClearDialogShow]);
   const colorMap = ["black", "red", "green", "blue"];
   const optionsMap = [
     "canvas_save",
@@ -76,24 +88,16 @@ const Canvas = ({ width, height }: CanvasProps) => {
     [lineWidth, strokeStyle]
   );
 
-  const clearRect = useCallback(
-    (newMousePosition: Coordinate) => {
-      if (!canvasRef.current) {
-        return;
-      }
-      const canvas: HTMLCanvasElement = canvasRef.current;
-      const context = canvas.getContext("2d");
-      if (context) {
-        context.clearRect(
-          newMousePosition.x - lineWidth / 2,
-          newMousePosition.y - lineWidth / 2,
-          lineWidth,
-          lineWidth
-        );
-      }
-    },
-    [lineWidth]
-  );
+  const clearRect = useCallback(({ x, y, width, height }: ClearRectOptions) => {
+    if (!canvasRef.current) {
+      return;
+    }
+    const canvas: HTMLCanvasElement = canvasRef.current;
+    const context = canvas.getContext("2d");
+    if (context) {
+      context.clearRect(x, y, width, height);
+    }
+  }, []);
 
   const paint = useCallback(
     (event: MouseEvent) => {
@@ -101,7 +105,12 @@ const Canvas = ({ width, height }: CanvasProps) => {
         const newMousePosition = getCoordinates(event);
         if (mousePosition && newMousePosition) {
           if (eraserEnabled) {
-            clearRect(newMousePosition);
+            clearRect({
+              x: newMousePosition.x - lineWidth / 2,
+              y: newMousePosition.y - lineWidth / 2,
+              width: lineWidth,
+              height: lineWidth,
+            });
           } else {
             drawLine(mousePosition, newMousePosition);
             setMousePosition(newMousePosition);
@@ -109,7 +118,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
         }
       }
     },
-    [isPainting, eraserEnabled, mousePosition, drawLine, clearRect]
+    [isPainting, eraserEnabled, mousePosition, lineWidth, drawLine, clearRect]
   );
 
   useEffect(() => {
@@ -175,18 +184,19 @@ const Canvas = ({ width, height }: CanvasProps) => {
     });
   }, []);
 
-  const onOptionsClick = useCallback(([e, toolName]) => {
-    const el = e.currentTarget;
-    if (el.classList[1]) return;
-    toolName === "canvas_eraser"
-      ? setEraserEnabled(true)
-      : setEraserEnabled(false);
-    el.classList.add("active");
-    el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
-      if (!item.matches("svg") || item === el) return;
-      item.classList.remove("active");
-    });
-  }, []);
+  const onOptionsClick = useCallback(
+    ([e, toolName]) => {
+      const el = e.currentTarget;
+      switch (toolName) {
+        case "canvas_clear":
+          setClearDialogShow(true);
+          break;
+        default:
+          break;
+      }
+    },
+    [clearRect, width, height]
+  );
 
   const onColorsChange = useCallback((e) => {
     setStrokeStyle(e.target.value);
@@ -203,6 +213,25 @@ const Canvas = ({ width, height }: CanvasProps) => {
     [isToolboxShow]
   );
 
+  const closeClearDialog = useCallback(
+    (e) => {
+      setClearDialogShow(false);
+    },
+    [setClearDialogShow]
+  );
+
+  const checkClearDialog = useCallback(
+    (e) => {
+      clearRect({
+        x: 0,
+        y: 0,
+        width,
+        height,
+      });
+      closeClearDialog(e);
+    },
+    [closeClearDialog]
+  );
   return (
     <React.Fragment>
       <canvas id="canvas" ref={canvasRef} height={height} width={width} />;
@@ -301,6 +330,15 @@ const Canvas = ({ width, height }: CanvasProps) => {
           </ol>
         </div>
       </CSSTransition>
+      <RenderDialog
+        width={300}
+        height={120}
+        id="clear-dialog"
+        title="您确定要清空该画布吗？"
+        message="一旦清空将无法撤回。"
+        onCheck={checkClearDialog}
+        onClose={closeClearDialog}
+      ></RenderDialog>
     </React.Fragment>
   );
 };

@@ -8,4 +8,6 @@ declare module "react-desktop/macOs" {
   export const ListView: JSX;
   export const ListViewRow: JSX;
   export const Window: JSX;
+  export const Dialog: JSX;
+  export const Button: JSX;
 }

@@ -1,4 +1,10 @@
 #DrawingView {
+  #clear-dialog {
+    position: fixed !important;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 50px;
+  }
   #DrawingMove {
     height: 32px;
   }
