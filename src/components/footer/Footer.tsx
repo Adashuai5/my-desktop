@@ -1,9 +1,9 @@
 import React, { useState, useEffect, createContext, useReducer } from "react";
 import { dockEffect, Props } from "./effect";
 import "./index.scss";
-import { Setting } from "../setting/setting";
+import { Setting } from "../setting/Setting";
 import { Calculator } from "../calculator/index";
-import { Drawing } from "../Drawing/index";
+import { Drawing } from "../drawing/index";
 import { positionReducer, lengthReducer, propsReducer } from "./reducer";
 export const FooterContext = createContext<any>([]);
 

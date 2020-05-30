@@ -10,7 +10,7 @@ import {
   ListViewRow,
 } from "react-desktop/macOs";
 import "./index.scss";
-import { Iconfont } from "../Iconfont";
+import { Iconfont } from "../iconfont";
 /// <reference path="react-desktop.d.ts" />
 
 export const Setting = React.memo(() => {

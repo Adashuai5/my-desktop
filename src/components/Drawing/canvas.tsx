@@ -5,9 +5,9 @@ import React, {
   useState,
   CSSProperties,
 } from "react";
-import { Iconfont } from "../Iconfont";
+import { Iconfont } from "../iconfont";
 import { CSSTransition } from "react-transition-group";
-import { useDialog } from "../Dialog/index";
+import { useDialog } from "../dialog/index";
 
 interface CanvasProps {
   width: number;
@@ -27,9 +27,6 @@ interface ClearRectOptions {
 }
 
 const Canvas = ({ width, height }: CanvasProps) => {
-  const { showDialog, hideDialog, RenderDialog } = useDialog();
-  const [isClearDialogShow, setClearDialogShow] = useState(false);
-  useEffect(isClearDialogShow ? showDialog : hideDialog, [isClearDialogShow]);
   const colorMap = ["black", "red", "green", "blue"];
   const optionsMap = [
     "canvas_save",
@@ -38,8 +35,8 @@ const Canvas = ({ width, height }: CanvasProps) => {
     "turn_right_flat",
   ];
   const toolsMap = ["canvas_paint", "canvas_eraser"];
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isToolboxShow, setToolboxShow] = useState(true);
   const [strokeStyle, setStrokeStyle] = useState("black");
   const [lineWidth, setLineWidth] = useState(5);
   const [eraserEnabled, setEraserEnabled] = useState(false);
@@ -47,6 +44,16 @@ const Canvas = ({ width, height }: CanvasProps) => {
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
     undefined
   );
+
+  const getCoordinates = (event: MouseEvent): Coordinate | undefined => {
+    if (!canvasRef.current) {
+      return;
+    }
+    return {
+      x: event.offsetX,
+      y: event.offsetY,
+    };
+  };
 
   const startPaint = useCallback((event: MouseEvent) => {
     const coordinates = getCoordinates(event);
@@ -120,28 +127,6 @@ const Canvas = ({ width, height }: CanvasProps) => {
     },
     [isPainting, eraserEnabled, mousePosition, lineWidth, drawLine, clearRect]
   );
-  const saveCanvas = useCallback(() => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    const context = canvas.getContext("2d");
-    if (context) {
-      const compositeOperation = context.globalCompositeOperation;
-      context.globalCompositeOperation = "destination-over";
-      context.fillStyle = "#fff";
-      context.fillRect(0, 0, width, height);
-      const imageData = canvas.toDataURL("image/png");
-      context.putImageData(context.getImageData(0, 0, width, height), 0, 0);
-      context.globalCompositeOperation = compositeOperation;
-      const a = document.createElement("a");
-      document.body.appendChild(a);
-      a.href = imageData;
-      a.download = "myPaint";
-      a.target = "_blank";
-      a.click();
-    }
-  }, [width, height]);
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -172,26 +157,13 @@ const Canvas = ({ width, height }: CanvasProps) => {
     };
   }, [exitPaint]);
 
-  const getCoordinates = (event: MouseEvent): Coordinate | undefined => {
-    if (!canvasRef.current) {
-      return;
-    }
-    return {
-      x: event.offsetX,
-      y: event.offsetY,
-    };
-  };
-
-  const onColorsClick = useCallback(([e, selector, color]) => {
-    const el = e.target;
-    if (el.className.includes("active")) return;
-    setStrokeStyle(color);
-    el.classList.add("active");
-    el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
-      if (!item.matches(selector) || item === el) return;
-      item.classList.remove("active");
-    });
-  }, []);
+  const [isToolboxShow, setToolboxShow] = useState(true);
+  const toolboxShowClick = useCallback(
+    (e) => {
+      setToolboxShow(!isToolboxShow);
+    },
+    [isToolboxShow]
+  );
 
   const onToolsClick = useCallback(([e, toolName]) => {
     const el = e.currentTarget;
@@ -205,6 +177,52 @@ const Canvas = ({ width, height }: CanvasProps) => {
       item.classList.remove("active");
     });
   }, []);
+
+  const onSizesChange = useCallback((e) => {
+    setLineWidth(e.target.value);
+  }, []);
+
+  const onColorsClick = useCallback(([e, selector, color]) => {
+    const el = e.target;
+    if (el.className.includes("active")) return;
+    setStrokeStyle(color);
+    el.classList.add("active");
+    el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
+      if (!item.matches(selector) || item === el) return;
+      item.classList.remove("active");
+    });
+  }, []);
+
+  const onColorsChange = useCallback((e) => {
+    setStrokeStyle(e.target.value);
+  }, []);
+
+  const { showDialog, hideDialog, RenderDialog } = useDialog();
+  const [isClearDialogShow, setClearDialogShow] = useState(false);
+  useEffect(isClearDialogShow ? showDialog : hideDialog, [isClearDialogShow]);
+
+  const saveCanvas = useCallback(() => {
+    if (!canvasRef.current) {
+      return;
+    }
+    const canvas: HTMLCanvasElement = canvasRef.current;
+    const context = canvas.getContext("2d");
+    if (context) {
+      const compositeOperation = context.globalCompositeOperation;
+      context.globalCompositeOperation = "destination-over";
+      context.fillStyle = "#fff";
+      context.fillRect(0, 0, width, height);
+      const imageData = canvas.toDataURL("image/png");
+      context.putImageData(context.getImageData(0, 0, width, height), 0, 0);
+      context.globalCompositeOperation = compositeOperation;
+      const a = document.createElement("a");
+      document.body.appendChild(a);
+      a.href = imageData;
+      a.download = "myPaint";
+      a.target = "_blank";
+      a.click();
+    }
+  }, [width, height]);
 
   const onOptionsClick = useCallback(
     ([e, toolName]) => {
@@ -221,21 +239,6 @@ const Canvas = ({ width, height }: CanvasProps) => {
       }
     },
     [saveCanvas]
-  );
-
-  const onColorsChange = useCallback((e) => {
-    setStrokeStyle(e.target.value);
-  }, []);
-
-  const onSizesChange = useCallback((e) => {
-    setLineWidth(e.target.value);
-  }, []);
-
-  const toolboxShowClick = useCallback(
-    (e) => {
-      setToolboxShow(!isToolboxShow);
-    },
-    [isToolboxShow]
   );
 
   const closeClearDialog = useCallback(
@@ -257,6 +260,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
     },
     [closeClearDialog, clearRect, width, height]
   );
+
   return (
     <React.Fragment>
       <canvas id="canvas" ref={canvasRef} height={height} width={width} />;

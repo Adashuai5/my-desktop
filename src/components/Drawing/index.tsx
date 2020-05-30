@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useModal } from "../modal/UseModal";
 import { FooterContext } from "../footer/Footer";
 import { TitleBar } from "react-desktop/macOs";
-import Canvas from "./canvas";
+import Canvas from "./Canvas"; 
 import "./index.scss";
 /// <reference path="react-desktop.d.ts" />
 
