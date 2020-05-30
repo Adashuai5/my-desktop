@@ -39,19 +39,33 @@
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 5px 5px,
       rgba(0, 0, 0, 0.3) 0px 25px 50px;
+
+    .tools,
+    .options {
+      .icon-font {
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover {
+          border-radius: 4px;
+          background-color: rgba(0, 0, 0, 0.31);
+        }
+        &:active {
+          border-radius: 4px;
+          border: 2px solid deepskyblue;
+        }
+        &.active {
+          border-radius: 4px;
+          border: 2px solid deepskyblue;
+        }
+      }
+    }
     .tools {
       padding: 10px 0 0;
       display: flex;
       width: 100%;
       .icon-font {
-        cursor: pointer;
         margin: auto;
         padding: 10px;
-        transition: all 0.3s;
-        &.active {
-          background-color: rgba(0, 0, 0, 0.31);
-          border-radius: 4px;
-        }
       }
     }
     .options {
@@ -77,14 +91,11 @@
         margin-bottom: 10px;
       }
       .icon-font {
-        cursor: pointer;
         padding: 5px;
         width: 50px;
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.31);
-        }
       }
     }
+
     .colors {
       li {
         display: inline-block;
@@ -124,6 +135,7 @@
         cursor: pointer;
       }
     }
+
     .sizes {
       margin: 10px;
       width: 100px;

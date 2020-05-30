@@ -37,6 +37,8 @@ const Canvas = ({ width, height }: CanvasProps) => {
   const toolsMap = ["canvas_paint", "canvas_eraser"];
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const backRef = useRef<SVGSVGElement>(null);
+  const goRef = useRef<SVGSVGElement>(null);
   const [strokeStyle, setStrokeStyle] = useState("black");
   const [lineWidth, setLineWidth] = useState(5);
   const [eraserEnabled, setEraserEnabled] = useState(false);
@@ -44,6 +46,8 @@ const Canvas = ({ width, height }: CanvasProps) => {
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
     undefined
   );
+  const [step, setStep] = useState(-1);
+  const [canvasHistory, setCanvasHistory] = useState<string[]>([]);
 
   const getCoordinates = (event: MouseEvent): Coordinate | undefined => {
     if (!canvasRef.current) {
@@ -55,6 +59,25 @@ const Canvas = ({ width, height }: CanvasProps) => {
     };
   };
 
+  const saveFragment = useCallback(() => {
+    setStep(step + 1);
+    if (!canvasRef.current) {
+      return;
+    }
+    const canvas: HTMLCanvasElement = canvasRef.current;
+    canvasHistory.push(canvas.toDataURL());
+    setCanvasHistory(canvasHistory);
+    console.log(canvasHistory);
+
+    if (!backRef.current || !goRef.current) {
+      return;
+    }
+    const back: SVGSVGElement = backRef.current;
+    const go: SVGSVGElement = goRef.current;
+    back.classList.add("active");
+    go.classList.remove("active");
+  }, [step, canvasHistory]);
+
   const startPaint = useCallback((event: MouseEvent) => {
     const coordinates = getCoordinates(event);
     if (coordinates) {
@@ -62,17 +85,6 @@ const Canvas = ({ width, height }: CanvasProps) => {
       setIsPainting(true);
     }
   }, []);
-
-  useEffect(() => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    canvas.addEventListener("mousedown", startPaint);
-    return () => {
-      canvas.removeEventListener("mousedown", startPaint);
-    };
-  }, [startPaint]);
 
   const drawLine = useCallback(
     (originalMousePosition: Coordinate, newMousePosition: Coordinate) => {
@@ -128,18 +140,13 @@ const Canvas = ({ width, height }: CanvasProps) => {
     [isPainting, eraserEnabled, mousePosition, lineWidth, drawLine, clearRect]
   );
 
-  useEffect(() => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    canvas.addEventListener("mousemove", paint);
-    return () => {
-      canvas.removeEventListener("mousemove", paint);
-    };
-  }, [paint]);
-
   const exitPaint = useCallback(() => {
+    setIsPainting(false);
+    setMousePosition(undefined);
+    saveFragment();
+  }, [saveFragment]);
+
+  const leaveCanvas = useCallback(() => {
     setIsPainting(false);
     setMousePosition(undefined);
   }, []);
@@ -149,13 +156,17 @@ const Canvas = ({ width, height }: CanvasProps) => {
       return;
     }
     const canvas: HTMLCanvasElement = canvasRef.current;
+    canvas.addEventListener("mousedown", startPaint);
+    canvas.addEventListener("mousemove", paint);
     canvas.addEventListener("mouseup", exitPaint);
-    canvas.addEventListener("mouseleave", exitPaint);
+    canvas.addEventListener("mouseleave", leaveCanvas);
     return () => {
+      canvas.removeEventListener("mousedown", startPaint);
+      canvas.removeEventListener("mousemove", paint);
       canvas.removeEventListener("mouseup", exitPaint);
-      canvas.removeEventListener("mouseleave", exitPaint);
+      canvas.removeEventListener("mouseleave", leaveCanvas);
     };
-  }, [exitPaint]);
+  }, [startPaint, paint, exitPaint, leaveCanvas]);
 
   const [isToolboxShow, setToolboxShow] = useState(true);
   const toolboxShowClick = useCallback(
@@ -224,6 +235,48 @@ const Canvas = ({ width, height }: CanvasProps) => {
     }
   }, [width, height]);
 
+  const changeCanvas = useCallback(
+    (type) => {
+      if (!canvasRef.current || !backRef.current || !goRef.current) {
+        return;
+      }
+      const canvas: HTMLCanvasElement = canvasRef.current;
+      const context = canvas.getContext("2d");
+      const back: SVGSVGElement = backRef.current;
+      const go: SVGSVGElement = goRef.current;
+      if (context) {
+        let currentStep = -1;
+        if (type === "back" && step >= 0) {
+          currentStep = step - 1;
+          go.classList.add("active");
+          if (currentStep < 0) {
+            back.classList.remove("active");
+          }
+        } else if (type === "go" && step < canvasHistory.length - 1) {
+          currentStep = step + 1;
+          back.classList.add("active");
+          if (currentStep === canvasHistory.length - 1) {
+            go.classList.remove("active");
+          }
+        } else {
+          return;
+        }
+        console.log(step);
+        console.log(canvasHistory);
+        console.log(canvasHistory[currentStep]);
+        console.log(currentStep);
+        context.clearRect(0, 0, width, height);
+        const canvasPic = new Image();
+        canvasPic.src = canvasHistory[currentStep];
+        canvasPic.addEventListener("load", () => {
+          context.drawImage(canvasPic, 0, 0);
+        });
+        setStep(currentStep);
+      }
+    },
+    [canvasHistory, step, width, height]
+  );
+
   const onOptionsClick = useCallback(
     ([e, toolName]) => {
       const el = e.currentTarget;
@@ -234,11 +287,15 @@ const Canvas = ({ width, height }: CanvasProps) => {
         case "canvas_save":
           saveCanvas();
           break;
-        default:
+        case "turn_left_flat":
+          changeCanvas("back");
+          break;
+        case "turn_right_flat":
+          changeCanvas("go");
           break;
       }
     },
-    [saveCanvas]
+    [saveCanvas, changeCanvas]
   );
 
   const closeClearDialog = useCallback(
@@ -256,7 +313,16 @@ const Canvas = ({ width, height }: CanvasProps) => {
         width,
         height,
       });
+      setCanvasHistory([]);
+      setStep(-1);
       closeClearDialog(e);
+      if (!backRef.current || !goRef.current) {
+        return;
+      }
+      const back: SVGSVGElement = backRef.current;
+      const go: SVGSVGElement = goRef.current;
+      back.classList.remove("active");
+      go.classList.remove("active");
     },
     [closeClearDialog, clearRect, width, height]
   );
@@ -293,6 +359,13 @@ const Canvas = ({ width, height }: CanvasProps) => {
             {optionsMap.map((option, index) => {
               return (
                 <Iconfont
+                  svgRef={
+                    option === "turn_right_flat"
+                      ? goRef
+                      : option === "turn_left_flat"
+                      ? backRef
+                      : undefined
+                  }
                   key={index + option}
                   className={option}
                   type={"icon-" + option}
