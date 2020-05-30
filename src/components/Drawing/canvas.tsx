@@ -120,6 +120,28 @@ const Canvas = ({ width, height }: CanvasProps) => {
     },
     [isPainting, eraserEnabled, mousePosition, lineWidth, drawLine, clearRect]
   );
+  const saveCanvas = useCallback(() => {
+    if (!canvasRef.current) {
+      return;
+    }
+    const canvas: HTMLCanvasElement = canvasRef.current;
+    const context = canvas.getContext("2d");
+    if (context) {
+      const compositeOperation = context.globalCompositeOperation;
+      context.globalCompositeOperation = "destination-over";
+      context.fillStyle = "#fff";
+      context.fillRect(0, 0, width, height);
+      const imageData = canvas.toDataURL("image/png");
+      context.putImageData(context.getImageData(0, 0, width, height), 0, 0);
+      context.globalCompositeOperation = compositeOperation;
+      const a = document.createElement("a");
+      document.body.appendChild(a);
+      a.href = imageData;
+      a.download = "myPaint";
+      a.target = "_blank";
+      a.click();
+    }
+  }, [width, height]);
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -191,11 +213,14 @@ const Canvas = ({ width, height }: CanvasProps) => {
         case "canvas_clear":
           setClearDialogShow(true);
           break;
+        case "canvas_save":
+          saveCanvas();
+          break;
         default:
           break;
       }
     },
-    [clearRect, width, height]
+    [saveCanvas]
   );
 
   const onColorsChange = useCallback((e) => {
@@ -230,7 +255,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
       });
       closeClearDialog(e);
     },
-    [closeClearDialog]
+    [closeClearDialog, clearRect, width, height]
   );
   return (
     <React.Fragment>
@@ -336,6 +361,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
         id="clear-dialog"
         title="您确定要清空该画布吗？"
         message="一旦清空将无法撤回。"
+        imgSrc={"Drawing.png"}
         onCheck={checkClearDialog}
         onClose={closeClearDialog}
       ></RenderDialog>
