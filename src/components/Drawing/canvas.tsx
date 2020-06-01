@@ -329,7 +329,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
 
   return (
     <React.Fragment>
-      <canvas id="canvas" ref={canvasRef} height={height} width={width} />;
+      <canvas id="canvas" ref={canvasRef} height={height} width={width} />
       <div
         id="toolbox-show"
         style={
