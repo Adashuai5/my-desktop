@@ -121,7 +121,7 @@ export const Setting = React.memo(() => {
               {positionMap.map((item, index) => {
                 return (
                   <div
-                    style={{ paddingRight: "24px" } as CSSProperties}
+                    style={{ paddingRight: 24 } as CSSProperties}
                     key={index + item}
                   >
                     <Radio

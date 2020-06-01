@@ -334,7 +334,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
         id="toolbox-show"
         style={
           {
-            borderRadius: isToolboxShow ? "" : "5px",
+            borderRadius: isToolboxShow ? null : 5,
           } as CSSProperties
         }
       >
@@ -342,7 +342,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
           type={isToolboxShow ? "icon-upward_flat" : "icon-downward_flat"}
           style={{
             width: "100%",
-            fontSize: "32px",
+            fontSize: 32,
           }}
           clickEvent={toolboxShowClick}
         />
@@ -369,7 +369,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
                   key={index + option}
                   className={option}
                   type={"icon-" + option}
-                  style={{ fontSize: "50px" }}
+                  style={{ fontSize: 50 }}
                   clickEvent={(e) => onOptionsClick([e, option])}
                 />
               );
@@ -391,7 +391,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
                       : ""
                   }
                   type={"icon-" + tool}
-                  style={{ fontSize: "50px" }}
+                  style={{ fontSize: 50 }}
                   clickEvent={(e) => onToolsClick([e, tool])}
                 />
               );

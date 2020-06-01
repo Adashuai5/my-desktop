@@ -35,8 +35,8 @@ const Calculate = () => {
       };
       setN1OrN2(getN1N2);
       setResult(
-        getN1N2[name].length > 12
-          ? removeZero(parseFloat(getN1N2[name]).toPrecision(12))
+        getN1N2[name].length > 6
+          ? removeZero(parseFloat(getN1N2[name]).toPrecision(6))
           : getN1N2[name]
       );
     },
@@ -56,20 +56,20 @@ const Calculate = () => {
       let numberN2: number = parseFloat(n2);
       let result1: number = parseFloat(result);
       if (operator === "+") {
-        return (numberN1 + numberN2).toPrecision(12);
+        return (numberN1 + numberN2).toPrecision(6);
       } else if (operator === "-") {
-        return (numberN1 - numberN2).toPrecision(12);
+        return (numberN1 - numberN2).toPrecision(6);
       } else if (operator === "×") {
-        return (numberN1 * numberN2).toPrecision(12);
+        return (numberN1 * numberN2).toPrecision(6);
       } else if (operator === "÷") {
         if (numberN2 === 0) {
           return "不是数字";
         }
-        return (numberN1 / numberN2).toPrecision(12);
+        return (numberN1 / numberN2).toPrecision(6);
       } else if (operator === "+/-") {
-        return (-(result1 || numberN1) || 0).toPrecision(12);
+        return (-(result1 || numberN1) || 0).toPrecision(6);
       } else if (operator === "%") {
-        return ((result1 || numberN1) / 100 || 0).toPrecision(12);
+        return ((result1 || numberN1) / 100 || 0).toPrecision(6);
       }
       return result;
     },

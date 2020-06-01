@@ -29,11 +29,11 @@ export const useDialog = () => {
   }: DialogProps) => {
     const styles = useMemo(
       () => ({
-        width: `${width}px`,
-        height: `${height}px`,
+        width: width,
+        height: height,
         left: `calc(50vw - ${width / 2}px)`,
         top: `calc(50vh - ${height}px)`,
-        borderRadius: "4px",
+        borderRadius: 4,
       }),
       [width, height]
     );

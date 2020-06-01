@@ -17,8 +17,8 @@
       .output {
         color: #fff;
         position: absolute;
-        right: 0.2em;
-        bottom: -0.2em;
+        right: 0.6em;
+        bottom: 0;
         span {
           font-size: 2em;
           max-width: 100%;
@@ -29,6 +29,7 @@
       text-align: center;
       height: 81%;
       .button {
+        font-size: 1em;
         border: 1px solid gray;
         background-color: #dcdbdc;
         height: 20%;
@@ -37,12 +38,14 @@
           background-color: #d1d0d1;
         }
         &.orange {
+          color: #fff;
           background-color: #ee8739;
         }
       }
       .text-0 {
         border-bottom-left-radius: 5px;
         width: 50%;
+        padding: 0 24.5% 0 .5%;
       }
       :last-child {
         border-bottom-right-radius: 5px;
