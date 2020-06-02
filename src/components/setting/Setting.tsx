@@ -22,8 +22,6 @@ export const Setting = React.memo(() => {
     setSettingShow,
     position,
     setPosition,
-    props,
-    setProps,
     length,
     setLength,
   ] = useContext(FooterContext);
@@ -101,14 +99,6 @@ export const Setting = React.memo(() => {
                         name: "change",
                         length: e.target.value,
                       });
-                      setProps({
-                        name: "change",
-                        props: {
-                          ...props,
-                          toTagLength: e.target.value,
-                          type: position,
-                        },
-                      });
                     }}
                   />
                   <span>{length}</span>
@@ -131,14 +121,6 @@ export const Setting = React.memo(() => {
                         setPosition({
                           name: "change",
                           position: e.target.value,
-                        });
-                        setProps({
-                          name: "change",
-                          props: {
-                            ...props,
-                            toTagLength: length,
-                            type: e.target.value,
-                          },
                         });
                       }}
                       defaultValue={item}

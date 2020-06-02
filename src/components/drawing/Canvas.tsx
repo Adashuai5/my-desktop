@@ -67,7 +67,6 @@ const Canvas = ({ width, height }: CanvasProps) => {
     const canvas: HTMLCanvasElement = canvasRef.current;
     canvasHistory.push(canvas.toDataURL());
     setCanvasHistory(canvasHistory);
-    console.log(canvasHistory);
 
     if (!backRef.current || !goRef.current) {
       return;
@@ -261,10 +260,6 @@ const Canvas = ({ width, height }: CanvasProps) => {
         } else {
           return;
         }
-        console.log(step);
-        console.log(canvasHistory);
-        console.log(canvasHistory[currentStep]);
-        console.log(currentStep);
         context.clearRect(0, 0, width, height);
         const canvasPic = new Image();
         canvasPic.src = canvasHistory[currentStep];

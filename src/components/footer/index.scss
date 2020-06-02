@@ -1,62 +1,51 @@
 #AppFooter {
   position: absolute;
-  z-index: 2;
+  display: flex;
   @each $member in top, bottom {
     &.#{$member} {
-      width: 100%;
-      text-align: center;
-      img {
-        vertical-align: #{$member};
-      }
+      width: 100vw;
+      justify-content: center;
+      #{$member}: 0;
     }
   }
   @each $member in left, right {
     &.#{$member} {
       height: 100vh;
-      display: flex;
-      justify-content: center;
+      align-items: center;
+      #{$member}: 0;
+    }
+  }
+  #Docker {
+    display: flex;
+    background-color: rgba(222, 223, 227, 0.7);
+    box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 50px;
+    @each $member in top, bottom, left, right {
+      &.#{$member} {
+        #{$member}: 0;
+      }
+    }
+    &.top {
+      align-items: flex-start;
+      border-bottom-left-radius: 0.4rem;
+      border-bottom-right-radius: 0.4rem;
+    }
+    &.bottom {
+      align-items: flex-end;
+      border-top-left-radius: 0.4rem;
+      border-top-right-radius: 0.4rem;
+    }
+    &.left {
       flex-direction: column;
+      justify-content: flex-start;
+      border-top-right-radius: 0.4rem;
+      border-bottom-right-radius: 0.4rem;
     }
-  }
-  &.left {
-    align-items: flex-start;
-  }
-  &.right {
-    align-items: flex-end;
-  }
-}
-#DockBackground {
-  position: absolute;
-  z-index: 1;
-  background-color: rgba(222, 223, 227, 0.7);
-  box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 50px;
-  @each $member in top, bottom {
-    &.#{$member} {
-      left: 50%;
-      transform: translateX(-50%);
+    &.right {
+      flex-direction: column;
+      justify-content: flex-end;
+      border-top-left-radius: 0.4rem;
+      border-bottom-left-radius: 0.4rem;
     }
-  }
-  @each $member in left, right {
-    &.#{$member} {
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
-  &.top {
-    border-bottom-left-radius: 0.4rem;
-    border-bottom-right-radius: 0.4rem;
-  }
-  &.bottom {
-    border-top-left-radius: 0.4rem;
-    border-top-right-radius: 0.4rem;
-  }
-  &.left {
-    border-top-right-radius: 0.4rem;
-    border-bottom-right-radius: 0.4rem;
-  }
-  &.right {
-    border-top-left-radius: 0.4rem;
-    border-bottom-left-radius: 0.4rem;
   }
 }

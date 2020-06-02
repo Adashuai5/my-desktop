@@ -57,7 +57,10 @@ export const dockEffect = (props: Props): void => {
       e = e || window.event;
       for (i = 0; i < imgAmount; i++) {
         if (props.type === "bottom" || props.type === "left") {
+          console.log(img[i].offsetLeft, "img[i].offsetLeft");
+          console.log(img[i].offsetTop, "img[i].offsetTop");
           x = e.clientX - (img[i].offsetLeft + props.toTagLength / 2);
+          console.log(getOffset(dockWrap, "top"), 'getOffset(dockWrap, "top")');
           y =
             img[i].offsetTop +
             getOffset(dockWrap, "top") +
@@ -71,8 +74,14 @@ export const dockEffect = (props: Props): void => {
             img[i].offsetWidth / 2 -
             e.clientX;
         }
+        console.log(
+          Math.sqrt(x * x + y * y) / (imgAmount * props.toTagLength),
+          "Math.sqrt(x * x + y * y) / (imgAmount * props.toTagLength)"
+        );
+
         imgScale =
           1 - Math.sqrt(x * x + y * y) / (imgAmount * props.toTagLength);
+        console.log(imgScale, "imgScale");
         if (imgScale < 0.5) {
           imgScale = 0.5;
         }

@@ -21,14 +21,6 @@ export const positionReducer = (state: string, action: PositionAction) => {
       return state;
   }
 };
-export const propsReducer = (state: Object, action: PropsAction) => {
-  switch (action.name) {
-    case "change":
-      return action.props;
-    default:
-      return state;
-  }
-};
 export const lengthReducer = (state: number, action: LengthAction) => {
   switch (action.name) {
     case "change":
