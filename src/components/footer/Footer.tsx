@@ -30,7 +30,7 @@ const Footer = React.memo(() => {
   const [isCalculatorShow, setCalculatorShow] = useState(false);
   const [isDrawingShow, setDrawingShow] = useState(false);
   const [Chrome, setChrome] = useState("" as any);
-  const dockItemClick = (item: string, index: number) => {
+  const dockItemClick = (item: string) => {
     switch (item) {
       case "Chrome.png":
         if (!Chrome) {
@@ -57,10 +57,7 @@ const Footer = React.memo(() => {
     }
   };
 
-  const [dockStyle, setDockStyle] = useState({
-    width: length * dockList.length,
-    height: length,
-  });
+  const [dockStyle, setDockStyle] = useState({});
 
   const dockRef = useRef<HTMLDivElement>(null);
 
@@ -85,21 +82,12 @@ const Footer = React.memo(() => {
       for (let i = 0; i < imgList.length; i++) {
         const img = imgList[i] as HTMLImageElement;
         let x, y;
-        if (position === "bottom" || position === "left") {
-          x = img.offsetLeft + length / 2 - clientX;
-          y =
-            img.offsetTop +
-            getOffset(dockRef.current, "top") +
-            img.offsetHeight / 2 -
-            clientY;
-        } else {
-          x = img.offsetTop + length / 2 - clientY;
-          y =
-            img.offsetLeft +
-            getOffset(dockRef.current, "left") +
-            img.offsetWidth / 2 -
-            clientY;
-        }
+        x = img.offsetLeft + length / 2 - clientX;
+        y =
+          img.offsetTop +
+          getOffset(dockRef.current, "top") +
+          img.offsetHeight / 2 -
+          clientY;
         let imgScale = 1 - Math.sqrt(x * x + y * y) / (imgList.length * length);
         if (imgScale < 0.5) {
           imgScale = 0.5;
@@ -109,18 +97,12 @@ const Footer = React.memo(() => {
       }
 
       if (position === "bottom" || position === "top") {
-        setDockStyle({
-          ...dockStyle,
-          ...{ width: dockBackgroundLength },
-        });
+        setDockStyle({ width: dockBackgroundLength, height: length });
       } else {
-        setDockStyle({
-          ...dockStyle,
-          ...{ height: dockBackgroundLength },
-        });
+        setDockStyle({ width: length, height: dockBackgroundLength });
       }
     },
-    [position, length, getOffset, dockStyle]
+    [position, length, getOffset, setDockStyle]
   );
 
   const mouseleave = useCallback(() => {
@@ -143,7 +125,11 @@ const Footer = React.memo(() => {
       const img = imgList[i] as HTMLImageElement;
       img.width = length;
     }
-  }, [position, length, setDockStyle, dockList]);
+  }, [position, length, dockList.length]);
+
+  useEffect(() => {
+    mouseleave();
+  }, [mouseleave]);
 
   useEffect(() => {
     if (!dockRef.current) {
@@ -156,7 +142,7 @@ const Footer = React.memo(() => {
       dockBackground.removeEventListener("mousemove", mousemove);
       dockBackground.removeEventListener("mouseleave", mouseleave);
     };
-  }, [mousemove, mouseleave, position, length]);
+  }, [mousemove, mouseleave]);
 
   return (
     <React.Fragment>
@@ -191,7 +177,7 @@ const Footer = React.memo(() => {
                 src={require("./image/" + item)}
                 alt={item}
                 key={index + item}
-                onClick={() => dockItemClick(item, index)}
+                onClick={() => dockItemClick(item)}
               />
             );
           })}
