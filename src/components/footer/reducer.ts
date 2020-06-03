@@ -24,7 +24,7 @@ export const positionReducer = (state: string, action: PositionAction) => {
 export const lengthReducer = (state: number, action: LengthAction) => {
   switch (action.name) {
     case "change":
-      return action.length;
+      return action.length * 1;
     default:
       return state;
   }

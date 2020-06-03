@@ -82,12 +82,24 @@ const Footer = React.memo(() => {
       for (let i = 0; i < imgList.length; i++) {
         const img = imgList[i] as HTMLImageElement;
         let x, y;
-        x = img.offsetLeft + length / 2 - clientX;
-        y =
-          img.offsetTop +
-          getOffset(dockRef.current, "top") +
-          img.offsetHeight / 2 -
-          clientY;
+        if (position === "bottom") {
+          x = img.offsetLeft + length / 2 - clientX;
+          y =
+            img.offsetTop +
+            getOffset(dockRef.current, "top") +
+            img.offsetHeight / 2 -
+            clientY;
+        } else if (position === "right") {
+          x = img.offsetTop + length / 2 - clientY;
+          y =
+            img.offsetLeft +
+            getOffset(dockRef.current, "left") +
+            img.offsetWidth / 2 -
+            clientX;
+        } else {
+          x = img.offsetTop + length / 2 - clientY;
+          y = img.offsetLeft + length / 2 - clientX;
+        }
         let imgScale = 1 - Math.sqrt(x * x + y * y) / (imgList.length * length);
         if (imgScale < 0.5) {
           imgScale = 0.5;
@@ -127,9 +139,7 @@ const Footer = React.memo(() => {
     }
   }, [position, length, dockList.length]);
 
-  useEffect(() => {
-    mouseleave();
-  }, [mouseleave]);
+  useEffect(mouseleave, [mouseleave]);
 
   useEffect(() => {
     if (!dockRef.current) {

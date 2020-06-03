@@ -32,13 +32,13 @@
     }
     &.left {
       flex-direction: column;
-      justify-content: flex-end;
+      align-items: flex-start;
       border-top-right-radius: 0.4rem;
       border-bottom-right-radius: 0.4rem;
     }
     &.right {
       flex-direction: column;
-      justify-content: flex-start;
+      align-items: flex-end;
       border-top-left-radius: 0.4rem;
       border-bottom-left-radius: 0.4rem;
     }
