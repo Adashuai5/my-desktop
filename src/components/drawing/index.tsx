@@ -11,6 +11,7 @@ export const Drawing = React.memo(() => {
   const [isDrawingShow, setDrawingShow] = useContext(FooterContext);
   const [style, setStyle] = useState({ width: 1200, height: 800 });
   const [isFullscreen, setFullscreen] = useState(false);
+
   useEffect(isDrawingShow ? show : hide, [isDrawingShow]);
   const maximizeClick = useCallback(() => {
     if (isFullscreen) {
@@ -47,8 +48,8 @@ export const Drawing = React.memo(() => {
           onResizeClick={maximizeClick}
         ></TitleBar>
         <Canvas
-          height={isFullscreen ? window.screen.height - 32 : style.height}
-          width={isFullscreen ? window.screen.width : style.width}
+          height={isFullscreen ? document.body.clientHeight - 32 : style.height}
+          width={isFullscreen ? document.body.clientWidth : style.width}
         />
       </div>
     </RenderModal>

@@ -16,10 +16,20 @@
     }
   }
   #Docker {
+    padding: 4px;
     display: flex;
     background-color: rgba(222, 223, 227, 0.7);
     box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
       rgba(0, 0, 0, 0.3) 0px 8px 50px;
+    .active {
+      position: relative;
+      &:after {
+        content: "●";
+        color: red;
+        position: absolute;
+        bottom: 6px;
+      }
+    }
     &.top {
       align-items: flex-start;
       border-bottom-left-radius: 0.4rem;

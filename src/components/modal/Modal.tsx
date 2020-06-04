@@ -82,6 +82,16 @@ const Modal = React.memo(
     }, [state.isDragging, onDragEnd]);
 
     useEffect(() => {
+      if (data.width === -1) {
+        setState({
+          isDragging: false,
+          origin: { x: 0, y: 0 },
+          position: { x: 0, y: 0 },
+        });
+      }
+    }, [data.width]);
+
+    useEffect(() => {
       if (!domEl) return;
       domEl.addEventListener("mousemove", handleMouseMove);
       domEl.addEventListener("mouseup", handleMouseUp);

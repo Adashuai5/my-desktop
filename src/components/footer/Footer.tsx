@@ -25,12 +25,23 @@ const Footer = React.memo(() => {
     "Drawing.png",
   ]);
   const [position, setPosition] = useReducer(positionReducer, "bottom");
-  const [length, setLength] = useReducer(lengthReducer, 76);
+  const [length, setLength] = useReducer(lengthReducer, 78);
   const [isSettingShow, setSettingShow] = useState(false);
   const [isCalculatorShow, setCalculatorShow] = useState(false);
   const [isDrawingShow, setDrawingShow] = useState(false);
   const [Chrome, setChrome] = useState("" as any);
-  const dockItemClick = (item: string) => {
+
+  const dockItemClick = (item: string, index: number) => {
+    if (!dockRef.current) {
+      return;
+    }
+    const imgList = dockRef.current.childNodes;
+    for (let i = 0; i < imgList.length; i++) {
+      const img = imgList[i] as HTMLImageElement;
+      if (i === index) {
+        img.classList.add("active");
+      }
+    }
     switch (item) {
       case "Chrome.png":
         if (!Chrome) {
@@ -123,13 +134,13 @@ const Footer = React.memo(() => {
     }
     if (position === "bottom" || position === "top") {
       setDockStyle({
-        width: length * dockList.length,
-        height: length,
+        width: length * dockList.length + 8,
+        height: length + 8,
       });
     } else {
       setDockStyle({
-        width: length,
-        height: length * dockList.length,
+        width: length + 8,
+        height: length * dockList.length + 8,
       });
     }
     const imgList = dockRef.current.childNodes;
@@ -187,7 +198,7 @@ const Footer = React.memo(() => {
                 src={require("./image/" + item)}
                 alt={item}
                 key={index + item}
-                onClick={() => dockItemClick(item)}
+                onClick={() => dockItemClick(item, index)}
               />
             );
           })}
