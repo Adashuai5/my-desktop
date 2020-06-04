@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { useModal } from "../modal/UseModal";
 import { FooterContext } from "../footer/Footer";
 import { TitleBar } from "react-desktop/macOs";
@@ -9,12 +9,23 @@ import "./index.scss";
 export const Drawing = React.memo(() => {
   const { show, hide, RenderModal } = useModal();
   const [isDrawingShow, setDrawingShow] = useContext(FooterContext);
+  const [style, setStyle] = useState({ width: 1200, height: 800 });
+  const [isFullscreen, setFullscreen] = useState(false);
   useEffect(isDrawingShow ? show : hide, [isDrawingShow]);
+  const maximizeClick = useCallback(() => {
+    if (isFullscreen) {
+      setStyle({ width: 1200, height: 800 });
+    } else {
+      setStyle({ width: -1, height: -1 });
+    }
+    setFullscreen(!isFullscreen);
+  }, [isFullscreen]);
+
   return (
     <RenderModal
       data={{
-        width: 1200,
-        height: 800,
+        width: style.width,
+        height: style.height,
         id: "DrawingView",
         moveId: "DrawingMove",
       }}
@@ -23,7 +34,7 @@ export const Drawing = React.memo(() => {
         <TitleBar
           controls
           id="DrawingMove"
-          isFullscreen={false}
+          isFullscreen={isFullscreen}
           onCloseClick={() => {
             hide();
             setDrawingShow(!isDrawingShow);
@@ -32,9 +43,13 @@ export const Drawing = React.memo(() => {
             hide();
             setDrawingShow(!isDrawingShow);
           }}
-          onMaximizeClick={show}
+          onMaximizeClick={maximizeClick}
+          onResizeClick={maximizeClick}
         ></TitleBar>
-        <Canvas height={768} width={1200} />
+        <Canvas
+          height={isFullscreen ? window.screen.height - 32 : style.height}
+          width={isFullscreen ? window.screen.width : style.width}
+        />
       </div>
     </RenderModal>
   );

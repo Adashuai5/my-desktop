@@ -274,7 +274,6 @@ const Canvas = ({ width, height }: CanvasProps) => {
 
   const onOptionsClick = useCallback(
     ([e, toolName]) => {
-      const el = e.currentTarget;
       switch (toolName) {
         case "canvas_clear":
           setClearDialogShow(true);

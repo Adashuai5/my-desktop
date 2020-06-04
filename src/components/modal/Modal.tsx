@@ -88,9 +88,18 @@ const Modal = React.memo(
       return () => {
         domEl.removeEventListener("mousemove", handleMouseMove);
         domEl.removeEventListener("mouseup", handleMouseUp);
-        localStorage.setItem(data.id, JSON.stringify(state.position));
+        if (data.width !== -1) {
+          localStorage.setItem(data.id, JSON.stringify(state.position));
+        }
       };
-    }, [domEl, handleMouseMove, handleMouseUp, data.id, state.position]);
+    }, [
+      domEl,
+      handleMouseMove,
+      handleMouseUp,
+      data.id,
+      data.width,
+      state.position,
+    ]);
 
     const styles = useMemo(
       () => ({

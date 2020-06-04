@@ -1,12 +1,6 @@
-import { Props } from "./effect";
-
 interface PositionAction {
   name: "change";
   position: "bottom" | "top" | "left" | "right";
-}
-interface PropsAction {
-  name: "change";
-  props: Props;
 }
 interface LengthAction {
   name: "change";
