@@ -29,7 +29,7 @@ const Footer = React.memo(() => {
   const [isSettingShow, setSettingShow] = useState(false);
   const [isCalculatorShow, setCalculatorShow] = useState(false);
   const [isDrawingShow, setDrawingShow] = useState(false);
-  const [Chrome, setChrome] = useState("" as any);
+  const [Chrome, setChrome] = useState<any>(null);
 
   const dockItemClick = useCallback(
     (item: string, index: number) => {
@@ -47,9 +47,11 @@ const Footer = React.memo(() => {
               "width=1000,height=600,left=500,top=300,menubar=no,toolbar=no,status=no,scrollbars=yes"
             );
             setChrome(chrome);
+            img.classList.add("active");
           } else {
             Chrome.close();
-            setChrome("");
+            setChrome(null);
+            img.classList.remove("active");
           }
           return;
         case "PrefApp.png":
@@ -72,7 +74,7 @@ const Footer = React.memo(() => {
           return;
       }
     },
-    [isSettingShow, isCalculatorShow, isDrawingShow]
+    [isSettingShow, isCalculatorShow, isDrawingShow, Chrome]
   );
 
   const [dockStyle, setDockStyle] = useState({});
@@ -96,7 +98,6 @@ const Footer = React.memo(() => {
         return;
       }
       const imgList = dockRef.current.childNodes;
-      let dockBackgroundLength = 0;
       for (let i = 0; i < imgList.length; i++) {
         const img = imgList[i] as HTMLDivElement;
         let x, y;
@@ -122,18 +123,10 @@ const Footer = React.memo(() => {
         if (imgScale < 0.5) {
           imgScale = 0.5;
         }
-        let newLength = length * 2 * imgScale;
         img.style.height = img.style.width = length * 2 * imgScale + "px";
-        dockBackgroundLength = dockBackgroundLength + newLength;
-      }
-
-      if (position === "bottom" || position === "top") {
-        setDockStyle({ width: dockBackgroundLength, height: length });
-      } else {
-        setDockStyle({ width: length, height: dockBackgroundLength });
       }
     },
-    [position, length, getOffset, setDockStyle]
+    [position, length, getOffset]
   );
 
   const mouseleave = useCallback(() => {
@@ -142,13 +135,11 @@ const Footer = React.memo(() => {
     }
     if (position === "bottom" || position === "top") {
       setDockStyle({
-        width: length * dockList.length + 8,
         height: length + 10,
       });
     } else {
       setDockStyle({
         width: length + 10,
-        height: length * dockList.length + 8,
       });
     }
     const imgList = dockRef.current.childNodes;
@@ -156,7 +147,7 @@ const Footer = React.memo(() => {
       const img = imgList[i] as HTMLDivElement;
       img.style.width = img.style.height = length + "px";
     }
-  }, [position, length, dockList.length]);
+  }, [position, length]);
 
   useEffect(mouseleave, [mouseleave]);
 
