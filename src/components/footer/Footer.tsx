@@ -31,42 +31,49 @@ const Footer = React.memo(() => {
   const [isDrawingShow, setDrawingShow] = useState(false);
   const [Chrome, setChrome] = useState("" as any);
 
-  const dockItemClick = (item: string, index: number) => {
-    if (!dockRef.current) {
-      return;
-    }
-    const imgList = dockRef.current.childNodes;
-    for (let i = 0; i < imgList.length; i++) {
-      const img = imgList[i] as HTMLImageElement;
-      if (i === index) {
-        img.classList.add("active");
+  const dockItemClick = useCallback(
+    (item: string, index: number) => {
+      if (!dockRef.current) {
+        return;
       }
-    }
-    switch (item) {
-      case "Chrome.png":
-        if (!Chrome) {
-          const chrome = window.open(
-            "http://www.google.com/",
-            "",
-            "width=1000,height=600,left=500,top=300,menubar=no,toolbar=no,status=no,scrollbars=yes"
-          );
-          setChrome(chrome);
-        } else {
-          Chrome.close();
-          setChrome("");
-        }
-        return;
-      case "PrefApp.png":
-        setSettingShow(!isSettingShow);
-        return;
-      case "Calculator.png":
-        setCalculatorShow(!isCalculatorShow);
-        return;
-      case "Drawing.png":
-        setDrawingShow(!isDrawingShow);
-        return;
-    }
-  };
+      const imgList = dockRef.current.childNodes;
+      const img = imgList[index] as HTMLDivElement;
+      switch (item) {
+        case "Chrome.png":
+          if (!Chrome) {
+            const chrome = window.open(
+              "http://www.google.com/",
+              "",
+              "width=1000,height=600,left=500,top=300,menubar=no,toolbar=no,status=no,scrollbars=yes"
+            );
+            setChrome(chrome);
+          } else {
+            Chrome.close();
+            setChrome("");
+          }
+          return;
+        case "PrefApp.png":
+          !isSettingShow
+            ? img.classList.add("active")
+            : img.classList.remove("active");
+          setSettingShow(!isSettingShow);
+          return;
+        case "Calculator.png":
+          !isCalculatorShow
+            ? img.classList.add("active")
+            : img.classList.remove("active");
+          setCalculatorShow(!isCalculatorShow);
+          return;
+        case "Drawing.png":
+          !isDrawingShow
+            ? img.classList.add("active")
+            : img.classList.remove("active");
+          setDrawingShow(!isDrawingShow);
+          return;
+      }
+    },
+    [isSettingShow, isCalculatorShow, isDrawingShow]
+  );
 
   const [dockStyle, setDockStyle] = useState({});
 
@@ -91,7 +98,7 @@ const Footer = React.memo(() => {
       const imgList = dockRef.current.childNodes;
       let dockBackgroundLength = 0;
       for (let i = 0; i < imgList.length; i++) {
-        const img = imgList[i] as HTMLImageElement;
+        const img = imgList[i] as HTMLDivElement;
         let x, y;
         if (position === "bottom") {
           x = img.offsetLeft + length / 2 - clientX;
@@ -115,8 +122,9 @@ const Footer = React.memo(() => {
         if (imgScale < 0.5) {
           imgScale = 0.5;
         }
-        img.width = length * 2 * imgScale;
-        dockBackgroundLength = dockBackgroundLength + img.width;
+        let newLength = length * 2 * imgScale;
+        img.style.height = img.style.width = length * 2 * imgScale + "px";
+        dockBackgroundLength = dockBackgroundLength + newLength;
       }
 
       if (position === "bottom" || position === "top") {
@@ -135,18 +143,18 @@ const Footer = React.memo(() => {
     if (position === "bottom" || position === "top") {
       setDockStyle({
         width: length * dockList.length + 8,
-        height: length + 8,
+        height: length + 10,
       });
     } else {
       setDockStyle({
-        width: length + 8,
+        width: length + 10,
         height: length * dockList.length + 8,
       });
     }
     const imgList = dockRef.current.childNodes;
     for (let i = 0; i < imgList.length; i++) {
-      const img = imgList[i] as HTMLImageElement;
-      img.width = length;
+      const img = imgList[i] as HTMLDivElement;
+      img.style.width = img.style.height = length + "px";
     }
   }, [position, length, dockList.length]);
 
@@ -194,9 +202,17 @@ const Footer = React.memo(() => {
         >
           {dockList.map((item, index) => {
             return (
-              <img
-                src={require("./image/" + item)}
-                alt={item}
+              <div
+                id="DockItem"
+                className={position}
+                style={
+                  {
+                    backgroundImage: "url(" + require("./image/" + item) + ")",
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                  } as CSSProperties
+                }
                 key={index + item}
                 onClick={() => dockItemClick(item, index)}
               />
