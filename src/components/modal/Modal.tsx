@@ -12,7 +12,13 @@ type Props = {
   closeModal: () => void;
   onDrag: (T: any) => void;
   onDragEnd: () => void;
-  data: { width: number; height: number; id: string; moveId: string };
+  data: {
+    width: number;
+    height: number;
+    id: string;
+    moveId: string;
+    isShow: boolean;
+  };
 };
 
 const Modal = React.memo(
@@ -116,9 +122,10 @@ const Modal = React.memo(
         left: `${state.position.x}px`,
         top: `${state.position.y}px`,
         zIndex: state.isDragging ? 2 : 1,
+        display: data.isShow ? "block" : "none",
         position: "absolute",
       }),
-      [state.isDragging, state.position]
+      [state.isDragging, state.position, data.isShow]
     );
 
     return ReactDOM.createPortal(

@@ -14,7 +14,13 @@ export const useModal = () => {
     data,
   }: {
     children: React.ReactChild;
-    data: { width: number; height: number; id: string; moveId: string };
+    data: {
+      width: number;
+      height: number;
+      id: string;
+      moveId: string;
+      isShow: boolean;
+    };
   }) => (
     <React.Fragment>
       {isVisible && (

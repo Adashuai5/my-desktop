@@ -8,7 +8,12 @@ import "./index.scss";
 
 export const Drawing = React.memo(() => {
   const { open, close, RenderModal } = useModal();
-  const [isDrawingOpen, setDrawingOpen] = useContext(FooterContext);
+  const [
+    isDrawingOpen,
+    setDrawingOpen,
+    isDrawingShow,
+    setDrawingShow,
+  ] = useContext(FooterContext);
   const [style, setStyle] = useState({ width: 1200, height: 800 });
   const [isFullscreen, setFullscreen] = useState(false);
 
@@ -29,6 +34,7 @@ export const Drawing = React.memo(() => {
         height: style.height,
         id: "DrawingView",
         moveId: "DrawingMove",
+        isShow: isDrawingShow,
       }}
     >
       <div className="drawing-wrapper">
@@ -38,9 +44,11 @@ export const Drawing = React.memo(() => {
           isFullscreen={isFullscreen}
           onCloseClick={() => {
             close();
-            setDrawingOpen({ ...isDrawingOpen, type: !isDrawingOpen.type });
+            setDrawingOpen({ ...isDrawingOpen, type: false });
           }}
-          onMinimizeClick={() => {}}
+          onMinimizeClick={() => {
+            setDrawingShow(false);
+          }}
           onMaximizeClick={maximizeClick}
           onResizeClick={maximizeClick}
         ></TitleBar>

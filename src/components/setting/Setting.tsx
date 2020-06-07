@@ -20,6 +20,8 @@ export const Setting = React.memo(() => {
   const [
     isSettingOpen,
     setSettingOpen,
+    isSettingShow,
+    setSettingShow,
     position,
     setPosition,
     length,
@@ -35,6 +37,7 @@ export const Setting = React.memo(() => {
         height: 466,
         id: "SettingView",
         moveId: "SettingMove",
+        isShow: isSettingShow,
       }}
     >
       <React.Fragment>
@@ -45,9 +48,11 @@ export const Setting = React.memo(() => {
           isFullscreen={false}
           onCloseClick={() => {
             close();
-            setSettingOpen({ ...isSettingOpen, type: !isSettingOpen.type });
+            setSettingOpen({ ...isSettingOpen, type: false });
           }}
-          onMinimizeClick={() => {}}
+          onMinimizeClick={() => {
+            setSettingShow(false);
+          }}
           onMaximizeClick={open}
         ></TitleBar>
         <div className="mainSet">

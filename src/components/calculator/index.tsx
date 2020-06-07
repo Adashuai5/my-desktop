@@ -8,7 +8,12 @@ import "./index.scss";
 
 export const Calculator = React.memo(() => {
   const { open, close, RenderModal } = useModal();
-  const [isCalculatorOpen, setCalculatorOpen] = useContext(FooterContext);
+  const [
+    isCalculatorOpen,
+    setCalculatorOpen,
+    isCalculatorShow,
+    setCalculatorShow,
+  ] = useContext(FooterContext);
   useEffect(isCalculatorOpen.type ? open : close, [isCalculatorOpen]);
   return (
     <RenderModal
@@ -17,6 +22,7 @@ export const Calculator = React.memo(() => {
         height: 560,
         id: "calculatorView",
         moveId: "calculatorMove",
+        isShow: isCalculatorShow,
       }}
     >
       <React.Fragment>
@@ -29,10 +35,12 @@ export const Calculator = React.memo(() => {
             close();
             setCalculatorOpen({
               ...isCalculatorOpen,
-              type: !isCalculatorOpen.type,
+              type: false,
             });
           }}
-          onMinimizeClick={() => {}}
+          onMinimizeClick={() => {
+            setCalculatorShow(false);
+          }}
           onMaximizeClick={open}
         ></TitleBar>
         <Calculate />
