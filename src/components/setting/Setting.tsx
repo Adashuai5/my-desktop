@@ -27,7 +27,7 @@ export const Setting = React.memo(() => {
   ] = useContext(FooterContext);
   const optionsMap = [{ title: "图标默认大小", value: length }];
   const [selected, setTitle] = useState("通用");
-  useEffect(isSettingOpen ? open : close, [isSettingOpen]);
+  useEffect(isSettingOpen.type ? open : close, [isSettingOpen]);
   return (
     <RenderModal
       data={{
@@ -45,10 +45,9 @@ export const Setting = React.memo(() => {
           isFullscreen={false}
           onCloseClick={() => {
             close();
-            setSettingOpen(!isSettingOpen);
+            setSettingOpen({ ...isSettingOpen, type: !isSettingOpen.type });
           }}
-          onMinimizeClick={() => {
-          }}
+          onMinimizeClick={() => {}}
           onMaximizeClick={open}
         ></TitleBar>
         <div className="mainSet">

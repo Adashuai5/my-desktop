@@ -14,6 +14,11 @@ import { Drawing } from "../drawing/index";
 import { positionReducer, lengthReducer } from "./reducer";
 export const FooterContext = createContext<any>([]);
 
+interface OpenTypes {
+  type: boolean;
+  index?: number;
+}
+
 const Footer = React.memo(() => {
   const [dockList] = useState<string[]>([
     "Finder.png",
@@ -26,55 +31,54 @@ const Footer = React.memo(() => {
   ]);
   const [position, setPosition] = useReducer(positionReducer, "bottom");
   const [length, setLength] = useReducer(lengthReducer, 78);
-  const [isSettingOpen, setSettingOpen] = useState(false);
-  const [isCalculatorOpen, setCalculatorOpen] = useState(false);
-  const [isDrawingOpen, setDrawingOpen] = useState(false);
-  const [Chrome, setChrome] = useState<any>(null);
+  const [isSettingOpen, setSettingOpen] = useState<OpenTypes>({
+    type: false,
+  });
+  const [isCalculatorOpen, setCalculatorOpen] = useState<OpenTypes>({
+    type: false,
+  });
+  const [isDrawingOpen, setDrawingOpen] = useState<OpenTypes>({
+    type: false,
+  });
+  const [isChrome, setChrome] = useState<any>(null);
 
   const dockItemClick = useCallback(
     (item: string, index: number) => {
       if (!dockRef.current) {
         return;
       }
-      const imgList = dockRef.current.childNodes;
-      const img = imgList[index] as HTMLDivElement;
       switch (item) {
         case "Chrome.png":
-          if (!Chrome) {
+          if (!isChrome) {
             const chrome = window.open(
               "http://www.google.com/",
               "",
               "width=1000,height=600,left=500,top=300,menubar=no,toolbar=no,status=no,scrollbars=yes"
             );
             setChrome(chrome);
-            img.classList.add("active");
           } else {
-            Chrome.close();
+            isChrome.close();
             setChrome(null);
-            img.classList.remove("active");
           }
           return;
         case "PrefApp.png":
-          !isSettingOpen
-            ? img.classList.add("active")
-            : img.classList.remove("active");
-          setSettingOpen(!isSettingOpen);
+          if (!isSettingOpen.type) {
+            setSettingOpen({ type: !isSettingOpen.type, index });
+          }
           return;
         case "Calculator.png":
-          !isCalculatorOpen
-            ? img.classList.add("active")
-            : img.classList.remove("active");
-          setCalculatorOpen(!isCalculatorOpen);
+          if (!isCalculatorOpen.type) {
+            setCalculatorOpen({ type: !isCalculatorOpen.type, index });
+          }
           return;
         case "Drawing.png":
-          !isDrawingOpen
-            ? img.classList.add("active")
-            : img.classList.remove("active");
-          setDrawingOpen(!isDrawingOpen);
+          if (!isDrawingOpen.type) {
+            setDrawingOpen({ type: !isDrawingOpen.type, index });
+          }
           return;
       }
     },
-    [isSettingOpen, isCalculatorOpen, isDrawingOpen, Chrome]
+    [isSettingOpen, isCalculatorOpen, isDrawingOpen, isChrome]
   );
 
   const [dockStyle, setDockStyle] = useState({});
@@ -150,6 +154,23 @@ const Footer = React.memo(() => {
   }, [position, length]);
 
   useEffect(mouseleave, [mouseleave]);
+
+  useEffect(() => {
+    if (!dockRef.current) {
+      return;
+    }
+    const imgList = dockRef.current.childNodes;
+    [isSettingOpen, isCalculatorOpen, isDrawingOpen].forEach((item) => {
+      if (item.index) {
+        const img = imgList[item.index] as HTMLDivElement;
+        !item.type
+          ? setTimeout(() => {
+              img?.classList.remove("active");
+            }, 2000)
+          : img.classList.add("active");
+      }
+    });
+  }, [isSettingOpen, isCalculatorOpen, isDrawingOpen]);
 
   useEffect(() => {
     if (!dockRef.current) {

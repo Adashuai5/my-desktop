@@ -9,7 +9,7 @@ import "./index.scss";
 export const Calculator = React.memo(() => {
   const { open, close, RenderModal } = useModal();
   const [isCalculatorOpen, setCalculatorOpen] = useContext(FooterContext);
-  useEffect(isCalculatorOpen ? open : close, [isCalculatorOpen]);
+  useEffect(isCalculatorOpen.type ? open : close, [isCalculatorOpen]);
   return (
     <RenderModal
       data={{
@@ -27,12 +27,12 @@ export const Calculator = React.memo(() => {
           isFullscreen={false}
           onCloseClick={() => {
             close();
-            setCalculatorOpen(!isCalculatorOpen);
+            setCalculatorOpen({
+              ...isCalculatorOpen,
+              type: !isCalculatorOpen.type,
+            });
           }}
-          onMinimizeClick={() => {
-            close();
-            setCalculatorOpen(!isCalculatorOpen);
-          }}
+          onMinimizeClick={() => {}}
           onMaximizeClick={open}
         ></TitleBar>
         <Calculate />

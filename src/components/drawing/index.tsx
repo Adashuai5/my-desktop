@@ -12,7 +12,7 @@ export const Drawing = React.memo(() => {
   const [style, setStyle] = useState({ width: 1200, height: 800 });
   const [isFullscreen, setFullscreen] = useState(false);
 
-  useEffect(isDrawingOpen ? open : close, [isDrawingOpen]);
+  useEffect(isDrawingOpen.type ? open : close, [isDrawingOpen]);
   const maximizeClick = useCallback(() => {
     if (isFullscreen) {
       setStyle({ width: 1200, height: 800 });
@@ -38,12 +38,9 @@ export const Drawing = React.memo(() => {
           isFullscreen={isFullscreen}
           onCloseClick={() => {
             close();
-            setDrawingOpen(!isDrawingOpen);
+            setDrawingOpen({ ...isDrawingOpen, type: !isDrawingOpen.type });
           }}
-          onMinimizeClick={() => {
-            close();
-            setDrawingOpen(!isDrawingOpen);
-          }}
+          onMinimizeClick={() => {}}
           onMaximizeClick={maximizeClick}
           onResizeClick={maximizeClick}
         ></TitleBar>
