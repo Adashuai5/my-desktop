@@ -26,9 +26,9 @@ const Footer = React.memo(() => {
   ]);
   const [position, setPosition] = useReducer(positionReducer, "bottom");
   const [length, setLength] = useReducer(lengthReducer, 78);
-  const [isSettingShow, setSettingShow] = useState(false);
-  const [isCalculatorShow, setCalculatorShow] = useState(false);
-  const [isDrawingShow, setDrawingShow] = useState(false);
+  const [isSettingOpen, setSettingOpen] = useState(false);
+  const [isCalculatorOpen, setCalculatorOpen] = useState(false);
+  const [isDrawingOpen, setDrawingOpen] = useState(false);
   const [Chrome, setChrome] = useState<any>(null);
 
   const dockItemClick = useCallback(
@@ -55,26 +55,26 @@ const Footer = React.memo(() => {
           }
           return;
         case "PrefApp.png":
-          !isSettingShow
+          !isSettingOpen
             ? img.classList.add("active")
             : img.classList.remove("active");
-          setSettingShow(!isSettingShow);
+          setSettingOpen(!isSettingOpen);
           return;
         case "Calculator.png":
-          !isCalculatorShow
+          !isCalculatorOpen
             ? img.classList.add("active")
             : img.classList.remove("active");
-          setCalculatorShow(!isCalculatorShow);
+          setCalculatorOpen(!isCalculatorOpen);
           return;
         case "Drawing.png":
-          !isDrawingShow
+          !isDrawingOpen
             ? img.classList.add("active")
             : img.classList.remove("active");
-          setDrawingShow(!isDrawingShow);
+          setDrawingOpen(!isDrawingOpen);
           return;
       }
     },
-    [isSettingShow, isCalculatorShow, isDrawingShow, Chrome]
+    [isSettingOpen, isCalculatorOpen, isDrawingOpen, Chrome]
   );
 
   const [dockStyle, setDockStyle] = useState({});
@@ -168,8 +168,8 @@ const Footer = React.memo(() => {
     <React.Fragment>
       <FooterContext.Provider
         value={[
-          isSettingShow,
-          setSettingShow,
+          isSettingOpen,
+          setSettingOpen,
           position,
           setPosition,
           length,
@@ -178,10 +178,10 @@ const Footer = React.memo(() => {
       >
         <Setting />
       </FooterContext.Provider>
-      <FooterContext.Provider value={[isCalculatorShow, setCalculatorShow]}>
+      <FooterContext.Provider value={[isCalculatorOpen, setCalculatorOpen]}>
         <Calculator />
       </FooterContext.Provider>
-      <FooterContext.Provider value={[isDrawingShow, setDrawingShow]}>
+      <FooterContext.Provider value={[isDrawingOpen, setDrawingOpen]}>
         <Drawing />
       </FooterContext.Provider>
       <footer className={position} id="AppFooter">

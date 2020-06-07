@@ -7,9 +7,9 @@ import "./index.scss";
 /// <reference path="react-desktop.d.ts" />
 
 export const Calculator = React.memo(() => {
-  const { show, hide, RenderModal } = useModal();
-  const [isCalculatorShow, setCalculatorShow] = useContext(FooterContext);
-  useEffect(isCalculatorShow ? show : hide, [isCalculatorShow]);
+  const { open, close, RenderModal } = useModal();
+  const [isCalculatorOpen, setCalculatorOpen] = useContext(FooterContext);
+  useEffect(isCalculatorOpen ? open : close, [isCalculatorOpen]);
   return (
     <RenderModal
       data={{
@@ -26,14 +26,14 @@ export const Calculator = React.memo(() => {
           controls
           isFullscreen={false}
           onCloseClick={() => {
-            hide();
-            setCalculatorShow(!isCalculatorShow);
+            close();
+            setCalculatorOpen(!isCalculatorOpen);
           }}
           onMinimizeClick={() => {
-            hide();
-            setCalculatorShow(!isCalculatorShow);
+            close();
+            setCalculatorOpen(!isCalculatorOpen);
           }}
-          onMaximizeClick={show}
+          onMaximizeClick={open}
         ></TitleBar>
         <Calculate />
       </React.Fragment>

@@ -167,12 +167,12 @@ const Canvas = ({ width, height }: CanvasProps) => {
     };
   }, [startPaint, paint, exitPaint, leaveCanvas]);
 
-  const [isToolboxShow, setToolboxShow] = useState(true);
-  const toolboxShowClick = useCallback(
+  const [isToolboxOpen, setToolboxOpen] = useState(true);
+  const toolboxOpenClick = useCallback(
     (e) => {
-      setToolboxShow(!isToolboxShow);
+      setToolboxOpen(!isToolboxOpen);
     },
-    [isToolboxShow]
+    [isToolboxOpen]
   );
 
   const onToolsClick = useCallback(([e, toolName]) => {
@@ -207,9 +207,9 @@ const Canvas = ({ width, height }: CanvasProps) => {
     setStrokeStyle(e.target.value);
   }, []);
 
-  const { showDialog, hideDialog, RenderDialog } = useDialog();
-  const [isClearDialogShow, setClearDialogShow] = useState(false);
-  useEffect(isClearDialogShow ? showDialog : hideDialog, [isClearDialogShow]);
+  const { openDialog, closeDialog, RenderDialog } = useDialog();
+  const [isClearDialogOpen, setClearDialogOpen] = useState(false);
+  useEffect(isClearDialogOpen ? openDialog : closeDialog, [isClearDialogOpen]);
 
   const saveCanvas = useCallback(() => {
     if (!canvasRef.current) {
@@ -276,7 +276,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
     ([e, toolName]) => {
       switch (toolName) {
         case "canvas_clear":
-          setClearDialogShow(true);
+          setClearDialogOpen(true);
           break;
         case "canvas_save":
           saveCanvas();
@@ -294,9 +294,9 @@ const Canvas = ({ width, height }: CanvasProps) => {
 
   const closeClearDialog = useCallback(
     (e) => {
-      setClearDialogShow(false);
+      setClearDialogOpen(false);
     },
-    [setClearDialogShow]
+    [setClearDialogOpen]
   );
 
   const checkClearDialog = useCallback(
@@ -325,24 +325,24 @@ const Canvas = ({ width, height }: CanvasProps) => {
     <React.Fragment>
       <canvas id="canvas" ref={canvasRef} height={height} width={width} />
       <div
-        id="toolbox-show"
+        id="toolbox-open"
         style={
           {
-            borderRadius: isToolboxShow ? null : 5,
+            borderRadius: isToolboxOpen ? null : 5,
           } as CSSProperties
         }
       >
         <Iconfont
-          type={isToolboxShow ? "icon-upward_flat" : "icon-downward_flat"}
+          type={isToolboxOpen ? "icon-upward_flat" : "icon-downward_flat"}
           style={{
             width: "100%",
             fontSize: 32,
           }}
-          clickEvent={toolboxShowClick}
+          clickEvent={toolboxOpenClick}
         />
       </div>
       <CSSTransition
-        in={isToolboxShow} //用于判断是否出现的状态
+        in={isToolboxOpen} //用于判断是否出现的状态
         timeout={300} //动画持续时间
         classNames="toolbox" //className值，防止重复
         unmountOnExit

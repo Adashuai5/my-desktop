@@ -7,12 +7,12 @@ import "./index.scss";
 /// <reference path="react-desktop.d.ts" />
 
 export const Drawing = React.memo(() => {
-  const { show, hide, RenderModal } = useModal();
-  const [isDrawingShow, setDrawingShow] = useContext(FooterContext);
+  const { open, close, RenderModal } = useModal();
+  const [isDrawingOpen, setDrawingOpen] = useContext(FooterContext);
   const [style, setStyle] = useState({ width: 1200, height: 800 });
   const [isFullscreen, setFullscreen] = useState(false);
 
-  useEffect(isDrawingShow ? show : hide, [isDrawingShow]);
+  useEffect(isDrawingOpen ? open : close, [isDrawingOpen]);
   const maximizeClick = useCallback(() => {
     if (isFullscreen) {
       setStyle({ width: 1200, height: 800 });
@@ -37,12 +37,12 @@ export const Drawing = React.memo(() => {
           id="DrawingMove"
           isFullscreen={isFullscreen}
           onCloseClick={() => {
-            hide();
-            setDrawingShow(!isDrawingShow);
+            close();
+            setDrawingOpen(!isDrawingOpen);
           }}
           onMinimizeClick={() => {
-            hide();
-            setDrawingShow(!isDrawingShow);
+            close();
+            setDrawingOpen(!isDrawingOpen);
           }}
           onMaximizeClick={maximizeClick}
           onResizeClick={maximizeClick}

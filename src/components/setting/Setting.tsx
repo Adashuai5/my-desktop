@@ -14,12 +14,12 @@ import { Iconfont } from "../iconfont";
 /// <reference path="react-desktop.d.ts" />
 
 export const Setting = React.memo(() => {
-  const { show, hide, RenderModal } = useModal();
+  const { open, close, RenderModal } = useModal();
   const positionMap = ["bottom", "top", "left", "right"];
   const setListMap = [{ title: "通用" }];
   const [
-    isSettingShow,
-    setSettingShow,
+    isSettingOpen,
+    setSettingOpen,
     position,
     setPosition,
     length,
@@ -27,7 +27,7 @@ export const Setting = React.memo(() => {
   ] = useContext(FooterContext);
   const optionsMap = [{ title: "图标默认大小", value: length }];
   const [selected, setTitle] = useState("通用");
-  useEffect(isSettingShow ? show : hide, [isSettingShow]);
+  useEffect(isSettingOpen ? open : close, [isSettingOpen]);
   return (
     <RenderModal
       data={{
@@ -44,14 +44,12 @@ export const Setting = React.memo(() => {
           inset
           isFullscreen={false}
           onCloseClick={() => {
-            hide();
-            setSettingShow(!isSettingShow);
+            close();
+            setSettingOpen(!isSettingOpen);
           }}
           onMinimizeClick={() => {
-            hide();
-            setSettingShow(!isSettingShow);
           }}
-          onMaximizeClick={show}
+          onMaximizeClick={open}
         ></TitleBar>
         <div className="mainSet">
           <View className="leftSet">

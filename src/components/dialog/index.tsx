@@ -15,8 +15,8 @@ interface DialogProps {
 
 export const useDialog = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const showDialog = () => setIsVisible(true);
-  const hideDialog = () => setIsVisible(false);
+  const openDialog = () => setIsVisible(true);
+  const closeDialog = () => setIsVisible(false);
   const RenderDialog = ({
     width,
     height,
@@ -45,7 +45,7 @@ export const useDialog = () => {
           src={require("../footer/image/" + imgSrc)}
           width="52"
           height="52"
-          alt='tip'
+          alt="tip"
         />
       );
     };
@@ -71,8 +71,8 @@ export const useDialog = () => {
   };
 
   return {
-    showDialog,
-    hideDialog,
+    openDialog,
+    closeDialog,
     RenderDialog,
   };
 };
