@@ -47,6 +47,11 @@ const Footer = React.memo(() => {
 
   const dockItemClick = useCallback(
     (item: string, index: number) => {
+      if (!dockRef.current) {
+        return;
+      }
+      const imgList = dockRef.current.childNodes;
+      const img = imgList[index] as HTMLDivElement;
       switch (item) {
         case "Chrome.png":
           if (!isChrome) {
@@ -56,28 +61,42 @@ const Footer = React.memo(() => {
               "width=1000,height=600,left=500,top=300,menubar=no,toolbar=no,status=no,scrollbars=yes"
             );
             setChrome(chrome);
+            img.classList.add("active");
           } else {
             isChrome.close();
             setChrome(null);
+            img.classList.remove("active");
           }
           return;
         case "PrefApp.png":
           if (!isSettingOpen.type) {
-            setSettingOpen({ type: !isSettingOpen.type, index });
+            img.classList.add("bounce");
+            setTimeout(() => {
+              setSettingOpen({ type: !isSettingOpen.type, index });
+              img.classList.remove("bounce");
+            }, 1000);
             return;
           }
           setSettingShow(!isSettingShow);
           return;
         case "Calculator.png":
           if (!isCalculatorOpen.type) {
-            setCalculatorOpen({ type: !isCalculatorOpen.type, index });
+            img.classList.add("bounce");
+            setTimeout(() => {
+              setCalculatorOpen({ type: !isCalculatorOpen.type, index });
+              img.classList.remove("bounce");
+            }, 1000);
             return;
           }
           setCalculatorShow(!isCalculatorShow);
           return;
         case "Drawing.png":
           if (!isDrawingOpen.type) {
-            setDrawingOpen({ type: !isDrawingOpen.type, index });
+            img.classList.add("bounce");
+            setTimeout(() => {
+              setDrawingOpen({ type: !isDrawingOpen.type, index });
+              img.classList.remove("bounce");
+            }, 1000);
             return;
           }
           setDrawingShow(!isDrawingShow);
