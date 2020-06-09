@@ -61,11 +61,9 @@ const Footer = React.memo(() => {
               "width=1000,height=600,left=500,top=300,menubar=no,toolbar=no,status=no,scrollbars=yes"
             );
             setChrome(chrome);
-            img.classList.add("active");
           } else {
             isChrome.close();
             setChrome(null);
-            img.classList.remove("active");
           }
           return;
         case "PrefApp.png":
@@ -74,7 +72,7 @@ const Footer = React.memo(() => {
             setTimeout(() => {
               setSettingOpen({ type: !isSettingOpen.type, index });
               img.classList.remove("bounce");
-            }, 1000);
+            }, 3000);
             return;
           }
           setSettingShow(!isSettingShow);
@@ -85,7 +83,7 @@ const Footer = React.memo(() => {
             setTimeout(() => {
               setCalculatorOpen({ type: !isCalculatorOpen.type, index });
               img.classList.remove("bounce");
-            }, 1000);
+            }, 3000);
             return;
           }
           setCalculatorShow(!isCalculatorShow);
@@ -96,7 +94,7 @@ const Footer = React.memo(() => {
             setTimeout(() => {
               setDrawingOpen({ type: !isDrawingOpen.type, index });
               img.classList.remove("bounce");
-            }, 1000);
+            }, 3000);
             return;
           }
           setDrawingShow(!isDrawingShow);
