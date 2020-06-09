@@ -72,7 +72,7 @@ const Footer = React.memo(() => {
             setTimeout(() => {
               setSettingOpen({ type: !isSettingOpen.type, index });
               img.classList.remove("bounce");
-            }, 3000);
+            }, 2500);
             return;
           }
           setSettingShow(!isSettingShow);
@@ -83,7 +83,7 @@ const Footer = React.memo(() => {
             setTimeout(() => {
               setCalculatorOpen({ type: !isCalculatorOpen.type, index });
               img.classList.remove("bounce");
-            }, 3000);
+            }, 2500);
             return;
           }
           setCalculatorShow(!isCalculatorShow);
@@ -94,7 +94,7 @@ const Footer = React.memo(() => {
             setTimeout(() => {
               setDrawingOpen({ type: !isDrawingOpen.type, index });
               img.classList.remove("bounce");
-            }, 3000);
+            }, 2500);
             return;
           }
           setDrawingShow(!isDrawingShow);
@@ -197,7 +197,7 @@ const Footer = React.memo(() => {
         !item.type
           ? setTimeout(() => {
               img?.classList.remove("active");
-            }, 2000)
+            }, 1000)
           : img.classList.add("active");
       }
     });

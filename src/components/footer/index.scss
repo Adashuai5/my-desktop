@@ -20,24 +20,23 @@
 
   80% {
     transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    transform: translate3d(0, 17, 0) scaleY(0.95);
+    transform: translate3d(0, -17, 0) scaleY(0.95);
   }
 
   90% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) scaleY(1.01);
   }
 
   95% {
-    transform: translate3d(0, -5px, 0) scaleY(1.02);
+    transform: translate3d(0, -8px, 0) scaleY(1.02);
   }
 }
 
 .bounce {
   display: inline-block;
   margin: 0 0.5rem;
-
   animation: bounce; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 2.5s; /* don't forget to set a duration! */
+  animation-duration: 2s; /* don't forget to set a duration! */
 }
 
 #AppFooter {
