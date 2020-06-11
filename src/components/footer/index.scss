@@ -1,4 +1,4 @@
-@keyframes bounce {
+@keyframes bottom {
   from,
   20%,
   53%,
@@ -20,23 +20,102 @@
 
   80% {
     transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    transform: translate3d(0, -17, 0) scaleY(0.95);
+    transform: translate3d(0, 0, 0) scaleY(0.95);
   }
 
   90% {
-    transform: translate3d(0, 0, 0) scaleY(1.01);
-  }
-
-  95% {
-    transform: translate3d(0, -8px, 0) scaleY(1.02);
+    transform: translate3d(0, -6px, 0) scaleY(1.02);
   }
 }
 
-.bounce {
-  display: inline-block;
-  margin: 0 0.5rem;
-  animation: bounce; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 2s; /* don't forget to set a duration! */
+@keyframes top {
+  from,
+  20%,
+  53%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, 35px, 0) scaleY(1.1);
+  }
+
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, 35px, 0) scaleY(1.05);
+  }
+
+  80% {
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0) scaleY(0.95);
+  }
+
+  90% {
+    transform: translate3d(0, 6px, 0) scaleY(1.02);
+  }
+}
+
+@keyframes left {
+  from,
+  20%,
+  53%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(35px, 0, 0) scaleX(1.1);
+  }
+
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(35px, 0, 0) scaleX(1.05);
+  }
+
+  80% {
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0) scaleX(0.95);
+  }
+
+  90% {
+    transform: translate3d(6px, 0, 0) scaleX(1.02);
+  }
+}
+
+@keyframes right {
+  from,
+  20%,
+  53%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(-35px, 0, 0) scaleX(1.1);
+  }
+
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(-35px, 0, 0) scaleX(1.05);
+  }
+
+  80% {
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translate3d(0, 0, 0) scaleX(0.95);
+  }
+
+  90% {
+    transform: translate3d(-6px, 0, 0) scaleX(1.02);
+  }
 }
 
 #AppFooter {
@@ -86,6 +165,10 @@
       }
       &.top {
         justify-content: center;
+        &.bounce {
+          animation-duration: 2s; /* don't forget to set a duration! */
+          animation-name: top; /* referring directly to the animation's @keyframe declaration */
+        }
         &.active {
           &::after {
             top: -13px;
@@ -94,6 +177,10 @@
       }
       &.bottom {
         justify-content: center;
+        &.bounce {
+          animation-duration: 2s; /* don't forget to set a duration! */
+          animation-name: bottom; /* referring directly to the animation's @keyframe declaration */
+        }
         &.active {
           &::after {
             bottom: -7px;
@@ -103,6 +190,10 @@
       @each $member in left, right {
         &.#{$member} {
           align-items: center;
+          &.bounce {
+            animation-duration: 2s; /* don't forget to set a duration! */
+            animation-name: #{$member}; /* referring directly to the animation's @keyframe declaration */
+          }
           &.active {
             &::after {
               #{$member}: -6px;
