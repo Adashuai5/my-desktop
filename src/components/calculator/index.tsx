@@ -20,7 +20,7 @@ export const Calculator = React.memo(() => {
       data={{
         width: 410,
         height: 560,
-        id: "calculatorView",
+        id: "CalculatorView",
         moveId: "calculatorMove",
         isShow: isCalculatorShow,
       }}

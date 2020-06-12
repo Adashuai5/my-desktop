@@ -201,6 +201,15 @@ const Footer = React.memo(() => {
           : img.classList.add("active");
       }
     });
+    if (isSettingOpen && localStorage.getItem("SettingView")) {
+      localStorage.removeItem("SettingView");
+    }
+    if (isCalculatorOpen && localStorage.getItem("CalculatorView")) {
+      localStorage.removeItem("CalculatorView");
+    }
+    if (isDrawingOpen && localStorage.getItem("DrawingView")) {
+      localStorage.removeItem("DrawingView");
+    }
   }, [isSettingOpen, isCalculatorOpen, isDrawingOpen, position]);
 
   useEffect(() => {

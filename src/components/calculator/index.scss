@@ -1,4 +1,4 @@
-#calculatorView {
+#CalculatorView {
   width: 410px;
   font-size: 2em;
   #calculatorMove {
@@ -45,7 +45,7 @@
       .text-0 {
         border-bottom-left-radius: 5px;
         width: 50%;
-        padding: 0 24.5% 0 .5%;
+        padding: 0 24.5% 0 0.5%;
       }
       :last-child {
         border-bottom-right-radius: 5px;
