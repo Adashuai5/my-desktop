@@ -1,5 +1,6 @@
 import React, {
   useState,
+  useMemo,
   useRef,
   useCallback,
   useEffect,
@@ -11,7 +12,7 @@ import "./index.scss";
 import { Setting } from "../setting/Setting";
 import { Calculator } from "../calculator/index";
 import { Drawing } from "../drawing/index";
-import { positionReducer, lengthReducer } from "./reducer";
+import { positionReducer, dataReducer } from "./reducer";
 export const FooterContext = createContext<any>([]);
 
 interface OpenTypes {
@@ -30,7 +31,13 @@ const Footer = React.memo(() => {
     "Drawing.png",
   ]);
   const [position, setPosition] = useReducer(positionReducer, "bottom");
-  const [length, setLength] = useReducer(lengthReducer, 78);
+  const [dockData, setDockData] = useReducer(dataReducer, {
+    length: 78,
+    bigLength: 78 * 2,
+    itemMargin: 2,
+    distance: 0,
+    isDockBig: true,
+  });
   const [isSettingOpen, setSettingOpen] = useState<OpenTypes>({
     type: false,
   });
@@ -137,52 +144,69 @@ const Footer = React.memo(() => {
         const img = imgList[i] as HTMLDivElement;
         let x, y;
         if (position === "bottom") {
-          x = img.offsetLeft + length / 2 - clientX;
+          x = img.offsetLeft + dockData.length / 2 - clientX;
           y =
             img.offsetTop +
             getOffset(dockRef.current, "top") +
             img.offsetHeight / 2 -
             clientY;
         } else if (position === "right") {
-          x = img.offsetTop + length / 2 - clientY;
+          x = img.offsetTop + dockData.length / 2 - clientY;
           y =
             img.offsetLeft +
             getOffset(dockRef.current, "left") +
             img.offsetWidth / 2 -
             clientX;
         } else {
-          x = img.offsetTop + length / 2 - clientY;
-          y = img.offsetLeft + length / 2 - clientX;
+          x = img.offsetTop + dockData.length / 2 - clientY;
+          y = img.offsetLeft + dockData.length / 2 - clientX;
         }
-        let imgScale = 1 - Math.sqrt(x * x + y * y) / (imgList.length * length);
-        if (imgScale < 0.5) {
-          imgScale = 0.5;
+        let imgScale =
+          1 - Math.sqrt(x * x + y * y) / (imgList.length * dockData.length);
+        if (imgScale < dockData.length / dockData.bigLength) {
+          imgScale = dockData.length / dockData.bigLength;
         }
-        img.style.height = img.style.width = length * 2 * imgScale + "px";
+        const multiplier = dockData.bigLength / dockData.length;
+        if (dockData.bigLength / dockData.length) {
+          img.style.height = img.style.width =
+            dockData.length * multiplier * imgScale + "px";
+        }
       }
     },
-    [position, length, getOffset]
+    [position, dockData.length, dockData.bigLength, getOffset]
   );
 
   const mouseleave = useCallback(() => {
     if (!dockRef.current) {
       return;
     }
-    if (position === "bottom" || position === "top") {
+    if (position === "bottom") {
       setDockStyle({
-        height: length + 10,
+        height: dockData.length * 1 + 10,
+        marginBottom: dockData.distance * 1,
+      });
+    } else if (position === "top") {
+      setDockStyle({
+        height: dockData.length * 1 + 10,
+        marginTop: dockData.distance * 1,
+      });
+    } else if (position === "left") {
+      setDockStyle({
+        width: dockData.length * 1 + 10,
+        marginLeft: dockData.distance * 1,
       });
     } else {
       setDockStyle({
-        width: length + 10,
+        width: dockData.length * 1 + 10,
+        marginRight: dockData.distance * 1,
       });
     }
     const imgList = dockRef.current.childNodes;
     for (let i = 0; i < imgList.length; i++) {
       const img = imgList[i] as HTMLDivElement;
-      img.style.width = img.style.height = length + "px";
+      img.style.width = img.style.height = dockData.length + "px";
     }
-  }, [position, length]);
+  }, [position, dockData.length, dockData.distance]);
 
   useEffect(mouseleave, [mouseleave]);
 
@@ -213,7 +237,7 @@ const Footer = React.memo(() => {
   }, [isSettingOpen, isCalculatorOpen, isDrawingOpen, position]);
 
   useEffect(() => {
-    if (!dockRef.current) {
+    if (!dockRef.current || !dockData.isDockBig) {
       return;
     }
     const dockBackground: HTMLDivElement = dockRef.current;
@@ -223,7 +247,19 @@ const Footer = React.memo(() => {
       dockBackground.removeEventListener("mousemove", mousemove);
       dockBackground.removeEventListener("mouseleave", mouseleave);
     };
-  }, [mousemove, mouseleave]);
+  }, [mousemove, mouseleave, dockData.isDockBig]);
+
+  const itemStyles = useMemo(() => {
+    return position === "top" || position === "bottom"
+      ? {
+          marginLeft: dockData.itemMargin * 1,
+          marginRight: dockData.itemMargin * 1,
+        }
+      : {
+          marginTop: dockData.itemMargin * 1,
+          marginBottom: dockData.itemMargin * 1,
+        };
+  }, [position, dockData.itemMargin]);
 
   return (
     <React.Fragment>
@@ -235,8 +271,8 @@ const Footer = React.memo(() => {
           setSettingShow,
           position,
           setPosition,
-          length,
-          setLength,
+          dockData,
+          setDockData,
         ]}
       >
         <Setting />
@@ -274,6 +310,7 @@ const Footer = React.memo(() => {
                     backgroundPosition: "center",
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
+                    ...itemStyles,
                   } as CSSProperties
                 }
                 key={index + item}

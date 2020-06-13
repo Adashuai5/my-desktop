@@ -10,4 +10,5 @@ declare module "react-desktop/macOs" {
   export const Window: JSX;
   export const Dialog: JSX;
   export const Button: JSX;
+  export const Checkbox: JSX;
 }

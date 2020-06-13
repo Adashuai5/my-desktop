@@ -136,6 +136,8 @@
     }
   }
   #Docker {
+    transition: margin 1s;
+    margin-bottom: 10px;
     padding: 3px 4px 7px;
     display: flex;
     background-color: rgba(222, 223, 227, 0.7);
