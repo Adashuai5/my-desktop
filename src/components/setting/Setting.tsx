@@ -42,22 +42,27 @@ export const Setting = React.memo(() => {
     setDockData,
   ] = useContext(FooterContext);
   const optionsMap: Array<OptionsProps> = [
-    { title: "图标默认大小", value: dockData.length, max: "128", min: "25" },
+    {
+      title: "图标默认大小",
+      value: dockData.length * 1,
+      max: "128",
+      min: "25",
+    },
     {
       title: "图标缩放后大小",
-      value: dockData.bigLength,
+      value: dockData.bigLength * 1,
       max: "256",
       min: "25",
     },
     {
       title: "图标之间距离大小",
-      value: dockData.itemMargin,
+      value: dockData.itemMargin * 1,
       max: "10",
       min: "0",
     },
     {
       title: "Dock 距离屏幕边缘大小",
-      value: dockData.distance,
+      value: dockData.distance * 1,
       max: "100",
       min: "0",
     },
@@ -116,6 +121,8 @@ export const Setting = React.memo(() => {
           onCloseClick={() => {
             close();
             setSettingOpen({ ...isSettingOpen, type: false });
+            localStorage.setItem("dockData", JSON.stringify(dockData));
+            localStorage.setItem("position", JSON.stringify(position));
           }}
           onMinimizeClick={() => {
             setSettingShow(false);

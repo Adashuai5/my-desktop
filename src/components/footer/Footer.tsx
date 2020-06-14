@@ -34,7 +34,7 @@ const Footer = React.memo(() => {
   const [dockData, setDockData] = useReducer(dataReducer, {
     length: 78,
     bigLength: 78 * 2,
-    itemMargin: 2,
+    itemMargin: 0,
     distance: 0,
     isDockBig: true,
   });
@@ -209,6 +209,23 @@ const Footer = React.memo(() => {
   }, [position, dockData.length, dockData.distance]);
 
   useEffect(mouseleave, [mouseleave]);
+  
+  useEffect(() => {
+    const localDockData = localStorage.getItem("dockData") || null;
+    if (localDockData) {
+      setDockData({
+        name: "change",
+        dockData: JSON.parse(localDockData),
+      });
+    }
+    const localPosition = localStorage.getItem("position") || null;
+    if (localPosition) {
+      setPosition({
+        name: "change",
+        position: JSON.parse(localPosition),
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (!dockRef.current) {
@@ -225,8 +242,10 @@ const Footer = React.memo(() => {
           : img.classList.add("active");
       }
     });
-    if (isSettingOpen && localStorage.getItem("SettingView")) {
-      localStorage.removeItem("SettingView");
+    if (isSettingOpen) {
+      if (localStorage.getItem("SettingView")) {
+        localStorage.removeItem("SettingView");
+      }
     }
     if (isCalculatorOpen && localStorage.getItem("CalculatorView")) {
       localStorage.removeItem("CalculatorView");
