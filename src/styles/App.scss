@@ -7,19 +7,6 @@
       #{$member}: 0;
     }
   }
-  .AppFinder {
-    transition: all 0.2s ease-in;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    height: 0.1rem;
-    &:hover {
-      height: 2rem;
-      background-color: rgba(222, 223, 227, 0.6);
-      box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px,
-        rgba(0, 0, 0, 0.18) 0px 0px 5px, rgba(0, 0, 0, 0.3) 0px 8px 50px;
-    }
-  }
 
   #main-view {
     position: absolute;
