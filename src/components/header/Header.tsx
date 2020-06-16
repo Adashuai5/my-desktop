@@ -46,7 +46,11 @@ const Header = () => {
             }}
           />
         </div>
-        <div onClick={() => setMenuShow(true)} ref={menuRef}>
+        <div
+          onClick={() => setMenuShow(true)}
+          ref={menuRef}
+          className="pointer"
+        >
           {inputShow ? (
             <input
               value={inputValue}

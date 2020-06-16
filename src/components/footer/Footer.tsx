@@ -209,7 +209,7 @@ const Footer = React.memo(() => {
   }, [position, dockData.length, dockData.distance]);
 
   useEffect(mouseleave, [mouseleave]);
-  
+
   useEffect(() => {
     const localDockData = localStorage.getItem("dockData") || null;
     if (localDockData) {
@@ -322,7 +322,16 @@ const Footer = React.memo(() => {
             return (
               <div
                 id="DockItem"
-                className={position}
+                className={
+                  [
+                    "PrefApp.png",
+                    "Chrome.png",
+                    "Calculator.png",
+                    "Drawing.png",
+                  ].includes(item)
+                    ? "pointer " + position
+                    : position
+                }
                 style={
                   {
                     backgroundImage: "url(" + require("./image/" + item) + ")",

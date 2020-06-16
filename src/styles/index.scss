@@ -18,6 +18,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: black;
   background: white;
+
+  .pointer {
+    cursor: pointer !important;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
