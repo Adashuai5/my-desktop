@@ -24,6 +24,49 @@
       padding-right: 24px;
       cursor: default;
     }
+    div {
+      position: relative;
+      input {
+        width: 100px;
+        height: 30px;
+        border-radius: 3px;
+      }
+      .text {
+        padding: 3px 6px;
+        &.active {
+          background-color: #3970ea;
+          color: #fff;
+        }
+      }
+      .menu {
+        width: 300px;
+        display: none;
+        background-color: rgba(230, 230, 230, 1);
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px,
+          rgba(0, 0, 0, 0.18) 0px 0px 5px, rgba(0, 0, 0, 0.3) 0px 8px 50px;
+        &.active {
+          position: absolute;
+          top: 30px;
+          display: block;
+        }
+        .line {
+          height: 2px;
+          width: 100%;
+          background-color: #d9d9d9;
+        }
+        li {
+          padding: 0 28px;
+          margin: 6px 0;
+          line-height: 30px;
+          &:hover {
+            background-color: #4493fe;
+            color: #fff;
+          }
+        }
+      }
+    }
   }
 
   .FinderRight {
