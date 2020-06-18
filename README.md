@@ -8,6 +8,8 @@ This project is just getting started, so if you're interested why not like it or
 
 [React Hooks + TypeScript 做个仿 MacOS 桌面（一）：项目初始化](https://zhuanlan.zhihu.com/p/144620075)
 
-[React Hooks + TypeScript 做个仿 MacOS 桌面（二）实现 Dock 动效](https://zhuanlan.zhihu.com/p/145449585)
+[React Hooks + TypeScript 做个仿 MacOS 桌面（二）：实现 Dock 动效](https://zhuanlan.zhihu.com/p/145449585)
 
-[React Hooks + TypeScript 做个仿 MacOS 桌面（三）：点击效果与弹窗](https://zhuanlan.zhihu.com/p/147974188)
+[React Hooks + TypeScript 做个仿 MacOS 桌面（三）：点击效果与弹窗](https://juejin.im/post/5ee38cfee51d45784f801db6)
+
+[React Hooks + TypeScript 做个仿 MacOS 桌面（四）：Canvas 实现画图工具](https://zhuanlan.zhihu.com/p/149045471)
