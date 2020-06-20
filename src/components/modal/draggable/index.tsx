@@ -9,8 +9,6 @@ import React, {
 type Props = {
   children: React.ReactChild;
   domEl: HTMLDivElement;
-  onDrag: (T: any) => void;
-  onDragEnd: () => void;
   data: {
     width: number;
     height: number;
@@ -19,7 +17,7 @@ type Props = {
     isShow: boolean;
   };
 };
-const Draggable = ({ children, domEl, data, onDrag, onDragEnd }: Props) => {
+const Draggable = ({ children, domEl, data }: Props) => {
   const dragEl = document.getElementById(data.id) as HTMLDivElement;
   const moveEl = document.getElementById(data.moveId) as HTMLDivElement;
   const localPosition = localStorage.getItem(data.id) || null;
@@ -66,9 +64,8 @@ const Draggable = ({ children, domEl, data, onDrag, onDragEnd }: Props) => {
         ...state,
         position: newPosition,
       }));
-      onDrag({ newPosition, dragEl });
     },
-    [state.isDragging, state.origin, moveEl, dragEl, onDrag]
+    [state.isDragging, state.origin, moveEl, dragEl]
   );
 
   const handleMouseUp = useCallback(() => {
@@ -77,10 +74,8 @@ const Draggable = ({ children, domEl, data, onDrag, onDragEnd }: Props) => {
         ...state,
         isDragging: false,
       }));
-
-      onDragEnd();
     }
-  }, [state.isDragging, onDragEnd]);
+  }, [state.isDragging]);
 
   useEffect(() => {
     if (data.width === -1) {

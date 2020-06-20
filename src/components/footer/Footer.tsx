@@ -238,7 +238,7 @@ const Footer = React.memo(() => {
         !item.type
           ? setTimeout(() => {
               img?.classList.remove("active");
-            }, 1000)
+            }, 500)
           : img.classList.add("active");
       }
     });

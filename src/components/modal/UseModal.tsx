@@ -24,12 +24,7 @@ export const useModal = () => {
   }) => (
     <React.Fragment>
       {isVisible && (
-        <Modal
-          data={data}
-          closeModal={close}
-          onDrag={() => console.log("onDrag")}
-          onDragEnd={() => console.log("onDragEnd")}
-        >
+        <Modal data={data} closeModal={close}>
           {children}
         </Modal>
       )}
