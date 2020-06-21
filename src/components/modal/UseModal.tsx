@@ -22,13 +22,13 @@ export const useModal = () => {
       isShow: boolean;
     };
   }) => (
-    <React.Fragment>
+    <>
       {isVisible && (
         <Modal data={data} closeModal={close}>
           {children}
         </Modal>
       )}
-    </React.Fragment>
+    </>
   );
 
   return {

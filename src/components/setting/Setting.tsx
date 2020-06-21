@@ -112,7 +112,7 @@ export const Setting = React.memo(() => {
         isShow: isSettingShow,
       }}
     >
-      <React.Fragment>
+      <>
         <TitleBar
           id="SettingMove"
           controls
@@ -233,7 +233,7 @@ export const Setting = React.memo(() => {
             </View>
           </View>
         </div>
-      </React.Fragment>
+      </>
     </RenderModal>
   );
 });

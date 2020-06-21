@@ -322,7 +322,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
   );
 
   return (
-    <React.Fragment>
+    <>
       <canvas id="canvas" ref={canvasRef} height={height} width={width} />
       <div
         id="toolbox-open"
@@ -436,7 +436,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
         onCheck={checkClearDialog}
         onClose={closeClearDialog}
       ></RenderDialog>
-    </React.Fragment>
+    </>
   );
 };
 

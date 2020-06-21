@@ -73,7 +73,6 @@ const Draggable = ({ children, id, onDrag, onDragEnd }: Props) => {
       transform: `translate(${state.translation.x}px, ${state.translation.y}px)`,
       transition: state.isDragging ? "none" : "transform 500ms",
       zIndex: state.isDragging ? 2 : 1,
-      position: state.isDragging ? "absolute" : "relative",
     }),
     [state.isDragging, state.translation]
   );

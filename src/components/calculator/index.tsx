@@ -25,7 +25,7 @@ export const Calculator = React.memo(() => {
         isShow: isCalculatorShow,
       }}
     >
-      <React.Fragment>
+      <>
         <TitleBar
           id="calculatorMove"
           transparent
@@ -44,7 +44,7 @@ export const Calculator = React.memo(() => {
           onMaximizeClick={open}
         ></TitleBar>
         <Calculate />
-      </React.Fragment>
+      </>
     </RenderModal>
   );
 });

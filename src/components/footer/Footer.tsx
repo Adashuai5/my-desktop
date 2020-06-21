@@ -13,6 +13,7 @@ import { Setting } from "../setting/Setting";
 import { Calculator } from "../calculator/index";
 import { Drawing } from "../drawing/index";
 import { positionReducer, dataReducer } from "./reducer";
+
 export const FooterContext = createContext<any>([]);
 
 interface OpenTypes {
@@ -281,7 +282,7 @@ const Footer = React.memo(() => {
   }, [position, dockData.itemMargin]);
 
   return (
-    <React.Fragment>
+    <>
       <FooterContext.Provider
         value={[
           isSettingOpen,
@@ -321,7 +322,6 @@ const Footer = React.memo(() => {
           {dockList.map((item, index) => {
             return (
               <div
-                id="DockItem"
                 className={
                   [
                     "PrefApp.png",
@@ -329,8 +329,8 @@ const Footer = React.memo(() => {
                     "Calculator.png",
                     "Drawing.png",
                   ].includes(item)
-                    ? "pointer " + position
-                    : position
+                    ? "pointer DockItem " + position
+                    : position + " DockItem"
                 }
                 style={
                   {
@@ -348,7 +348,7 @@ const Footer = React.memo(() => {
           })}
         </div>
       </footer>
-    </React.Fragment>
+    </>
   );
 });
 

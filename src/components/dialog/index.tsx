@@ -50,7 +50,7 @@ export const useDialog = () => {
       );
     };
     return (
-      <React.Fragment>
+      <>
         {isVisible && (
           <div id={id} style={styles as CSSProperties}>
             <Dialog
@@ -66,7 +66,7 @@ export const useDialog = () => {
             />
           </div>
         )}
-      </React.Fragment>
+      </>
     );
   };
 
