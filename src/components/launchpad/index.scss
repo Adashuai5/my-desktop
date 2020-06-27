@@ -1,0 +1,30 @@
+#Launchpad {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: url(../../assets/image/sierra-4K.jpg) center/cover no-repeat;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: -1;
+    background: url(../../assets/image/sierra-4K.jpg) center/cover no-repeat;
+    background-attachment: fixed;
+    filter: blur(25px);
+    margin: -50px;
+  }
+  #LaunchpadItemWrapper {
+    margin: 60px 120px;
+    .LaunchpadItem {
+      z-index: 1;
+      width: 100px;
+      height: 100px;
+    }
+  }
+}

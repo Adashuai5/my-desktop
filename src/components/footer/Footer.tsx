@@ -12,9 +12,8 @@ import "./index.scss";
 import { Setting } from "../setting/Setting";
 import { Calculator } from "../calculator/index";
 import { Drawing } from "../drawing/index";
+import { Launchpad } from "../launchpad/index";
 import { positionReducer, dataReducer } from "./reducer";
-import { range, inRange } from "lodash";
-import Draggable from "./draggable/index";
 
 export const FooterContext = createContext<any>([]);
 
@@ -43,16 +42,20 @@ const Footer = React.memo(() => {
   });
   const [isSettingOpen, setSettingOpen] = useState<OpenTypes>({
     type: false,
+    index: 2,
   });
   const [isCalculatorOpen, setCalculatorOpen] = useState<OpenTypes>({
     type: false,
+    index: 5,
   });
   const [isDrawingOpen, setDrawingOpen] = useState<OpenTypes>({
     type: false,
+    index: 6,
   });
   const [isSettingShow, setSettingShow] = useState(true);
   const [isCalculatorShow, setCalculatorShow] = useState(true);
   const [isDrawingShow, setDrawingShow] = useState(true);
+  const [isLaunchpadShow, setLaunchpadShow] = useState(false);
   const [isChrome, setChrome] = useState<any>(null);
 
   const dockItemClick = useCallback(
@@ -61,7 +64,7 @@ const Footer = React.memo(() => {
         return;
       }
       const imgList = dockRef.current.childNodes;
-      const img = imgList[index].childNodes[0] as HTMLDivElement;
+      const img = imgList[index] as HTMLDivElement;
       switch (item) {
         case "Chrome.png":
           if (!isChrome) {
@@ -78,6 +81,11 @@ const Footer = React.memo(() => {
           return;
         case "PrefApp.png":
           if (!isSettingOpen.type) {
+            if (isLaunchpadShow) {
+              setSettingOpen({ ...isSettingOpen, type: !isSettingOpen.type });
+              setLaunchpadShow(false);
+              return;
+            }
             img.classList.add("bounce");
             setTimeout(() => {
               setSettingOpen({ type: !isSettingOpen.type, index });
@@ -89,6 +97,14 @@ const Footer = React.memo(() => {
           return;
         case "Calculator.png":
           if (!isCalculatorOpen.type) {
+            if (isLaunchpadShow) {
+              setCalculatorOpen({
+                ...isCalculatorOpen,
+                type: !isCalculatorOpen.type,
+              });
+              setLaunchpadShow(false);
+              return;
+            }
             img.classList.add("bounce");
             setTimeout(() => {
               setCalculatorOpen({ type: !isCalculatorOpen.type, index });
@@ -100,6 +116,14 @@ const Footer = React.memo(() => {
           return;
         case "Drawing.png":
           if (!isDrawingOpen.type) {
+            if (isLaunchpadShow) {
+              setDrawingOpen({
+                ...isDrawingOpen,
+                type: !isDrawingOpen.type,
+              });
+              setLaunchpadShow(false);
+              return;
+            }
             img.classList.add("bounce");
             setTimeout(() => {
               setDrawingOpen({ type: !isDrawingOpen.type, index });
@@ -108,6 +132,9 @@ const Footer = React.memo(() => {
             return;
           }
           setDrawingShow(!isDrawingShow);
+          return;
+        case "Launchpad.png":
+          setLaunchpadShow(!isLaunchpadShow);
           return;
       }
     },
@@ -118,6 +145,7 @@ const Footer = React.memo(() => {
       isCalculatorShow,
       isDrawingOpen,
       isDrawingShow,
+      isLaunchpadShow,
       isChrome,
     ]
   );
@@ -137,50 +165,14 @@ const Footer = React.memo(() => {
     []
   );
 
-  const items = range(dockList.length);
-  const [dragState, setDragState] = useState({
-    dragging: false,
-    order: items,
-    dragOrder: items,
-    draggedIndex: null,
-  });
-  const handleDrag = useCallback(
-    ({ translation, id }) => {
-      const delta = Math.round(translation.x / dockData.length);
-      const index = dragState.order.indexOf(id);
-      const dragOrder = dragState.order.filter((index: number) => index !== id);
-
-      if (!inRange(index + delta, 0, items.length)) {
-        return;
-      }
-
-      dragOrder.splice(index + delta, 0, id);
-
-      setDragState((dragState) => ({
-        ...dragState,
-        draggedIndex: id,
-        dragOrder,
-      }));
-    },
-    [dragState.order, items.length, dockData.length]
-  );
-  const handleDragEnd = useCallback(() => {
-    setDragState((dragState) => ({
-      ...dragState,
-      order: dragState.dragOrder,
-      draggedIndex: null,
-    }));
-  }, []);
   const mousemove = useCallback(
     ({ clientX, clientY }) => {
       if (!dockRef.current) {
         return;
       }
       const imgList = dockRef.current.childNodes;
-
-      let dockBackgroundLength = 0;
       for (let i = 0; i < imgList.length; i++) {
-        const img = imgList[i].childNodes[0] as HTMLDivElement;
+        const img = imgList[i] as HTMLDivElement;
         let x, y;
         if (position === "bottom") {
           x = img.offsetLeft + dockData.length / 2 - clientX;
@@ -206,23 +198,13 @@ const Footer = React.memo(() => {
           imgScale = dockData.length / dockData.bigLength;
         }
         const multiplier = dockData.bigLength / dockData.length;
-        const newLength = dockData.length * multiplier * imgScale;
-        img.style.height = img.style.width = newLength + "px";
-        dockBackgroundLength = dockBackgroundLength + newLength;
-      }
-      if (position === "bottom" || position === "top") {
-        setDockStyle({
-          ...dockStyle,
-          width: dockBackgroundLength + 20,
-        });
-      } else {
-        setDockStyle({
-          ...dockStyle,
-          height: dockBackgroundLength + 20,
-        });
+        if (dockData.bigLength / dockData.length) {
+          img.style.height = img.style.width =
+            dockData.length * multiplier * imgScale + "px";
+        }
       }
     },
-    [dockStyle, position, dockData.length, dockData.bigLength, getOffset]
+    [position, dockData.length, dockData.bigLength, getOffset]
   );
 
   const mouseleave = useCallback(() => {
@@ -231,35 +213,31 @@ const Footer = React.memo(() => {
     }
     if (position === "bottom") {
       setDockStyle({
-        width: dockData.length * dockList.length + 20,
         height: dockData.length * 1 + 10,
         marginBottom: dockData.distance * 1,
       });
     } else if (position === "top") {
       setDockStyle({
-        width: dockData.length * dockList.length + 20,
         height: dockData.length * 1 + 10,
         marginTop: dockData.distance * 1,
       });
     } else if (position === "left") {
       setDockStyle({
-        height: dockData.length * dockList.length + 20,
         width: dockData.length * 1 + 10,
         marginLeft: dockData.distance * 1,
       });
     } else {
       setDockStyle({
-        height: dockData.length * dockList.length + 20,
         width: dockData.length * 1 + 10,
         marginRight: dockData.distance * 1,
       });
     }
     const imgList = dockRef.current.childNodes;
     for (let i = 0; i < imgList.length; i++) {
-      const img = imgList[i].childNodes[0] as HTMLDivElement;
+      const img = imgList[i] as HTMLDivElement;
       img.style.width = img.style.height = dockData.length + "px";
     }
-  }, [position, dockData.length, dockData.distance, dockList.length]);
+  }, [position, dockData.length, dockData.distance]);
 
   useEffect(mouseleave, [mouseleave]);
 
@@ -287,7 +265,7 @@ const Footer = React.memo(() => {
     const imgList = dockRef.current.childNodes;
     [isSettingOpen, isCalculatorOpen, isDrawingOpen].forEach((item) => {
       if (item.index) {
-        const img = imgList[item.index].childNodes[0] as HTMLDivElement;
+        const img = imgList[item.index] as HTMLDivElement;
         !item.type
           ? setTimeout(() => {
               img?.classList.remove("active");
@@ -364,6 +342,9 @@ const Footer = React.memo(() => {
       >
         <Drawing />
       </FooterContext.Provider>
+      <FooterContext.Provider value={[isLaunchpadShow, setLaunchpadShow]}>
+        <Launchpad isVisible={isLaunchpadShow} dockItemClick={dockItemClick} />
+      </FooterContext.Provider>
       <footer className={position} id="AppFooter">
         <div
           id="Docker"
@@ -372,47 +353,31 @@ const Footer = React.memo(() => {
           style={dockStyle as CSSProperties}
         >
           {dockList.map((item, index) => {
-            const isDragging = dragState.draggedIndex === index;
-            const top =
-              dragState.dragOrder.indexOf(index) *
-              (dockData.length + dockData.itemMargin * 2);
-            const draggedTop =
-              dragState.order.indexOf(index) *
-              (dockData.length + dockData.itemMargin * 2);
             return (
-              <Draggable
-                key={index}
-                id={index}
-                onDrag={handleDrag}
-                onDragEnd={handleDragEnd}
-              >
-                <div
-                  className={
-                    [
-                      "PrefApp.png",
-                      "Chrome.png",
-                      "Calculator.png",
-                      "Drawing.png",
-                    ].includes(item)
-                      ? "pointer DockItem " + position
-                      : position + " DockItem"
-                  }
-                  style={
-                    {
-                      position: "absolute",
-                      left: isDragging ? draggedTop : top,
-                      transition: isDragging ? "none" : "all 500ms",
-                      backgroundImage:
-                        "url(" + require("./image/" + item) + ")",
-                      backgroundPosition: "center",
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                      ...itemStyles,
-                    } as CSSProperties
-                  }
-                  onClick={() => dockItemClick(item, index)}
-                />
-              </Draggable>
+              <div
+                className={
+                  [
+                    "Launchpad.png",
+                    "PrefApp.png",
+                    "Chrome.png",
+                    "Calculator.png",
+                    "Drawing.png",
+                  ].includes(item)
+                    ? "pointer DockItem " + position
+                    : position + " DockItem"
+                }
+                style={
+                  {
+                    backgroundImage: "url(" + require("./image/" + item) + ")",
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    ...itemStyles,
+                  } as CSSProperties
+                }
+                key={index + item}
+                onClick={() => dockItemClick(item, index)}
+              />
             );
           })}
         </div>
