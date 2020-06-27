@@ -17,10 +17,10 @@ type Props = {
 
 export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
   const [dockList] = useState<string[]>([
-    "PrefApp.png",
-    "Chrome.png",
-    "Terminal.png",
-    "Calculator.png",
+    "PrefApp",
+    "Chrome",
+    "Terminal",
+    "Calculator",
   ]);
   const [isLaunchpadShow, setLaunchpadShow] = useContext(FooterContext);
   const items = range(dockList.length);
@@ -33,6 +33,10 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
 
   const handleDrag = useCallback(
     ({ translation, id }) => {
+      setDragState((dragState) => ({
+        ...dragState,
+        dragging: true,
+      }));
       const delta = Math.round(translation.x / 100);
       const index = dragState.order.indexOf(id);
       const dragOrder = dragState.order.filter((index: number) => index !== id);
@@ -62,16 +66,17 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
 
   const handleKeydown = useCallback(
     ({ keyCode }) => {
-      if (keyCode === 27) {
+      if (keyCode === 27 && isVisible) {
         setLaunchpadShow(!isLaunchpadShow);
       }
     },
-    [setLaunchpadShow, isLaunchpadShow]
+    [setLaunchpadShow, isLaunchpadShow, isVisible]
   );
 
   const handleClick = useCallback(
     ({ target }) => {
-      const LaunchpadItems = document.getElementsByClassName("LaunchpadItem");
+      if (!isVisible) return;
+      const LaunchpadItems = document.getElementsByClassName("LaunchpadImg");
       for (let i = 0; i < LaunchpadItems.length; i++) {
         if (LaunchpadItems[i] === target) {
           return;
@@ -79,7 +84,7 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
       }
       setLaunchpadShow(!isLaunchpadShow);
     },
-    [setLaunchpadShow, isLaunchpadShow]
+    [setLaunchpadShow, isLaunchpadShow, isVisible]
   );
 
   useEffect(() => {
@@ -111,18 +116,37 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
                     className="LaunchpadItem"
                     style={
                       {
-                        position: "absolute",
                         left: isDragging ? draggedTop : top,
                         transition: isDragging ? "none" : "all 500ms",
-                        backgroundImage:
-                          "url(" + require("../footer/image/" + item) + ")",
-                        backgroundPosition: "center",
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat",
                       } as CSSProperties
                     }
-                    onClick={() => dockItemClick(item, index)}
-                  />
+                  >
+                    <div
+                      className="LaunchpadImg"
+                      style={
+                        {
+                          backgroundImage:
+                            "url(" +
+                            require("../footer/image/" + item + ".png") +
+                            ")",
+                          backgroundPosition: "center",
+                          backgroundSize: "cover",
+                          backgroundRepeat: "no-repeat",
+                        } as CSSProperties
+                      }
+                      onClick={() => {
+                        if (!dragState.dragging) {
+                          dockItemClick(item + ".png", index);
+                        } else {
+                          setDragState((dragState) => ({
+                            ...dragState,
+                            dragging: false,
+                          }));
+                        }
+                      }}
+                    />
+                    <span style={{ color: "#fff" }}>{item}</span>
+                  </div>
                 </Draggable>
               );
             })}
