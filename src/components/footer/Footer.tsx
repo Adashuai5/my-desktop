@@ -12,6 +12,7 @@ import "./index.scss";
 import { Setting } from "../setting/Setting";
 import { Calculator } from "../calculator/index";
 import { Drawing } from "../drawing/index";
+import { Launchpad } from "../launchpad/index";
 import { positionReducer, dataReducer } from "./reducer";
 
 export const FooterContext = createContext<any>([]);
@@ -41,16 +42,20 @@ const Footer = React.memo(() => {
   });
   const [isSettingOpen, setSettingOpen] = useState<OpenTypes>({
     type: false,
+    index: 2,
   });
   const [isCalculatorOpen, setCalculatorOpen] = useState<OpenTypes>({
     type: false,
+    index: 5,
   });
   const [isDrawingOpen, setDrawingOpen] = useState<OpenTypes>({
     type: false,
+    index: 6,
   });
   const [isSettingShow, setSettingShow] = useState(true);
   const [isCalculatorShow, setCalculatorShow] = useState(true);
   const [isDrawingShow, setDrawingShow] = useState(true);
+  const [isLaunchpadShow, setLaunchpadShow] = useState(false);
   const [isChrome, setChrome] = useState<any>(null);
 
   const dockItemClick = useCallback(
@@ -76,6 +81,11 @@ const Footer = React.memo(() => {
           return;
         case "PrefApp.png":
           if (!isSettingOpen.type) {
+            if (isLaunchpadShow) {
+              setSettingOpen({ ...isSettingOpen, type: !isSettingOpen.type });
+              setLaunchpadShow(false);
+              return;
+            }
             img.classList.add("bounce");
             setTimeout(() => {
               setSettingOpen({ type: !isSettingOpen.type, index });
@@ -87,6 +97,14 @@ const Footer = React.memo(() => {
           return;
         case "Calculator.png":
           if (!isCalculatorOpen.type) {
+            if (isLaunchpadShow) {
+              setCalculatorOpen({
+                ...isCalculatorOpen,
+                type: !isCalculatorOpen.type,
+              });
+              setLaunchpadShow(false);
+              return;
+            }
             img.classList.add("bounce");
             setTimeout(() => {
               setCalculatorOpen({ type: !isCalculatorOpen.type, index });
@@ -98,6 +116,14 @@ const Footer = React.memo(() => {
           return;
         case "Drawing.png":
           if (!isDrawingOpen.type) {
+            if (isLaunchpadShow) {
+              setDrawingOpen({
+                ...isDrawingOpen,
+                type: !isDrawingOpen.type,
+              });
+              setLaunchpadShow(false);
+              return;
+            }
             img.classList.add("bounce");
             setTimeout(() => {
               setDrawingOpen({ type: !isDrawingOpen.type, index });
@@ -106,6 +132,9 @@ const Footer = React.memo(() => {
             return;
           }
           setDrawingShow(!isDrawingShow);
+          return;
+        case "Launchpad.png":
+          setLaunchpadShow(!isLaunchpadShow);
           return;
       }
     },
@@ -116,6 +145,7 @@ const Footer = React.memo(() => {
       isCalculatorShow,
       isDrawingOpen,
       isDrawingShow,
+      isLaunchpadShow,
       isChrome,
     ]
   );
@@ -312,6 +342,9 @@ const Footer = React.memo(() => {
       >
         <Drawing />
       </FooterContext.Provider>
+      <FooterContext.Provider value={[isLaunchpadShow, setLaunchpadShow]}>
+        <Launchpad isVisible={isLaunchpadShow} dockItemClick={dockItemClick} />
+      </FooterContext.Provider>
       <footer className={position} id="AppFooter">
         <div
           id="Docker"
@@ -324,6 +357,7 @@ const Footer = React.memo(() => {
               <div
                 className={
                   [
+                    "Launchpad.png",
                     "PrefApp.png",
                     "Chrome.png",
                     "Calculator.png",
