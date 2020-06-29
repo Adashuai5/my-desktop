@@ -5,8 +5,8 @@ import React, {
   CSSProperties,
   useCallback,
 } from "react";
-import { useModal } from "../modal/UseModal";
-import { FooterContext } from "../footer/Footer";
+import {useModal} from "../modal/UseModal";
+import {FooterContext} from "../footer/Footer";
 import {
   View,
   Radio,
@@ -17,7 +17,8 @@ import {
   Checkbox,
 } from "react-desktop/macOs";
 import "./index.scss";
-import { Iconfont } from "../iconfont";
+import {Iconfont} from "../iconfont";
+
 /// <reference path="react-desktop.d.ts" />
 
 interface OptionsProps {
@@ -28,9 +29,9 @@ interface OptionsProps {
 }
 
 export const Setting = React.memo(() => {
-  const { open, close, RenderModal } = useModal();
+  const {open, close, RenderModal} = useModal();
   const positionMap = ["left", "bottom", "right", "top"];
-  const setListMap = [{ title: "通用" }];
+  const setListMap = [{title: "通用"}];
   const [
     isSettingOpen,
     setSettingOpen,
@@ -76,25 +77,25 @@ export const Setting = React.memo(() => {
         case "图标默认大小":
           setDockData({
             name: "change",
-            dockData: { ...dockData, length: value },
+            dockData: {...dockData, length: value},
           });
           return;
         case "图标缩放后大小":
           setDockData({
             name: "change",
-            dockData: { ...dockData, bigLength: value },
+            dockData: {...dockData, bigLength: value},
           });
           return;
         case "图标之间距离大小":
           setDockData({
             name: "change",
-            dockData: { ...dockData, itemMargin: value },
+            dockData: {...dockData, itemMargin: value},
           });
           return;
         case "Dock 距离屏幕边缘大小":
           setDockData({
             name: "change",
-            dockData: { ...dockData, distance: value },
+            dockData: {...dockData, distance: value},
           });
           return;
       }
@@ -120,7 +121,7 @@ export const Setting = React.memo(() => {
           isFullscreen={false}
           onCloseClick={() => {
             close();
-            setSettingOpen({ ...isSettingOpen, type: false });
+            setSettingOpen({...isSettingOpen, type: false});
             localStorage.setItem("dockData", JSON.stringify(dockData));
             localStorage.setItem("position", JSON.stringify(position));
           }}
@@ -128,7 +129,7 @@ export const Setting = React.memo(() => {
             setSettingShow(false);
           }}
           onMaximizeClick={open}
-        ></TitleBar>
+        />
         <div className="mainSet">
           <View className="leftSet">
             <ListView>
@@ -158,7 +159,7 @@ export const Setting = React.memo(() => {
             <Text bold marginBottom="10px" size="20">
               {selected}
             </Text>
-            <div className="divide"></div>
+            <div className="divide"/>
             {optionsMap.map((item, index) => {
               return (
                 <div className="options" key={index + item.value}>
@@ -226,7 +227,7 @@ export const Setting = React.memo(() => {
                       }}
                       defaultValue={item}
                       defaultChecked={item === position}
-                    ></Radio>
+                    />
                   </div>
                 );
               })}

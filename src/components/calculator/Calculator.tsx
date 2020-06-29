@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import "./index.scss";
 
 const Calculate = () => {
@@ -23,7 +23,7 @@ const Calculate = () => {
     ".",
     "=",
   ];
-  const [N1N2, setN1OrN2] = useState({ n1: "", n2: "" });
+  const [N1N2, setN1OrN2] = useState({n1: "", n2: ""});
   const [operator, setOperator] = useState("");
   const [result, setResult] = useState("0");
 
@@ -83,17 +83,17 @@ const Calculate = () => {
         if ("0123456789.".indexOf(buttonText) >= 0) {
           operator ? getNumber("n2", buttonText) : getNumber("n1", buttonText);
         } else if ("+-×÷".indexOf(buttonText) >= 0) {
-          setN1OrN2({ n1: N1N2.n1 ? N1N2.n1 : result, n2: N1N2.n2 });
+          setN1OrN2({n1: N1N2.n1 ? N1N2.n1 : result, n2: N1N2.n2});
           setOperator(buttonText);
         } else if ("=".indexOf(buttonText) >= 0) {
           if (N1N2.n1 && N1N2.n2) {
             setResult(removeZero(getResult(N1N2.n1, N1N2.n2, operator)));
-            setN1OrN2({ n1: "", n2: "" });
+            setN1OrN2({n1: "", n2: ""});
             setOperator("");
           }
         } else if (buttonText === "C") {
           setResult("0");
-          setN1OrN2({ n1: "", n2: "" });
+          setN1OrN2({n1: "", n2: ""});
           setOperator("");
         } else if ("%'+/-'".indexOf(buttonText) >= 0) {
           if (N1N2.n1 || result) {

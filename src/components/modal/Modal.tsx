@@ -14,7 +14,7 @@ type Props = {
   };
 };
 
-const Modal = React.memo(({ children, data }: Props) => {
+const Modal = React.memo(({children, data}: Props) => {
   const domEl = document.getElementById("main-view") as HTMLDivElement;
   if (!domEl) return null;
 

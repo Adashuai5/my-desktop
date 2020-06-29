@@ -1,4 +1,4 @@
-import React, { CSSProperties, RefObject } from "react";
+import React, {CSSProperties, RefObject} from "react";
 import "./index.scss";
 
 const scriptElem = document.createElement("script");
@@ -14,12 +14,12 @@ interface PropsTypes {
 }
 
 export const Iconfont = ({
-  className,
-  type,
-  style,
-  svgRef,
-  clickEvent,
-}: PropsTypes) => {
+                           className,
+                           type,
+                           style,
+                           svgRef,
+                           clickEvent,
+                         }: PropsTypes) => {
   return (
     <svg
       ref={svgRef}
@@ -28,7 +28,7 @@ export const Iconfont = ({
       style={style as CSSProperties}
       onClick={clickEvent}
     >
-      <use xlinkHref={`#${type}`} />
+      <use xlinkHref={`#${type}`}/>
     </svg>
   );
 };

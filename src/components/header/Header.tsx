@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Iconfont } from "../iconfont";
+import React, {useState, useRef, useEffect, useCallback} from "react";
+import {Iconfont} from "../iconfont";
 import "./index.scss";
 import dayjs from "dayjs";
+
 require("dayjs/locale/zh-cn");
 dayjs.locale("zh-cn");
 const Header = () => {
@@ -15,7 +16,7 @@ const Header = () => {
     setTime(newTime);
   }, 60000);
   const windowClick = useCallback(
-    ({ target }) => {
+    ({target}) => {
       if (inputShow || menuShow) {
         if (
           target.parentNode === menuRef.current ||
@@ -63,17 +64,17 @@ const Header = () => {
           )}
           <ul className={menuShow ? "menu active" : "menu"}>
             <li onClick={() => setInputShow(true)}>自定义标题</li>
-            <div className="line"></div>
+            <div className="line"/>
             <li>你好</li>
-            <div className="line"></div>
+            <div className="line"/>
             <li>我是周元达</li>
-            <div className="line"></div>
+            <div className="line"/>
             <li>感谢来到这里的你</li>
-            <div className="line"></div>
+            <div className="line"/>
             <li>我正在找工作</li>
-            <div className="line"></div>
+            <div className="line"/>
             <li>如有意请联系我</li>
-            <div className="line"></div>
+            <div className="line"/>
             <li>点击右边人头可查看我的简历</li>
           </ul>
         </div>

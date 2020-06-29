@@ -1,5 +1,6 @@
-import React, { useMemo, useState, CSSProperties } from "react";
-import { Dialog, Button } from "react-desktop/macOs";
+import React, {useMemo, useState, CSSProperties} from "react";
+import {Dialog, Button} from "react-desktop/macOs";
+
 /// <reference path="react-desktop.d.ts" />
 
 interface DialogProps {
@@ -18,15 +19,15 @@ export const useDialog = () => {
   const openDialog = () => setIsVisible(true);
   const closeDialog = () => setIsVisible(false);
   const RenderDialog = ({
-    width,
-    height,
-    id,
-    title,
-    message,
-    imgSrc,
-    onCheck,
-    onClose,
-  }: DialogProps) => {
+                          width,
+                          height,
+                          id,
+                          title,
+                          message,
+                          imgSrc,
+                          onCheck,
+                          onClose,
+                        }: DialogProps) => {
     const styles = useMemo(
       () => ({
         width: width,

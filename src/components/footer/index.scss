@@ -135,6 +135,7 @@
       #{$member}: 0;
     }
   }
+
   #Docker {
     transition: margin 0.5s;
     margin-bottom: 10px;
@@ -142,22 +143,28 @@
     display: flex;
     background-color: rgba(222, 223, 227, 0.7);
     box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
-      rgba(0, 0, 0, 0.3) 0px 8px 50px;
+    rgba(0, 0, 0, 0.3) 0px 8px 50px;
+
     &.top {
       padding: 7px 4px 3px;
     }
+
     &.bottom {
       padding: 3px 4px 7px;
     }
+
     &.left {
       padding: 4px 3px 4px 7px;
     }
+
     &.right {
       padding: 4px 7px 4px 3px;
     }
+
     .DockItem {
       position: relative;
       display: flex;
+
       &.active {
         &::after {
           content: "●";
@@ -165,37 +172,46 @@
           position: absolute;
         }
       }
+
       &.top {
         justify-content: center;
+
         &.bounce {
           animation-duration: 2s; /* don't forget to set a duration! */
           animation-name: top; /* referring directly to the animation's @keyframe declaration */
         }
+
         &.active {
           &::after {
             top: -13px;
           }
         }
       }
+
       &.bottom {
         justify-content: center;
+
         &.bounce {
           animation-duration: 2s; /* don't forget to set a duration! */
           animation-name: bottom; /* referring directly to the animation's @keyframe declaration */
         }
+
         &.active {
           &::after {
             bottom: -7px;
           }
         }
       }
+
       @each $member in left, right {
         &.#{$member} {
           align-items: center;
+
           &.bounce {
             animation-duration: 2s; /* don't forget to set a duration! */
             animation-name: #{$member}; /* referring directly to the animation's @keyframe declaration */
           }
+
           &.active {
             &::after {
               #{$member}: -6px;
@@ -210,17 +226,20 @@
       border-bottom-left-radius: 0.4rem;
       border-bottom-right-radius: 0.4rem;
     }
+
     &.bottom {
       align-items: flex-end;
       border-top-left-radius: 0.4rem;
       border-top-right-radius: 0.4rem;
     }
+
     &.left {
       flex-direction: column;
       align-items: flex-start;
       border-top-right-radius: 0.4rem;
       border-bottom-right-radius: 0.4rem;
     }
+
     &.right {
       flex-direction: column;
       align-items: flex-end;

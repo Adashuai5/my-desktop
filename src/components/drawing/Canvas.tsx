@@ -5,9 +5,9 @@ import React, {
   useState,
   CSSProperties,
 } from "react";
-import { Iconfont } from "../iconfont";
-import { CSSTransition } from "react-transition-group";
-import { useDialog } from "../dialog/index";
+import {Iconfont} from "../iconfont";
+import {CSSTransition} from "react-transition-group";
+import {useDialog} from "../dialog";
 
 interface CanvasProps {
   width: number;
@@ -26,7 +26,7 @@ interface ClearRectOptions {
   height: number;
 }
 
-const Canvas = ({ width, height }: CanvasProps) => {
+const Canvas = ({width, height}: CanvasProps) => {
   const colorMap = ["black", "red", "green", "blue"];
   const optionsMap = [
     "canvas_save",
@@ -106,7 +106,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
     [lineWidth, strokeStyle]
   );
 
-  const clearRect = useCallback(({ x, y, width, height }: ClearRectOptions) => {
+  const clearRect = useCallback(({x, y, width, height}: ClearRectOptions) => {
     if (!canvasRef.current) {
       return;
     }
@@ -169,7 +169,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
 
   const [isToolboxOpen, setToolboxOpen] = useState(true);
   const toolboxOpenClick = useCallback(
-    (e) => {
+    () => {
       setToolboxOpen(!isToolboxOpen);
     },
     [isToolboxOpen]
@@ -207,7 +207,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
     setStrokeStyle(e.target.value);
   }, []);
 
-  const { openDialog, closeDialog, RenderDialog } = useDialog();
+  const {openDialog, closeDialog, RenderDialog} = useDialog();
   const [isClearDialogOpen, setClearDialogOpen] = useState(false);
   useEffect(isClearDialogOpen ? openDialog : closeDialog, [isClearDialogOpen]);
 
@@ -293,7 +293,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
   );
 
   const closeClearDialog = useCallback(
-    (e) => {
+    () => {
       setClearDialogOpen(false);
     },
     [setClearDialogOpen]
@@ -309,7 +309,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
       });
       setCanvasHistory([]);
       setStep(-1);
-      closeClearDialog(e);
+      closeClearDialog();
       if (!backRef.current || !goRef.current) {
         return;
       }
@@ -323,7 +323,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
 
   return (
     <>
-      <canvas id="canvas" ref={canvasRef} height={height} width={width} />
+      <canvas id="canvas" ref={canvasRef} height={height} width={width}/>
       <div
         id="toolbox-open"
         style={
@@ -363,7 +363,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
                   key={index + option}
                   className={option}
                   type={"icon-" + option}
-                  style={{ fontSize: 50 }}
+                  style={{fontSize: 50}}
                   clickEvent={(e) => onOptionsClick([e, option])}
                 />
               );
@@ -378,14 +378,14 @@ const Canvas = ({ width, height }: CanvasProps) => {
                   className={
                     tool === "canvas_eraser"
                       ? eraserEnabled
-                        ? "active"
-                        : ""
+                      ? "active"
+                      : ""
                       : !eraserEnabled
                       ? "active"
                       : ""
                   }
                   type={"icon-" + tool}
-                  style={{ fontSize: 50 }}
+                  style={{fontSize: 50}}
                   clickEvent={(e) => onToolsClick([e, tool])}
                 />
               );
@@ -414,7 +414,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
                   className={color === strokeStyle ? color + " active" : color}
                   key={index + color}
                   onClick={(e) => onColorsClick([e, "li", color])}
-                ></li>
+                />
               );
             })}
             <input
@@ -435,7 +435,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
         imgSrc={"Drawing.png"}
         onCheck={checkClearDialog}
         onClose={closeClearDialog}
-      ></RenderDialog>
+      />
     </>
   );
 };

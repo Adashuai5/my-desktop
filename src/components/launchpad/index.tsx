@@ -5,9 +5,9 @@ import React, {
   useContext,
   CSSProperties,
 } from "react";
-import { range, inRange } from "lodash";
+import {range, inRange} from "lodash";
 import Draggable from "../draggable/index";
-import { FooterContext } from "../footer/Footer";
+import {FooterContext} from "../footer/Footer";
 import "./index.scss";
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
   dockItemClick: (item: string, index: number) => void;
 };
 
-export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
+export const Launchpad = ({isVisible, dockItemClick}: Props) => {
   const [dockList] = useState<string[]>([
     "PrefApp",
     "Chrome",
@@ -32,7 +32,7 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
   });
 
   const handleDrag = useCallback(
-    ({ translation, id }) => {
+    ({translation, id}) => {
       setDragState((dragState) => ({
         ...dragState,
         dragging: true,
@@ -65,7 +65,7 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
   }, []);
 
   const handleKeydown = useCallback(
-    ({ keyCode }) => {
+    ({keyCode}) => {
       if (keyCode === 27 && isVisible) {
         setLaunchpadShow(!isLaunchpadShow);
       }
@@ -74,7 +74,7 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
   );
 
   const handleClick = useCallback(
-    ({ target }) => {
+    ({target}) => {
       if (!isVisible) return;
       const LaunchpadItems = document.getElementsByClassName("LaunchpadImg");
       for (let i = 0; i < LaunchpadItems.length; i++) {
@@ -145,7 +145,7 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
                         }
                       }}
                     />
-                    <span style={{ color: "#fff" }}>{item}</span>
+                    <span style={{color: "#fff"}}>{item}</span>
                   </div>
                 </Draggable>
               );

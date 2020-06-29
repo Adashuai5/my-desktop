@@ -6,7 +6,7 @@ import React, {
   CSSProperties,
 } from "react";
 
-const POSITION = { x: 0, y: 0 };
+const POSITION = {x: 0, y: 0};
 
 type Props = {
   children: React.ReactChild;
@@ -14,23 +14,23 @@ type Props = {
   onDrag: (T: any) => void;
   onDragEnd: () => void;
 };
-const Draggable = ({ children, id, onDrag, onDragEnd }: Props) => {
+const Draggable = ({children, id, onDrag, onDragEnd}: Props) => {
   const [state, setState] = useState({
     isDragging: false,
     origin: POSITION,
     translation: POSITION,
   });
 
-  const handleMouseDown = useCallback(({ clientX, clientY }) => {
+  const handleMouseDown = useCallback(({clientX, clientY}) => {
     setState((state) => ({
       ...state,
       isDragging: true,
-      origin: { x: clientX, y: clientY },
+      origin: {x: clientX, y: clientY},
     }));
   }, []);
 
   const handleMouseMove = useCallback(
-    ({ clientX, clientY }) => {
+    ({clientX, clientY}) => {
       const translation = {
         x: clientX - state.origin.x,
         y: clientY - state.origin.y,
@@ -41,7 +41,7 @@ const Draggable = ({ children, id, onDrag, onDragEnd }: Props) => {
         translation,
       }));
 
-      onDrag({ translation, id });
+      onDrag({translation, id});
     },
     [state.origin, onDrag, id]
   );
@@ -63,7 +63,7 @@ const Draggable = ({ children, id, onDrag, onDragEnd }: Props) => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
 
-      setState((state) => ({ ...state, translation: { x: 0, y: 0 } }));
+      setState((state) => ({...state, translation: {x: 0, y: 0}}));
     }
   }, [state.isDragging, handleMouseMove, handleMouseUp]);
 

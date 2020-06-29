@@ -2,14 +2,18 @@
   #SettingMove {
     height: 48px;
   }
+
   .mainSet {
     display: flex;
+
     .leftSet {
       width: 172px;
       background-color: #f0f0f0;
       border-bottom-left-radius: 5px;
+
       div {
         overflow: inherit !important;
+
         ul {
           li {
             margin: 0 !important;
@@ -17,6 +21,7 @@
         }
       }
     }
+
     .rightSet {
       overflow: auto;
       border-bottom-right-radius: 5px;
@@ -25,27 +30,33 @@
       width: 512px;
       height: 420px;
       background-color: #ffffff;
+
       .divide {
         width: 100%;
         border-top: 1px solid #f0f0f0;
         margin-bottom: 10px;
       }
+
       .options {
         label {
           font-weight: bold;
           line-height: 16px;
         }
+
         input[type="range"] {
           margin: 0 30px 20px 0;
           width: 256px;
           -webkit-appearance: none;
+
           &:focus {
             outline: none;
           }
+
           &::-webkit-slider-runnable-track {
             height: 4px;
             background-color: #d9d9d9;
           }
+
           &::-webkit-slider-thumb {
             -webkit-appearance: none;
             height: 18px;

@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      <div id="main-view"></div>
+      <div id="main-view"/>
       <Footer />
     </div>
   );

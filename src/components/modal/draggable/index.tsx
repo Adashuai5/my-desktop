@@ -17,23 +17,23 @@ type Props = {
     isShow: boolean;
   };
 };
-const Draggable = ({ children, domEl, data }: Props) => {
+const Draggable = ({children, domEl, data}: Props) => {
   const dragEl = document.getElementById(data.id) as HTMLDivElement;
   const moveEl = document.getElementById(data.moveId) as HTMLDivElement;
   const localPosition = localStorage.getItem(data.id) || null;
   const initPosition = localPosition
     ? JSON.parse(localPosition)
     : {
-        x: data.width === -1 ? 0 : (window.innerWidth - data.width) / 2,
-        y: data.height === -1 ? 0 : (window.innerHeight - data.height) / 2,
-      };
+      x: data.width === -1 ? 0 : (window.innerWidth - data.width) / 2,
+      y: data.height === -1 ? 0 : (window.innerHeight - data.height) / 2,
+    };
   const [state, setState] = useState({
     isDragging: false,
-    origin: { x: 0, y: 0 },
+    origin: {x: 0, y: 0},
     position: initPosition,
   });
 
-  const handleMouseDown = useCallback(({ clientX, clientY }) => {
+  const handleMouseDown = useCallback(({clientX, clientY}) => {
     setState((state) => ({
       ...state,
       isDragging: true,
@@ -45,7 +45,7 @@ const Draggable = ({ children, domEl, data }: Props) => {
   }, []);
 
   const handleMouseMove = useCallback(
-    ({ clientX, clientY, target }) => {
+    ({clientX, clientY, target}) => {
       if (!state.isDragging || (moveEl && target !== moveEl)) return;
       let x = clientX - state.origin.x;
       let y = clientY - state.origin.y;
@@ -59,7 +59,7 @@ const Draggable = ({ children, domEl, data }: Props) => {
       } else if (y > window.innerHeight - dragEl.offsetHeight) {
         y = window.innerHeight - dragEl.offsetHeight;
       }
-      const newPosition = { x, y };
+      const newPosition = {x, y};
       setState((state) => ({
         ...state,
         position: newPosition,
@@ -81,8 +81,8 @@ const Draggable = ({ children, domEl, data }: Props) => {
     if (data.width === -1) {
       setState({
         isDragging: false,
-        origin: { x: 0, y: 0 },
-        position: { x: 0, y: 0 },
+        origin: {x: 0, y: 0},
+        position: {x: 0, y: 0},
       });
     }
   }, [data.width]);

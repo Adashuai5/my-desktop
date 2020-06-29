@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
 import Modal from "./Modal";
 
@@ -10,9 +10,9 @@ export const useModal = () => {
   const close = () => setIsVisible(false);
 
   const RenderModal = ({
-    children,
-    data,
-  }: {
+                         children,
+                         data,
+                       }: {
     children: React.ReactChild;
     data: {
       width: number;
