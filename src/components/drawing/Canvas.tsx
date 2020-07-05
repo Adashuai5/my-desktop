@@ -214,7 +214,9 @@ const Canvas = ({width, height, onRef}: CanvasProps) => {
 
   useImperativeHandle(onRef, () => ({
     drawingCloseClick: () => {
-      if (isClearDialogOpen || step === -1) return;
+      if (step === -1) {
+        setDrawingOpen({...isDrawingOpen, type: false});
+      } else if (isClearDialogOpen) return;
       setCloseCanvas(true);
     },
   }));
