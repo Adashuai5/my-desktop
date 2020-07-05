@@ -4,14 +4,18 @@ import React, {
   useRef,
   useState,
   CSSProperties,
+  useContext,
+  useImperativeHandle,
 } from "react";
 import {Iconfont} from "../iconfont";
 import {CSSTransition} from "react-transition-group";
 import {useDialog} from "../dialog";
+import {FooterContext} from "../footer/Footer";
 
 interface CanvasProps {
   width: number;
   height: number;
+  onRef: any;
 }
 
 type Coordinate = {
@@ -26,7 +30,7 @@ interface ClearRectOptions {
   height: number;
 }
 
-const Canvas = ({width, height}: CanvasProps) => {
+const Canvas = ({width, height, onRef}: CanvasProps) => {
   const colorMap = ["black", "red", "green", "blue"];
   const optionsMap = [
     "canvas_save",
@@ -168,12 +172,9 @@ const Canvas = ({width, height}: CanvasProps) => {
   }, [startPaint, paint, exitPaint, leaveCanvas]);
 
   const [isToolboxOpen, setToolboxOpen] = useState(true);
-  const toolboxOpenClick = useCallback(
-    () => {
-      setToolboxOpen(!isToolboxOpen);
-    },
-    [isToolboxOpen]
-  );
+  const toolboxOpenClick = useCallback(() => {
+    setToolboxOpen(!isToolboxOpen);
+  }, [isToolboxOpen]);
 
   const onToolsClick = useCallback(([e, toolName]) => {
     const el = e.currentTarget;
@@ -209,6 +210,34 @@ const Canvas = ({width, height}: CanvasProps) => {
 
   const {openDialog, closeDialog, RenderDialog} = useDialog();
   const [isClearDialogOpen, setClearDialogOpen] = useState(false);
+  const [closeCanvas, setCloseCanvas] = useState(false);
+
+  useImperativeHandle(onRef, () => ({
+    drawingCloseClick: () => {
+      if (isClearDialogOpen || step === -1) return;
+      setCloseCanvas(true);
+    },
+  }));
+
+  useEffect(() => {
+    if (closeCanvas) {
+      if (!isClearDialogOpen) {
+        setClearDialogText({
+          title: "退出将丢失该画布！",
+          message: "确认退出画板？",
+        });
+        setClearDialogOpen(true);
+      }
+    } else {
+      setClearDialogText({
+        title: "您确定要清空该画布吗？",
+        message: "一旦清空将无法撤回。",
+      });
+    }
+  }, [closeCanvas, isClearDialogOpen]);
+
+  const [isDrawingOpen, setDrawingOpen] = useContext(FooterContext);
+
   useEffect(isClearDialogOpen ? openDialog : closeDialog, [isClearDialogOpen]);
 
   const saveCanvas = useCallback(() => {
@@ -276,6 +305,7 @@ const Canvas = ({width, height}: CanvasProps) => {
     ([e, toolName]) => {
       switch (toolName) {
         case "canvas_clear":
+          if (step === -1) return;
           setClearDialogOpen(true);
           break;
         case "canvas_save":
@@ -289,15 +319,20 @@ const Canvas = ({width, height}: CanvasProps) => {
           break;
       }
     },
-    [saveCanvas, changeCanvas]
+    [saveCanvas, changeCanvas, step]
   );
 
-  const closeClearDialog = useCallback(
-    () => {
-      setClearDialogOpen(false);
-    },
-    [setClearDialogOpen]
-  );
+  const [clearDialogText, setClearDialogText] = useState({
+    title: "您确定要清空该画布吗？",
+    message: "一旦清空将无法撤回。",
+  });
+
+  const closeClearDialog = useCallback(() => {
+    setClearDialogOpen(false);
+    if (closeCanvas) {
+      setCloseCanvas(false);
+    }
+  }, [setClearDialogOpen, closeCanvas, setCloseCanvas]);
 
   const checkClearDialog = useCallback(
     (e) => {
@@ -317,8 +352,21 @@ const Canvas = ({width, height}: CanvasProps) => {
       const go: SVGSVGElement = goRef.current;
       back.classList.remove("active");
       go.classList.remove("active");
+      if (closeCanvas) {
+        setDrawingOpen({...isDrawingOpen, type: false});
+        setCloseCanvas(false);
+      }
     },
-    [closeClearDialog, clearRect, width, height]
+    [
+      closeClearDialog,
+      clearRect,
+      width,
+      height,
+      closeCanvas,
+      setCloseCanvas,
+      isDrawingOpen,
+      setDrawingOpen,
+    ]
   );
 
   return (
@@ -430,8 +478,8 @@ const Canvas = ({width, height}: CanvasProps) => {
         width={300}
         height={120}
         id="clear-dialog"
-        title="您确定要清空该画布吗？"
-        message="一旦清空将无法撤回。"
+        title={clearDialogText.title}
+        message={clearDialogText.message}
         imgSrc={"Drawing.png"}
         onCheck={checkClearDialog}
         onClose={closeClearDialog}
