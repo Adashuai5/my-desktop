@@ -19,8 +19,8 @@ export const Launchpad = ({isVisible, dockItemClick}: Props) => {
   const [dockList] = useState<string[]>([
     "PrefApp",
     "Chrome",
-    "Terminal",
     "Calculator",
+    "Drawing",
   ]);
   const [isLaunchpadShow, setLaunchpadShow] = useContext(FooterContext);
   const items = range(dockList.length);
