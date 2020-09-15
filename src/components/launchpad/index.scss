@@ -5,7 +5,6 @@
   bottom: 0;
   right: 0;
   background: url(../../assets/image/sierra-4K.jpg) center/cover no-repeat;
-
   &::after {
     content: "";
     position: absolute;
@@ -14,9 +13,9 @@
     right: 0;
     bottom: 0;
     z-index: -1;
-    background: rgba(255, 255, 255, 0.8) url(../../assets/image/sierra-4K.jpg) no-repeat fixed;
-    filter: blur(25px);
-    margin: -50px;
+    background: inherit;
+    filter: blur(40px) contrast(135%);
+    margin: -60px;
   }
 
   #LaunchpadItemWrapper {
