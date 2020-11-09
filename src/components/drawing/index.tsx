@@ -5,27 +5,27 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-import {useModal} from "../modal/UseModal";
-import {FooterContext} from "../footer/Footer";
-import {TitleBar} from "react-desktop/macOs";
+import { useModal } from "../modal/UseModal";
+import { FooterContext } from "../footer/Footer";
+import { TitleBar } from "react-desktop/macOs";
 import Canvas from "./Canvas";
 import "./index.scss";
 /// <reference path="react-desktop.d.ts" />
 
 export const Drawing = React.memo(() => {
-  const {open, close, RenderModal} = useModal();
-  const [isDrawingOpen, isDrawingShow, setDrawingShow] = useContext(
+  const { open, close, RenderModal } = useModal();
+  const [isDrawingOpen, , isDrawingShow, setDrawingShow] = useContext(
     FooterContext
   );
-  const [style, setStyle] = useState({width: 1200, height: 800});
+  const [style, setStyle] = useState({ width: 1200, height: 800 });
   const [isFullscreen, setFullscreen] = useState(false);
 
   useEffect(isDrawingOpen.type ? open : close, [isDrawingOpen]);
   const maximizeClick = useCallback(() => {
     if (isFullscreen) {
-      setStyle({width: 1200, height: 800});
+      setStyle({ width: 1200, height: 800 });
     } else {
-      setStyle({width: -1, height: -1});
+      setStyle({ width: -1, height: -1 });
     }
     setFullscreen(!isFullscreen);
   }, [isFullscreen]);

@@ -1,5 +1,5 @@
-import React, {useMemo, useState, CSSProperties} from "react";
-import {Dialog, Button} from "react-desktop/macOs";
+import React, { useMemo, useState, CSSProperties } from "react";
+import { Dialog, Button } from "react-desktop/macOs";
 
 /// <reference path="react-desktop.d.ts" />
 
@@ -19,15 +19,15 @@ export const useDialog = () => {
   const openDialog = () => setIsVisible(true);
   const closeDialog = () => setIsVisible(false);
   const RenderDialog = ({
-                          width,
-                          height,
-                          id,
-                          title,
-                          message,
-                          imgSrc,
-                          onCheck,
-                          onClose,
-                        }: DialogProps) => {
+    width,
+    height,
+    id,
+    title,
+    message,
+    imgSrc,
+    onCheck,
+    onClose,
+  }: DialogProps) => {
     const styles = useMemo(
       () => ({
         width: width,
@@ -43,7 +43,7 @@ export const useDialog = () => {
       if (!imgSrc) return;
       return (
         <img
-          src={require("../footer/image/" + imgSrc)}
+          src={require(`../footer/image/${imgSrc}`)}
           width="52"
           height="52"
           alt="tip"

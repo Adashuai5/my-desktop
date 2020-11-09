@@ -368,7 +368,7 @@ const Footer = React.memo(() => {
                 }
                 style={
                   {
-                    backgroundImage: "url(" + require("./image/" + item) + ")",
+                    backgroundImage: "url(" + require(`./image/${item}`) + ")",
                     backgroundPosition: "center",
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
