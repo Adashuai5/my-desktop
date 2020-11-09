@@ -1,24 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 import Modal from "./Modal";
 import store from "./store";
 
 // Modal组件最基础的两个事件，open/close
-export const useModal = () => {
+export const useModal = (id: string) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [id, setId] = useState("");
-  const initId = (id: string) => {
-    if (!id) return;
-    setId(id);
-  };
-  const open = () => {
+
+  const open = useCallback(() => {
     setIsVisible(true);
     store.addModal(id);
-  };
-  const close = () => {
+  }, [id]);
+
+  const close = useCallback(() => {
     setIsVisible(false);
     store.removeModal(id);
-  };
+  }, [id]);
 
   const RenderModal = ({
     children,
@@ -33,7 +30,6 @@ export const useModal = () => {
       isShow: boolean;
     };
   }) => {
-    initId(data.id);
     return (
       <>
         {isVisible && (

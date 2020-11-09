@@ -13,7 +13,7 @@ import "./index.scss";
 /// <reference path="react-desktop.d.ts" />
 
 export const Drawing = React.memo(() => {
-  const { open, close, RenderModal } = useModal();
+  const { open, close, RenderModal } = useModal("DrawingView");
   const [isDrawingOpen, , isDrawingShow, setDrawingShow] = useContext(
     FooterContext
   );

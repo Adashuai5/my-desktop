@@ -7,7 +7,7 @@ import "./index.scss";
 /// <reference path="react-desktop.d.ts" />
 
 export const Calculator = React.memo(() => {
-  const { open, close, RenderModal } = useModal();
+  const { open, close, RenderModal } = useModal("CalculatorView");
   const [
     isCalculatorOpen,
     setCalculatorOpen,
