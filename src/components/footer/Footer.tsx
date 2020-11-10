@@ -9,11 +9,11 @@ import React, {
   CSSProperties,
 } from "react";
 import "./index.scss";
-import {Setting} from "../setting/Setting";
-import {Calculator} from "../calculator";
-import {Drawing} from "../drawing";
-import {Launchpad} from "../launchpad";
-import {positionReducer, dataReducer} from "./reducer";
+import { Setting } from "../setting/Setting";
+import { Calculator } from "../calculator";
+import { Drawing } from "../drawing";
+import { Launchpad } from "../launchpad";
+import { positionReducer, dataReducer } from "./reducer";
 
 export const FooterContext = createContext<any>([]);
 
@@ -82,13 +82,13 @@ const Footer = React.memo(() => {
         case "PrefApp.png":
           if (!isSettingOpen.type) {
             if (isLaunchpadShow) {
-              setSettingOpen({...isSettingOpen, type: !isSettingOpen.type});
+              setSettingOpen({ ...isSettingOpen, type: !isSettingOpen.type });
               setLaunchpadShow(false);
               return;
             }
             img.classList.add("bounce");
             setTimeout(() => {
-              setSettingOpen({type: !isSettingOpen.type, index});
+              setSettingOpen({ type: !isSettingOpen.type, index });
               img.classList.remove("bounce");
             }, 2500);
             return;
@@ -107,7 +107,7 @@ const Footer = React.memo(() => {
             }
             img.classList.add("bounce");
             setTimeout(() => {
-              setCalculatorOpen({type: !isCalculatorOpen.type, index});
+              setCalculatorOpen({ type: !isCalculatorOpen.type, index });
               img.classList.remove("bounce");
             }, 2500);
             return;
@@ -126,7 +126,7 @@ const Footer = React.memo(() => {
             }
             img.classList.add("bounce");
             setTimeout(() => {
-              setDrawingOpen({type: !isDrawingOpen.type, index});
+              setDrawingOpen({ type: !isDrawingOpen.type, index });
               img.classList.remove("bounce");
             }, 2500);
             return;
@@ -166,7 +166,7 @@ const Footer = React.memo(() => {
   );
 
   const mousemove = useCallback(
-    ({clientX, clientY}) => {
+    ({ clientX, clientY }) => {
       if (!dockRef.current) {
         return;
       }
@@ -268,8 +268,8 @@ const Footer = React.memo(() => {
         const img = imgList[item.index] as HTMLDivElement;
         !item.type
           ? setTimeout(() => {
-            img?.classList.remove("active");
-          }, 500)
+              img?.classList.remove("active");
+            }, 500)
           : img.classList.add("active");
       }
     });
@@ -302,13 +302,13 @@ const Footer = React.memo(() => {
   const itemStyles = useMemo(() => {
     return position === "top" || position === "bottom"
       ? {
-        marginLeft: dockData.itemMargin * 1,
-        marginRight: dockData.itemMargin * 1,
-      }
+          marginLeft: dockData.itemMargin * 1,
+          marginRight: dockData.itemMargin * 1,
+        }
       : {
-        marginTop: dockData.itemMargin * 1,
-        marginBottom: dockData.itemMargin * 1,
-      };
+          marginTop: dockData.itemMargin * 1,
+          marginBottom: dockData.itemMargin * 1,
+        };
   }, [position, dockData.itemMargin]);
 
   return (
@@ -325,7 +325,7 @@ const Footer = React.memo(() => {
           setDockData,
         ]}
       >
-        <Setting/>
+        <Setting />
       </FooterContext.Provider>
       <FooterContext.Provider
         value={[
@@ -335,15 +335,15 @@ const Footer = React.memo(() => {
           setCalculatorShow,
         ]}
       >
-        <Calculator/>
+        <Calculator />
       </FooterContext.Provider>
       <FooterContext.Provider
         value={[isDrawingOpen, setDrawingOpen, isDrawingShow, setDrawingShow]}
       >
-        <Drawing/>
+        <Drawing />
       </FooterContext.Provider>
       <FooterContext.Provider value={[isLaunchpadShow, setLaunchpadShow]}>
-        <Launchpad isVisible={isLaunchpadShow} dockItemClick={dockItemClick}/>
+        <Launchpad isVisible={isLaunchpadShow} dockItemClick={dockItemClick} />
       </FooterContext.Provider>
       <footer className={position} id="AppFooter">
         <div
@@ -368,7 +368,7 @@ const Footer = React.memo(() => {
                 }
                 style={
                   {
-                    backgroundImage: "url(" + require("./image/" + item) + ")",
+                    backgroundImage: "url(" + require(`./image/${item}`) + ")",
                     backgroundPosition: "center",
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",

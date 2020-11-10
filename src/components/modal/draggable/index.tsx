@@ -5,6 +5,8 @@ import React, {
   useEffect,
   CSSProperties,
 } from "react";
+import { observer } from "mobx-react";
+import store from "../store";
 
 type Props = {
   children: React.ReactChild;
@@ -17,35 +19,41 @@ type Props = {
     isShow: boolean;
   };
 };
-const Draggable = ({children, domEl, data}: Props) => {
+const Draggable = ({ children, domEl, data }: Props) => {
+  const [zIndex, setZIndex] = useState(1);
+
   const dragEl = document.getElementById(data.id) as HTMLDivElement;
   const moveEl = document.getElementById(data.moveId) as HTMLDivElement;
   const localPosition = localStorage.getItem(data.id) || null;
   const initPosition = localPosition
     ? JSON.parse(localPosition)
     : {
-      x: data.width === -1 ? 0 : (window.innerWidth - data.width) / 2,
-      y: data.height === -1 ? 0 : (window.innerHeight - data.height) / 2,
-    };
+        x: data.width === -1 ? 0 : (window.innerWidth - data.width) / 2,
+        y: data.height === -1 ? 0 : (window.innerHeight - data.height) / 2,
+      };
   const [state, setState] = useState({
     isDragging: false,
-    origin: {x: 0, y: 0},
+    origin: { x: 0, y: 0 },
     position: initPosition,
   });
 
-  const handleMouseDown = useCallback(({clientX, clientY}) => {
-    setState((state) => ({
-      ...state,
-      isDragging: true,
-      origin: {
-        x: clientX - state.position.x,
-        y: clientY - state.position.y,
-      },
-    }));
-  }, []);
+  const handleMouseDown = useCallback(
+    ({ clientX, clientY }) => {
+      setZIndex(zIndex + store.queue.length + 1);
+      setState((state) => ({
+        ...state,
+        isDragging: true,
+        origin: {
+          x: clientX - state.position.x,
+          y: clientY - state.position.y,
+        },
+      }));
+    },
+    [zIndex]
+  );
 
   const handleMouseMove = useCallback(
-    ({clientX, clientY, target}) => {
+    ({ clientX, clientY, target }) => {
       if (!state.isDragging || (moveEl && target !== moveEl)) return;
       let x = clientX - state.origin.x;
       let y = clientY - state.origin.y;
@@ -59,7 +67,7 @@ const Draggable = ({children, domEl, data}: Props) => {
       } else if (y > window.innerHeight - dragEl.offsetHeight) {
         y = window.innerHeight - dragEl.offsetHeight;
       }
-      const newPosition = {x, y};
+      const newPosition = { x, y };
       setState((state) => ({
         ...state,
         position: newPosition,
@@ -81,8 +89,8 @@ const Draggable = ({children, domEl, data}: Props) => {
     if (data.width === -1) {
       setState({
         isDragging: false,
-        origin: {x: 0, y: 0},
-        position: {x: 0, y: 0},
+        origin: { x: 0, y: 0 },
+        position: { x: 0, y: 0 },
       });
     }
   }, [data.width]);
@@ -111,11 +119,11 @@ const Draggable = ({children, domEl, data}: Props) => {
     () => ({
       left: `${state.position.x}px`,
       top: `${state.position.y}px`,
-      zIndex: state.isDragging ? 2 : 1,
+      zIndex,
       display: data.isShow ? "block" : "none",
       position: "absolute",
     }),
-    [state.isDragging, state.position, data.isShow]
+    [state.position.x, state.position.y, zIndex, data.isShow]
   );
 
   return (
@@ -129,4 +137,4 @@ const Draggable = ({children, domEl, data}: Props) => {
   );
 };
 
-export default Draggable;
+export default observer(Draggable);

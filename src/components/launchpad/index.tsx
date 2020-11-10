@@ -127,7 +127,7 @@ export const Launchpad = ({isVisible, dockItemClick}: Props) => {
                         {
                           backgroundImage:
                             "url(" +
-                            require("../footer/image/" + item + ".png") +
+                            require(`../footer/image/${item}.png`) +
                             ")",
                           backgroundPosition: "center",
                           backgroundSize: "cover",

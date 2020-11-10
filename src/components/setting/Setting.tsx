@@ -29,7 +29,7 @@ interface OptionsProps {
 }
 
 export const Setting = React.memo(() => {
-  const {open, close, RenderModal} = useModal();
+  const {open, close, RenderModal} = useModal("SettingView");
   const positionMap = ["left", "bottom", "right", "top"];
   const setListMap = [{title: "通用"}];
   const [
