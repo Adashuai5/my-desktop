@@ -14,6 +14,13 @@ import { Calculator } from "../calculator";
 import { Drawing } from "../drawing";
 import { Launchpad } from "../launchpad";
 import { positionReducer, dataReducer } from "./reducer";
+import FinderPng from "./image/Finder.png";
+import LaunchpadPng from "./image/Launchpad.png";
+import PrefAppPng from "./image/PrefApp.png";
+import ChromePng from "./image/Chrome.png";
+import TerminalPng from "./image/Terminal.png";
+import CalculatorPng from "./image/Calculator.png";
+import DrawingPng from "./image/Drawing.png";
 
 export const FooterContext = createContext<any>([]);
 
@@ -24,13 +31,13 @@ interface OpenTypes {
 
 const Footer = React.memo(() => {
   const [dockList] = useState<string[]>([
-    "Finder.png",
-    "Launchpad.png",
-    "PrefApp.png",
-    "Chrome.png",
-    "Terminal.png",
-    "Calculator.png",
-    "Drawing.png",
+    FinderPng,
+    LaunchpadPng,
+    PrefAppPng,
+    ChromePng,
+    TerminalPng,
+    CalculatorPng,
+    DrawingPng,
   ]);
   const [position, setPosition] = useReducer(positionReducer, "bottom");
   const [dockData, setDockData] = useReducer(dataReducer, {
@@ -66,7 +73,7 @@ const Footer = React.memo(() => {
       const imgList = dockRef.current.childNodes;
       const img = imgList[index] as HTMLDivElement;
       switch (item) {
-        case "Chrome.png":
+        case ChromePng:
           if (!isChrome) {
             const chrome = window.open(
               "http://www.google.com/",
@@ -79,7 +86,7 @@ const Footer = React.memo(() => {
             setChrome(null);
           }
           return;
-        case "PrefApp.png":
+        case PrefAppPng:
           if (!isSettingOpen.type) {
             if (isLaunchpadShow) {
               setSettingOpen({ ...isSettingOpen, type: !isSettingOpen.type });
@@ -95,7 +102,7 @@ const Footer = React.memo(() => {
           }
           setSettingShow(!isSettingShow);
           return;
-        case "Calculator.png":
+        case CalculatorPng:
           if (!isCalculatorOpen.type) {
             if (isLaunchpadShow) {
               setCalculatorOpen({
@@ -114,7 +121,7 @@ const Footer = React.memo(() => {
           }
           setCalculatorShow(!isCalculatorShow);
           return;
-        case "Drawing.png":
+        case DrawingPng:
           if (!isDrawingOpen.type) {
             if (isLaunchpadShow) {
               setDrawingOpen({
@@ -133,7 +140,7 @@ const Footer = React.memo(() => {
           }
           setDrawingShow(!isDrawingShow);
           return;
-        case "Launchpad.png":
+        case LaunchpadPng:
           setLaunchpadShow(!isLaunchpadShow);
           return;
       }
@@ -358,17 +365,17 @@ const Footer = React.memo(() => {
                 className={
                   [
                     "Launchpad.png",
-                    "PrefApp.png",
-                    "Chrome.png",
-                    "Calculator.png",
-                    "Drawing.png",
+                    PrefAppPng,
+                    ChromePng,
+                    CalculatorPng,
+                    DrawingPng,
                   ].includes(item)
                     ? "pointer DockItem " + position
                     : position + " DockItem"
                 }
                 style={
                   {
-                    backgroundImage: "url(" + require(`./image/${item}`) + ")",
+                    backgroundImage: "url(" + item + ")",
                     backgroundPosition: "center",
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",

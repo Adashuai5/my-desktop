@@ -5,9 +5,13 @@ import React, {
   useContext,
   CSSProperties,
 } from "react";
-import {range, inRange} from "lodash";
+import { range, inRange } from "lodash";
 import Draggable from "../draggable/index";
-import {FooterContext} from "../footer/Footer";
+import { FooterContext } from "../footer/Footer";
+import PrefAppPng from "../footer/image/PrefApp.png";
+import ChromePng from "../footer/image/Chrome.png";
+import CalculatorPng from "../footer/image/Calculator.png";
+import DrawingPng from "../footer/image/Drawing.png";
 import "./index.scss";
 
 type Props = {
@@ -15,12 +19,12 @@ type Props = {
   dockItemClick: (item: string, index: number) => void;
 };
 
-export const Launchpad = ({isVisible, dockItemClick}: Props) => {
+export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
   const [dockList] = useState<string[]>([
-    "PrefApp",
-    "Chrome",
-    "Calculator",
-    "Drawing",
+    PrefAppPng,
+    ChromePng,
+    CalculatorPng,
+    DrawingPng,
   ]);
   const [isLaunchpadShow, setLaunchpadShow] = useContext(FooterContext);
   const items = range(dockList.length);
@@ -32,7 +36,7 @@ export const Launchpad = ({isVisible, dockItemClick}: Props) => {
   });
 
   const handleDrag = useCallback(
-    ({translation, id}) => {
+    ({ translation, id }) => {
       setDragState((dragState) => ({
         ...dragState,
         dragging: true,
@@ -65,7 +69,7 @@ export const Launchpad = ({isVisible, dockItemClick}: Props) => {
   }, []);
 
   const handleKeydown = useCallback(
-    ({keyCode}) => {
+    ({ keyCode }) => {
       if (keyCode === 27 && isVisible) {
         setLaunchpadShow(!isLaunchpadShow);
       }
@@ -74,7 +78,7 @@ export const Launchpad = ({isVisible, dockItemClick}: Props) => {
   );
 
   const handleClick = useCallback(
-    ({target}) => {
+    ({ target }) => {
       if (!isVisible) return;
       const LaunchpadItems = document.getElementsByClassName("LaunchpadImg");
       for (let i = 0; i < LaunchpadItems.length; i++) {
@@ -105,6 +109,9 @@ export const Launchpad = ({isVisible, dockItemClick}: Props) => {
               const isDragging = dragState.draggedIndex === index;
               const top = dragState.dragOrder.indexOf(index) * 200;
               const draggedTop = dragState.order.indexOf(index) * 200;
+              const picName = item.split("/").pop();
+              const name = (picName || "").split(".")[0];
+
               return (
                 <Draggable
                   key={index}
@@ -125,10 +132,7 @@ export const Launchpad = ({isVisible, dockItemClick}: Props) => {
                       className="LaunchpadImg"
                       style={
                         {
-                          backgroundImage:
-                            "url(" +
-                            require(`../footer/image/${item}.png`) +
-                            ")",
+                          backgroundImage: "url(" + item + ")",
                           backgroundPosition: "center",
                           backgroundSize: "cover",
                           backgroundRepeat: "no-repeat",
@@ -136,7 +140,7 @@ export const Launchpad = ({isVisible, dockItemClick}: Props) => {
                       }
                       onClick={() => {
                         if (!dragState.dragging) {
-                          dockItemClick(item + ".png", index);
+                          dockItemClick(item, index);
                         } else {
                           setDragState((dragState) => ({
                             ...dragState,
@@ -145,7 +149,7 @@ export const Launchpad = ({isVisible, dockItemClick}: Props) => {
                         }
                       }}
                     />
-                    <span style={{color: "#fff"}}>{item}</span>
+                    <span style={{ color: "#fff" }}>{name}</span>
                   </div>
                 </Draggable>
               );
