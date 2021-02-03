@@ -4,9 +4,9 @@ import React, {
   useEffect,
   CSSProperties,
   useCallback,
-} from "react";
-import {useModal} from "../modal/UseModal";
-import {FooterContext} from "../footer/Footer";
+} from "react"
+import { useModal } from "../modal/UseModal"
+import { FooterContext } from "../footer/Footer"
 import {
   View,
   Radio,
@@ -15,23 +15,23 @@ import {
   ListView,
   ListViewRow,
   Checkbox,
-} from "react-desktop/macOs";
-import "./index.scss";
-import {Iconfont} from "../iconfont";
+} from "react-desktop/macOs"
+import "./index.scss"
+import { Iconfont } from "../iconfont"
 
 /// <reference path="react-desktop.d.ts" />
 
 interface OptionsProps {
-  title: string;
-  value: number;
-  max: string;
-  min: string;
+  title: string
+  value: number
+  max: string
+  min: string
 }
 
 export const Setting = React.memo(() => {
-  const {open, close, RenderModal} = useModal("SettingView");
-  const positionMap = ["left", "bottom", "right", "top"];
-  const setListMap = [{title: "通用"}];
+  const { open, close, RenderModal } = useModal("SettingView")
+  const positionMap = ["left", "bottom", "right", "top"]
+  const setListMap = [{ title: "通用" }]
   const [
     isSettingOpen,
     setSettingOpen,
@@ -41,7 +41,7 @@ export const Setting = React.memo(() => {
     setPosition,
     dockData,
     setDockData,
-  ] = useContext(FooterContext);
+  ] = useContext(FooterContext)
   const optionsMap: Array<OptionsProps> = [
     {
       title: "图标默认大小",
@@ -67,9 +67,14 @@ export const Setting = React.memo(() => {
       max: "100",
       min: "0",
     },
-  ];
-  const [selected, setTitle] = useState("通用");
-  useEffect(isSettingOpen.type ? open : close, [isSettingOpen]);
+  ]
+  const [selected, setTitle] = useState("通用")
+
+  useEffect(() => (isSettingOpen.type ? open() : close()), [
+    close,
+    isSettingOpen,
+    open,
+  ])
 
   const onInputChange = useCallback(
     (value: string, item: OptionsProps) => {
@@ -77,31 +82,31 @@ export const Setting = React.memo(() => {
         case "图标默认大小":
           setDockData({
             name: "change",
-            dockData: {...dockData, length: value},
-          });
-          return;
+            dockData: { ...dockData, length: value },
+          })
+          return
         case "图标缩放后大小":
           setDockData({
             name: "change",
-            dockData: {...dockData, bigLength: value},
-          });
-          return;
+            dockData: { ...dockData, bigLength: value },
+          })
+          return
         case "图标之间距离大小":
           setDockData({
             name: "change",
-            dockData: {...dockData, itemMargin: value},
-          });
-          return;
+            dockData: { ...dockData, itemMargin: value },
+          })
+          return
         case "Dock 距离屏幕边缘大小":
           setDockData({
             name: "change",
-            dockData: {...dockData, distance: value},
-          });
-          return;
+            dockData: { ...dockData, distance: value },
+          })
+          return
       }
     },
     [dockData, setDockData]
-  );
+  )
 
   return (
     <RenderModal
@@ -120,13 +125,13 @@ export const Setting = React.memo(() => {
           inset
           isFullscreen={false}
           onCloseClick={() => {
-            close();
-            setSettingOpen({...isSettingOpen, type: false});
-            localStorage.setItem("dockData", JSON.stringify(dockData));
-            localStorage.setItem("position", JSON.stringify(position));
+            close()
+            setSettingOpen({ ...isSettingOpen, type: false })
+            localStorage.setItem("dockData", JSON.stringify(dockData))
+            localStorage.setItem("position", JSON.stringify(position))
           }}
           onMinimizeClick={() => {
-            setSettingShow(false);
+            setSettingShow(false)
           }}
           onMaximizeClick={open}
         />
@@ -151,7 +156,7 @@ export const Setting = React.memo(() => {
                       {item.title}
                     </Text>
                   </ListViewRow>
-                );
+                )
               })}
             </ListView>
           </View>
@@ -159,7 +164,7 @@ export const Setting = React.memo(() => {
             <Text bold marginBottom="10px" size="20">
               {selected}
             </Text>
-            <div className="divide"/>
+            <div className="divide" />
             {optionsMap.map((item, index) => {
               return (
                 <div className="options" key={index + item.value}>
@@ -188,12 +193,12 @@ export const Setting = React.memo(() => {
                     type="range"
                     value={item.value}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputChange(e.target.value, item);
+                      onInputChange(e.target.value, item)
                     }}
                   />
                   <span>{item.value}</span>
                 </div>
-              );
+              )
             })}
 
             <Text bold marginBottom="10px">
@@ -223,18 +228,18 @@ export const Setting = React.memo(() => {
                         setPosition({
                           name: "change",
                           position: e.target.value,
-                        });
+                        })
                       }}
                       defaultValue={item}
                       defaultChecked={item === position}
                     />
                   </div>
-                );
+                )
               })}
             </View>
           </View>
         </div>
       </>
     </RenderModal>
-  );
-});
+  )
+})

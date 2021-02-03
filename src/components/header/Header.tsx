@@ -1,41 +1,41 @@
-import React, {useState, useRef, useEffect, useCallback} from "react";
-import {Iconfont} from "../iconfont";
-import "./index.scss";
-import dayjs from "dayjs";
+import React, { useState, useRef, useEffect, useCallback } from "react"
+import { Iconfont } from "../iconfont"
+import "./index.scss"
+import dayjs from "dayjs"
 
-require("dayjs/locale/zh-cn");
-dayjs.locale("zh-cn");
+require("dayjs/locale/zh-cn")
+dayjs.locale("zh-cn")
 const Header = () => {
-  const menuRef = useRef<HTMLDivElement>(null);
-  const [time, setTime] = useState(dayjs().format("M月DD日 周dd HH:mm"));
-  const [menuShow, setMenuShow] = useState(false);
-  const [inputShow, setInputShow] = useState(false);
-  const [inputValue, setInputValue] = useState("Ada");
+  const menuRef = useRef<HTMLDivElement>(null)
+  const [time, setTime] = useState(dayjs().format("M月DD日 周dd HH:mm"))
+  const [menuShow, setMenuShow] = useState(false)
+  const [inputShow, setInputShow] = useState(false)
+  const [inputValue, setInputValue] = useState("Ada")
   window.setInterval(() => {
-    const newTime = dayjs().format("M月DD日 周dd HH:mm");
-    setTime(newTime);
-  }, 60000);
+    const newTime = dayjs().format("M月DD日 周dd HH:mm")
+    setTime(newTime)
+  }, 60000)
   const windowClick = useCallback(
-    ({target}) => {
+    ({ target }) => {
       if (inputShow || menuShow) {
         if (
           target.parentNode === menuRef.current ||
           target.parentNode.parentNode === menuRef.current
         ) {
-          return;
+          return
         }
-        setMenuShow(false);
-        setInputShow(false);
+        setMenuShow(false)
+        setInputShow(false)
       }
     },
     [inputShow, menuShow]
-  );
+  )
   useEffect(() => {
-    window.addEventListener("click", windowClick);
+    window.addEventListener("click", windowClick)
     return () => {
-      window.removeEventListener("click", windowClick);
-    };
-  }, [windowClick]);
+      window.removeEventListener("click", windowClick)
+    }
+  }, [windowClick])
   return (
     <header className="AppFinder">
       <div className="FinderLeft">
@@ -64,17 +64,17 @@ const Header = () => {
           )}
           <ul className={menuShow ? "menu active" : "menu"}>
             <li onClick={() => setInputShow(true)}>自定义标题</li>
-            <div className="line"/>
+            <div className="line" />
             <li>你好</li>
-            <div className="line"/>
+            <div className="line" />
             <li>我是周元达</li>
-            <div className="line"/>
+            <div className="line" />
             <li>感谢来到这里的你</li>
-            <div className="line"/>
+            <div className="line" />
             <li>我正在找工作</li>
-            <div className="line"/>
+            <div className="line" />
             <li>如有意请联系我</li>
-            <div className="line"/>
+            <div className="line" />
             <li>点击右边人头可查看我的简历</li>
           </ul>
         </div>
@@ -105,7 +105,7 @@ const Header = () => {
         </a>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

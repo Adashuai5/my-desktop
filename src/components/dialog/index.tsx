@@ -43,7 +43,7 @@ export const useDialog = () => {
       if (!imgSrc) return;
       return (
         <img
-          src={require(`../footer/image/${imgSrc}`)}
+          src={imgSrc}
           width="52"
           height="52"
           alt="tip"

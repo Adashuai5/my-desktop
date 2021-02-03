@@ -1,8 +1,8 @@
-import { observable, action } from "mobx";
+import { observable, action } from "mobx"
 
 class Store {
   @observable
-  queue: string[] = [];
+  queue: string[] = []
 
   /**
    * 弹窗入队
@@ -10,7 +10,7 @@ class Store {
    */
   @action
   addModal(id: string) {
-    !this.queue.find((i: string) => i === id) && this.queue.push(id);
+    !this.queue.find((i: string) => i === id) && this.queue.push(id)
   }
   /**
    * 弹窗出队
@@ -18,10 +18,10 @@ class Store {
    */
   @action
   removeModal(id: string) {
-    const index = this.queue.indexOf(id);
-    if (index === -1) return;
-    this.queue.splice(index, 1);
+    const index = this.queue.indexOf(id)
+    if (index === -1) return
+    this.queue.splice(index, 1)
   }
 }
 
-export default new Store();
+export default new Store()

@@ -4,20 +4,20 @@ import React, {
   useCallback,
   useContext,
   CSSProperties,
-} from "react";
-import { range, inRange } from "lodash";
-import Draggable from "../draggable/index";
-import { FooterContext } from "../footer/Footer";
-import PrefAppPng from "../footer/image/PrefApp.png";
-import ChromePng from "../footer/image/Chrome.png";
-import CalculatorPng from "../footer/image/Calculator.png";
-import DrawingPng from "../footer/image/Drawing.png";
-import "./index.scss";
+} from "react"
+import { range, inRange } from "lodash"
+import Draggable from "../draggable/index"
+import { FooterContext } from "../footer/Footer"
+import PrefAppPng from "../footer/image/PrefApp.png"
+import ChromePng from "../footer/image/Chrome.png"
+import CalculatorPng from "../footer/image/Calculator.png"
+import DrawingPng from "../footer/image/Drawing.png"
+import "./index.scss"
 
 type Props = {
-  isVisible: boolean;
-  dockItemClick: (item: string, index: number) => void;
-};
+  isVisible: boolean
+  dockItemClick: (item: string, index: number) => void
+}
 
 export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
   const [dockList] = useState<string[]>([
@@ -25,80 +25,80 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
     ChromePng,
     CalculatorPng,
     DrawingPng,
-  ]);
-  const [isLaunchpadShow, setLaunchpadShow] = useContext(FooterContext);
-  const items = range(dockList.length);
+  ])
+  const [isLaunchpadShow, setLaunchpadShow] = useContext(FooterContext)
+  const items = range(dockList.length)
   const [dragState, setDragState] = useState({
     dragging: false,
     order: items,
     dragOrder: items,
     draggedIndex: null,
-  });
+  })
 
   const handleDrag = useCallback(
     ({ translation, id }) => {
       setDragState((dragState) => ({
         ...dragState,
         dragging: true,
-      }));
-      const delta = Math.round(translation.x / 100);
-      const index = dragState.order.indexOf(id);
-      const dragOrder = dragState.order.filter((index: number) => index !== id);
+      }))
+      const delta = Math.round(translation.x / 100)
+      const index = dragState.order.indexOf(id)
+      const dragOrder = dragState.order.filter((index: number) => index !== id)
 
       if (!inRange(index + delta, 0, items.length)) {
-        return;
+        return
       }
 
-      dragOrder.splice(index + delta, 0, id);
+      dragOrder.splice(index + delta, 0, id)
 
       setDragState((dragState) => ({
         ...dragState,
         draggedIndex: id,
         dragOrder,
-      }));
+      }))
     },
     [dragState.order, items.length]
-  );
+  )
 
   const handleDragEnd = useCallback(() => {
     setDragState((dragState) => ({
       ...dragState,
       order: dragState.dragOrder,
       draggedIndex: null,
-    }));
-  }, []);
+    }))
+  }, [])
 
   const handleKeydown = useCallback(
     ({ keyCode }) => {
       if (keyCode === 27 && isVisible) {
-        setLaunchpadShow(!isLaunchpadShow);
+        setLaunchpadShow(!isLaunchpadShow)
       }
     },
     [setLaunchpadShow, isLaunchpadShow, isVisible]
-  );
+  )
 
   const handleClick = useCallback(
     ({ target }) => {
-      if (!isVisible) return;
-      const LaunchpadItems = document.getElementsByClassName("LaunchpadImg");
+      if (!isVisible) return
+      const LaunchpadItems = document.getElementsByClassName("LaunchpadImg")
       for (let i = 0; i < LaunchpadItems.length; i++) {
         if (LaunchpadItems[i] === target) {
-          return;
+          return
         }
       }
-      setLaunchpadShow(!isLaunchpadShow);
+      setLaunchpadShow(!isLaunchpadShow)
     },
     [setLaunchpadShow, isLaunchpadShow, isVisible]
-  );
+  )
 
   useEffect(() => {
-    window.addEventListener("click", handleClick);
-    window.addEventListener("keyup", handleKeydown);
+    window.addEventListener("click", handleClick)
+    window.addEventListener("keyup", handleKeydown)
     return () => {
-      window.removeEventListener("click", handleClick);
-      window.removeEventListener("keyup", handleKeydown);
-    };
-  }, [handleKeydown, handleClick, setLaunchpadShow, isLaunchpadShow]);
+      window.removeEventListener("click", handleClick)
+      window.removeEventListener("keyup", handleKeydown)
+    }
+  }, [handleKeydown, handleClick, setLaunchpadShow, isLaunchpadShow])
 
   return (
     <>
@@ -106,11 +106,11 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
         <div id="Launchpad">
           <div id="LaunchpadItemWrapper">
             {dockList.map((item, index) => {
-              const isDragging = dragState.draggedIndex === index;
-              const top = dragState.dragOrder.indexOf(index) * 200;
-              const draggedTop = dragState.order.indexOf(index) * 200;
-              const picName = item.split("/").pop();
-              const name = (picName || "").split(".")[0];
+              const isDragging = dragState.draggedIndex === index
+              const top = dragState.dragOrder.indexOf(index) * 200
+              const draggedTop = dragState.order.indexOf(index) * 200
+              const picName = item.split("/").pop()
+              const name = (picName || "").split(".")[0]
 
               return (
                 <Draggable
@@ -140,23 +140,23 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
                       }
                       onClick={() => {
                         if (!dragState.dragging) {
-                          dockItemClick(item, index);
+                          dockItemClick(item, index)
                         } else {
                           setDragState((dragState) => ({
                             ...dragState,
                             dragging: false,
-                          }));
+                          }))
                         }
                       }}
                     />
                     <span style={{ color: "#fff" }}>{name}</span>
                   </div>
                 </Draggable>
-              );
+              )
             })}
           </div>
         </div>
       )}
     </>
-  );
-};
+  )
+}
