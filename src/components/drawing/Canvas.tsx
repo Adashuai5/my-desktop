@@ -6,125 +6,126 @@ import React, {
   CSSProperties,
   useContext,
   useImperativeHandle,
-} from "react";
-import {Iconfont} from "../iconfont";
-import {CSSTransition} from "react-transition-group";
-import {useDialog} from "../dialog";
-import {FooterContext} from "../footer/Footer";
+} from "react"
+import { Iconfont } from "../iconfont"
+import { CSSTransition } from "react-transition-group"
+import { useDialog } from "../dialog"
+import { FooterContext } from "../footer/Footer"
+import DrawingPng from '../footer/image/Drawing.png'
 
 interface CanvasProps {
-  width: number;
-  height: number;
-  onRef: any;
+  width: number
+  height: number
+  onRef: any
 }
 
 type Coordinate = {
-  x: number;
-  y: number;
-};
-
-interface ClearRectOptions {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+  x: number
+  y: number
 }
 
-const Canvas = ({width, height, onRef}: CanvasProps) => {
-  const colorMap = ["black", "red", "green", "blue"];
+interface ClearRectOptions {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
+const Canvas = ({ width, height, onRef }: CanvasProps) => {
+  const colorMap = ["black", "red", "green", "blue"]
   const optionsMap = [
     "canvas_save",
     "canvas_clear",
     "turn_left_flat",
     "turn_right_flat",
-  ];
-  const toolsMap = ["canvas_paint", "canvas_eraser"];
+  ]
+  const toolsMap = ["canvas_paint", "canvas_eraser"]
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const backRef = useRef<SVGSVGElement>(null);
-  const goRef = useRef<SVGSVGElement>(null);
-  const [strokeStyle, setStrokeStyle] = useState("black");
-  const [lineWidth, setLineWidth] = useState(5);
-  const [eraserEnabled, setEraserEnabled] = useState(false);
-  const [isPainting, setIsPainting] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const backRef = useRef<SVGSVGElement>(null)
+  const goRef = useRef<SVGSVGElement>(null)
+  const [strokeStyle, setStrokeStyle] = useState("black")
+  const [lineWidth, setLineWidth] = useState(5)
+  const [eraserEnabled, setEraserEnabled] = useState(false)
+  const [isPainting, setIsPainting] = useState(false)
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
     undefined
-  );
-  const [step, setStep] = useState(-1);
-  const [canvasHistory, setCanvasHistory] = useState<string[]>([]);
+  )
+  const [step, setStep] = useState(-1)
+  const [canvasHistory, setCanvasHistory] = useState<string[]>([])
 
   const getCoordinates = (event: MouseEvent): Coordinate | undefined => {
     if (!canvasRef.current) {
-      return;
+      return
     }
     return {
       x: event.offsetX,
       y: event.offsetY,
-    };
-  };
+    }
+  }
 
   const saveFragment = useCallback(() => {
-    setStep(step + 1);
+    setStep(step + 1)
     if (!canvasRef.current) {
-      return;
+      return
     }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    canvasHistory.push(canvas.toDataURL());
-    setCanvasHistory(canvasHistory);
+    const canvas: HTMLCanvasElement = canvasRef.current
+    canvasHistory.push(canvas.toDataURL())
+    setCanvasHistory(canvasHistory)
 
     if (!backRef.current || !goRef.current) {
-      return;
+      return
     }
-    const back: SVGSVGElement = backRef.current;
-    const go: SVGSVGElement = goRef.current;
-    back.classList.add("active");
-    go.classList.remove("active");
-  }, [step, canvasHistory]);
+    const back: SVGSVGElement = backRef.current
+    const go: SVGSVGElement = goRef.current
+    back.classList.add("active")
+    go.classList.remove("active")
+  }, [step, canvasHistory])
 
   const startPaint = useCallback((event: MouseEvent) => {
-    const coordinates = getCoordinates(event);
+    const coordinates = getCoordinates(event)
     if (coordinates) {
-      setMousePosition(coordinates);
-      setIsPainting(true);
+      setMousePosition(coordinates)
+      setIsPainting(true)
     }
-  }, []);
+  }, [])
 
   const drawLine = useCallback(
     (originalMousePosition: Coordinate, newMousePosition: Coordinate) => {
       if (!canvasRef.current) {
-        return;
+        return
       }
-      const canvas: HTMLCanvasElement = canvasRef.current;
-      const context = canvas.getContext("2d");
+      const canvas: HTMLCanvasElement = canvasRef.current
+      const context = canvas.getContext("2d")
       if (context) {
-        context.strokeStyle = strokeStyle;
-        context.lineJoin = "round";
-        context.lineWidth = lineWidth;
-        context.beginPath();
-        context.moveTo(originalMousePosition.x, originalMousePosition.y);
-        context.lineTo(newMousePosition.x, newMousePosition.y);
-        context.closePath();
-        context.stroke();
+        context.strokeStyle = strokeStyle
+        context.lineJoin = "round"
+        context.lineWidth = lineWidth
+        context.beginPath()
+        context.moveTo(originalMousePosition.x, originalMousePosition.y)
+        context.lineTo(newMousePosition.x, newMousePosition.y)
+        context.closePath()
+        context.stroke()
       }
     },
     [lineWidth, strokeStyle]
-  );
+  )
 
-  const clearRect = useCallback(({x, y, width, height}: ClearRectOptions) => {
+  const clearRect = useCallback(({ x, y, width, height }: ClearRectOptions) => {
     if (!canvasRef.current) {
-      return;
+      return
     }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    const context = canvas.getContext("2d");
+    const canvas: HTMLCanvasElement = canvasRef.current
+    const context = canvas.getContext("2d")
     if (context) {
-      context.clearRect(x, y, width, height);
+      context.clearRect(x, y, width, height)
     }
-  }, []);
+  }, [])
 
   const paint = useCallback(
     (event: MouseEvent) => {
       if (isPainting) {
-        const newMousePosition = getCoordinates(event);
+        const newMousePosition = getCoordinates(event)
         if (mousePosition && newMousePosition) {
           if (eraserEnabled) {
             clearRect({
@@ -132,94 +133,94 @@ const Canvas = ({width, height, onRef}: CanvasProps) => {
               y: newMousePosition.y - lineWidth / 2,
               width: lineWidth,
               height: lineWidth,
-            });
+            })
           } else {
-            drawLine(mousePosition, newMousePosition);
-            setMousePosition(newMousePosition);
+            drawLine(mousePosition, newMousePosition)
+            setMousePosition(newMousePosition)
           }
         }
       }
     },
     [isPainting, eraserEnabled, mousePosition, lineWidth, drawLine, clearRect]
-  );
+  )
 
   const exitPaint = useCallback(() => {
-    setIsPainting(false);
-    setMousePosition(undefined);
-    saveFragment();
-  }, [saveFragment]);
+    setIsPainting(false)
+    setMousePosition(undefined)
+    saveFragment()
+  }, [saveFragment])
 
   const leaveCanvas = useCallback(() => {
-    setIsPainting(false);
-    setMousePosition(undefined);
-  }, []);
+    setIsPainting(false)
+    setMousePosition(undefined)
+  }, [])
 
   useEffect(() => {
     if (!canvasRef.current) {
-      return;
+      return
     }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    canvas.addEventListener("mousedown", startPaint);
-    canvas.addEventListener("mousemove", paint);
-    canvas.addEventListener("mouseup", exitPaint);
-    canvas.addEventListener("mouseleave", leaveCanvas);
+    const canvas: HTMLCanvasElement = canvasRef.current
+    canvas.addEventListener("mousedown", startPaint)
+    canvas.addEventListener("mousemove", paint)
+    canvas.addEventListener("mouseup", exitPaint)
+    canvas.addEventListener("mouseleave", leaveCanvas)
     return () => {
-      canvas.removeEventListener("mousedown", startPaint);
-      canvas.removeEventListener("mousemove", paint);
-      canvas.removeEventListener("mouseup", exitPaint);
-      canvas.removeEventListener("mouseleave", leaveCanvas);
-    };
-  }, [startPaint, paint, exitPaint, leaveCanvas]);
+      canvas.removeEventListener("mousedown", startPaint)
+      canvas.removeEventListener("mousemove", paint)
+      canvas.removeEventListener("mouseup", exitPaint)
+      canvas.removeEventListener("mouseleave", leaveCanvas)
+    }
+  }, [startPaint, paint, exitPaint, leaveCanvas])
 
-  const [isToolboxOpen, setToolboxOpen] = useState(true);
+  const [isToolboxOpen, setToolboxOpen] = useState(true)
   const toolboxOpenClick = useCallback(() => {
-    setToolboxOpen(!isToolboxOpen);
-  }, [isToolboxOpen]);
+    setToolboxOpen(!isToolboxOpen)
+  }, [isToolboxOpen])
 
   const onToolsClick = useCallback(([e, toolName]) => {
-    const el = e.currentTarget;
-    if (el.classList[1]) return;
+    const el = e.currentTarget
+    if (el.classList[1]) return
     toolName === "canvas_eraser"
       ? setEraserEnabled(true)
-      : setEraserEnabled(false);
-    el.classList.add("active");
+      : setEraserEnabled(false)
+    el.classList.add("active")
     el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
-      if (!item.matches("svg") || item === el) return;
-      item.classList.remove("active");
-    });
-  }, []);
+      if (!item.matches("svg") || item === el) return
+      item.classList.remove("active")
+    })
+  }, [])
 
   const onSizesChange = useCallback((e) => {
-    setLineWidth(e.target.value);
-  }, []);
+    setLineWidth(e.target.value)
+  }, [])
 
   const onColorsClick = useCallback(([e, selector, color]) => {
-    const el = e.target;
-    if (el.className.includes("active")) return;
-    setStrokeStyle(color);
-    el.classList.add("active");
+    const el = e.target
+    if (el.className.includes("active")) return
+    setStrokeStyle(color)
+    el.classList.add("active")
     el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
-      if (!item.matches(selector) || item === el) return;
-      item.classList.remove("active");
-    });
-  }, []);
+      if (!item.matches(selector) || item === el) return
+      item.classList.remove("active")
+    })
+  }, [])
 
   const onColorsChange = useCallback((e) => {
-    setStrokeStyle(e.target.value);
-  }, []);
+    setStrokeStyle(e.target.value)
+  }, [])
 
-  const {openDialog, closeDialog, RenderDialog} = useDialog();
-  const [isClearDialogOpen, setClearDialogOpen] = useState(false);
-  const [closeCanvas, setCloseCanvas] = useState(false);
+  const { openDialog, closeDialog, RenderDialog } = useDialog()
+  const [isClearDialogOpen, setClearDialogOpen] = useState(false)
+  const [closeCanvas, setCloseCanvas] = useState(false)
 
   useImperativeHandle(onRef, () => ({
     drawingCloseClick: () => {
       if (step === -1) {
-        setDrawingOpen({...isDrawingOpen, type: false});
-      } else if (isClearDialogOpen) return;
-      setCloseCanvas(true);
+        setDrawingOpen({ ...isDrawingOpen, type: false })
+      } else if (isClearDialogOpen) return
+      setCloseCanvas(true)
     },
-  }));
+  }))
 
   useEffect(() => {
     if (closeCanvas) {
@@ -227,114 +228,114 @@ const Canvas = ({width, height, onRef}: CanvasProps) => {
         setClearDialogText({
           title: "退出将丢失该画布！",
           message: "确认退出画板？",
-        });
-        setClearDialogOpen(true);
+        })
+        setClearDialogOpen(true)
       }
     } else {
       setClearDialogText({
         title: "您确定要清空该画布吗？",
         message: "一旦清空将无法撤回。",
-      });
+      })
     }
-  }, [closeCanvas, isClearDialogOpen]);
+  }, [closeCanvas, isClearDialogOpen])
 
-  const [isDrawingOpen, setDrawingOpen] = useContext(FooterContext);
+  const [isDrawingOpen, setDrawingOpen] = useContext(FooterContext)
 
-  useEffect(isClearDialogOpen ? openDialog : closeDialog, [isClearDialogOpen]);
+  useEffect(() => (isClearDialogOpen ? openDialog() : closeDialog()), [closeDialog, isClearDialogOpen, openDialog])
 
   const saveCanvas = useCallback(() => {
     if (!canvasRef.current) {
-      return;
+      return
     }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    const context = canvas.getContext("2d");
+    const canvas: HTMLCanvasElement = canvasRef.current
+    const context = canvas.getContext("2d")
     if (context) {
-      const compositeOperation = context.globalCompositeOperation;
-      context.globalCompositeOperation = "destination-over";
-      context.fillStyle = "#fff";
-      context.fillRect(0, 0, width, height);
-      const imageData = canvas.toDataURL("image/png");
-      context.putImageData(context.getImageData(0, 0, width, height), 0, 0);
-      context.globalCompositeOperation = compositeOperation;
-      const a = document.createElement("a");
-      document.body.appendChild(a);
-      a.href = imageData;
-      a.download = "myPaint";
-      a.target = "_blank";
-      a.click();
+      const compositeOperation = context.globalCompositeOperation
+      context.globalCompositeOperation = "destination-over"
+      context.fillStyle = "#fff"
+      context.fillRect(0, 0, width, height)
+      const imageData = canvas.toDataURL("image/png")
+      context.putImageData(context.getImageData(0, 0, width, height), 0, 0)
+      context.globalCompositeOperation = compositeOperation
+      const a = document.createElement("a")
+      document.body.appendChild(a)
+      a.href = imageData
+      a.download = "myPaint"
+      a.target = "_blank"
+      a.click()
     }
-  }, [width, height]);
+  }, [width, height])
 
   const changeCanvas = useCallback(
     (type) => {
       if (!canvasRef.current || !backRef.current || !goRef.current) {
-        return;
+        return
       }
-      const canvas: HTMLCanvasElement = canvasRef.current;
-      const context = canvas.getContext("2d");
-      const back: SVGSVGElement = backRef.current;
-      const go: SVGSVGElement = goRef.current;
+      const canvas: HTMLCanvasElement = canvasRef.current
+      const context = canvas.getContext("2d")
+      const back: SVGSVGElement = backRef.current
+      const go: SVGSVGElement = goRef.current
       if (context) {
-        let currentStep = -1;
+        let currentStep = -1
         if (type === "back" && step >= 0) {
-          currentStep = step - 1;
-          go.classList.add("active");
+          currentStep = step - 1
+          go.classList.add("active")
           if (currentStep < 0) {
-            back.classList.remove("active");
+            back.classList.remove("active")
           }
         } else if (type === "go" && step < canvasHistory.length - 1) {
-          currentStep = step + 1;
-          back.classList.add("active");
+          currentStep = step + 1
+          back.classList.add("active")
           if (currentStep === canvasHistory.length - 1) {
-            go.classList.remove("active");
+            go.classList.remove("active")
           }
         } else {
-          return;
+          return
         }
-        context.clearRect(0, 0, width, height);
-        const canvasPic = new Image();
-        canvasPic.src = canvasHistory[currentStep];
+        context.clearRect(0, 0, width, height)
+        const canvasPic = new Image()
+        canvasPic.src = canvasHistory[currentStep]
         canvasPic.addEventListener("load", () => {
-          context.drawImage(canvasPic, 0, 0);
-        });
-        setStep(currentStep);
+          context.drawImage(canvasPic, 0, 0)
+        })
+        setStep(currentStep)
       }
     },
     [canvasHistory, step, width, height]
-  );
+  )
 
   const onOptionsClick = useCallback(
     ([e, toolName]) => {
       switch (toolName) {
         case "canvas_clear":
-          if (step === -1) return;
-          setClearDialogOpen(true);
-          break;
+          if (step === -1) return
+          setClearDialogOpen(true)
+          break
         case "canvas_save":
-          saveCanvas();
-          break;
+          saveCanvas()
+          break
         case "turn_left_flat":
-          changeCanvas("back");
-          break;
+          changeCanvas("back")
+          break
         case "turn_right_flat":
-          changeCanvas("go");
-          break;
+          changeCanvas("go")
+          break
       }
     },
     [saveCanvas, changeCanvas, step]
-  );
+  )
 
   const [clearDialogText, setClearDialogText] = useState({
     title: "您确定要清空该画布吗？",
     message: "一旦清空将无法撤回。",
-  });
+  })
 
   const closeClearDialog = useCallback(() => {
-    setClearDialogOpen(false);
+    setClearDialogOpen(false)
     if (closeCanvas) {
-      setCloseCanvas(false);
+      setCloseCanvas(false)
     }
-  }, [setClearDialogOpen, closeCanvas, setCloseCanvas]);
+  }, [setClearDialogOpen, closeCanvas, setCloseCanvas])
 
   const checkClearDialog = useCallback(
     (e) => {
@@ -343,20 +344,20 @@ const Canvas = ({width, height, onRef}: CanvasProps) => {
         y: 0,
         width,
         height,
-      });
-      setCanvasHistory([]);
-      setStep(-1);
-      closeClearDialog();
+      })
+      setCanvasHistory([])
+      setStep(-1)
+      closeClearDialog()
       if (!backRef.current || !goRef.current) {
-        return;
+        return
       }
-      const back: SVGSVGElement = backRef.current;
-      const go: SVGSVGElement = goRef.current;
-      back.classList.remove("active");
-      go.classList.remove("active");
+      const back: SVGSVGElement = backRef.current
+      const go: SVGSVGElement = goRef.current
+      back.classList.remove("active")
+      go.classList.remove("active")
       if (closeCanvas) {
-        setDrawingOpen({...isDrawingOpen, type: false});
-        setCloseCanvas(false);
+        setDrawingOpen({ ...isDrawingOpen, type: false })
+        setCloseCanvas(false)
       }
     },
     [
@@ -369,11 +370,11 @@ const Canvas = ({width, height, onRef}: CanvasProps) => {
       isDrawingOpen,
       setDrawingOpen,
     ]
-  );
+  )
 
   return (
     <>
-      <canvas id="canvas" ref={canvasRef} height={height} width={width}/>
+      <canvas id="canvas" ref={canvasRef} height={height} width={width} />
       <div
         id="toolbox-open"
         style={
@@ -413,10 +414,10 @@ const Canvas = ({width, height, onRef}: CanvasProps) => {
                   key={index + option}
                   className={option}
                   type={"icon-" + option}
-                  style={{fontSize: 50}}
+                  style={{ fontSize: 50 }}
                   clickEvent={(e) => onOptionsClick([e, option])}
                 />
-              );
+              )
             })}
           </div>
           <span>Toolbox</span>
@@ -428,17 +429,17 @@ const Canvas = ({width, height, onRef}: CanvasProps) => {
                   className={
                     tool === "canvas_eraser"
                       ? eraserEnabled
-                      ? "active"
-                      : ""
+                        ? "active"
+                        : ""
                       : !eraserEnabled
                       ? "active"
                       : ""
                   }
                   type={"icon-" + tool}
-                  style={{fontSize: 50}}
+                  style={{ fontSize: 50 }}
                   clickEvent={(e) => onToolsClick([e, tool])}
                 />
-              );
+              )
             })}
           </div>
           <div className="sizes">
@@ -465,7 +466,7 @@ const Canvas = ({width, height, onRef}: CanvasProps) => {
                   key={index + color}
                   onClick={(e) => onColorsClick([e, "li", color])}
                 />
-              );
+              )
             })}
             <input
               type="color"
@@ -482,17 +483,17 @@ const Canvas = ({width, height, onRef}: CanvasProps) => {
         id="clear-dialog"
         title={clearDialogText.title}
         message={clearDialogText.message}
-        imgSrc={"Drawing.png"}
+        imgSrc={DrawingPng}
         onCheck={checkClearDialog}
         onClose={closeClearDialog}
       />
     </>
-  );
-};
+  )
+}
 
 Canvas.defaultProps = {
   width: window.innerWidth,
   height: window.innerHeight,
-};
+}
 
-export default Canvas;
+export default Canvas

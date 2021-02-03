@@ -4,39 +4,44 @@ import React, {
   useState,
   useCallback,
   useRef,
-} from "react";
-import { useModal } from "../modal/UseModal";
-import { FooterContext } from "../footer/Footer";
-import { TitleBar } from "react-desktop/macOs";
-import Canvas from "./Canvas";
-import "./index.scss";
+} from "react"
+import { useModal } from "../modal/UseModal"
+import { FooterContext } from "../footer/Footer"
+import { TitleBar } from "react-desktop/macOs"
+import Canvas from "./Canvas"
+import "./index.scss"
 /// <reference path="react-desktop.d.ts" />
 
 export const Drawing = React.memo(() => {
-  const { open, close, RenderModal } = useModal("DrawingView");
+  const { open, close, RenderModal } = useModal("DrawingView")
   const [isDrawingOpen, , isDrawingShow, setDrawingShow] = useContext(
     FooterContext
-  );
-  const [style, setStyle] = useState({ width: 1200, height: 800 });
-  const [isFullscreen, setFullscreen] = useState(false);
+  )
+  const [style, setStyle] = useState({ width: 1200, height: 800 })
+  const [isFullscreen, setFullscreen] = useState(false)
 
-  useEffect(isDrawingOpen.type ? open : close, [isDrawingOpen]);
+  useEffect(() => (isDrawingOpen.type ? open() : close()), [
+    close,
+    isDrawingOpen,
+    open,
+  ])
+
   const maximizeClick = useCallback(() => {
     if (isFullscreen) {
-      setStyle({ width: 1200, height: 800 });
+      setStyle({ width: 1200, height: 800 })
     } else {
-      setStyle({ width: -1, height: -1 });
+      setStyle({ width: -1, height: -1 })
     }
-    setFullscreen(!isFullscreen);
-  }, [isFullscreen]);
+    setFullscreen(!isFullscreen)
+  }, [isFullscreen])
 
-  const drawingRef = useRef<any>();
+  const drawingRef = useRef<any>()
 
   const drawingCloseClick = () => {
     if (drawingRef.current) {
-      drawingRef.current.drawingCloseClick();
+      drawingRef.current.drawingCloseClick()
     }
-  };
+  }
   return (
     <RenderModal
       data={{
@@ -54,7 +59,7 @@ export const Drawing = React.memo(() => {
           isFullscreen={isFullscreen}
           onCloseClick={drawingCloseClick}
           onMinimizeClick={() => {
-            setDrawingShow(false);
+            setDrawingShow(false)
           }}
           onMaximizeClick={maximizeClick}
           onResizeClick={maximizeClick}
@@ -66,5 +71,5 @@ export const Drawing = React.memo(() => {
         />
       </div>
     </RenderModal>
-  );
-});
+  )
+})
