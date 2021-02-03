@@ -267,9 +267,9 @@
     js-tokens "^4.0.0"
 
 "@babel/parser@^7.1.0", "@babel/parser@^7.12.13", "@babel/parser@^7.12.3", "@babel/parser@^7.7.0":
-  version "7.12.13"
-  resolved "http://npm.dui88.com:80/@babel%2fparser/-/parser-7.12.13.tgz#3ee7be4131fe657ba9143d5c5b3a9f253fdb75e9"
-  integrity sha1-Pue+QTH+ZXupFD1cWzqfJT/bdek=
+  version "7.12.14"
+  resolved "http://npm.dui88.com:80/@babel%2fparser/-/parser-7.12.14.tgz#4adb7c5eef1d437ef965ad1569cd826db8c11dc9"
+  integrity sha1-Stt8Xu8dQ375Za0Vac2CbbjBHck=
 
 "@babel/plugin-proposal-async-generator-functions@^7.12.1", "@babel/plugin-proposal-async-generator-functions@^7.12.13":
   version "7.12.13"
@@ -5349,9 +5349,9 @@ get-caller-file@^2.0.1:
   integrity sha1-T5RBKoLbMvNuOwuXQfipf+sDH34=
 
 get-intrinsic@^1.0.1, get-intrinsic@^1.0.2, get-intrinsic@^1.1.0:
-  version "1.1.0"
-  resolved "http://npm.dui88.com:80/get-intrinsic/-/get-intrinsic-1.1.0.tgz#892e62931e6938c8a23ea5aaebcfb67bd97da97e"
-  integrity sha1-iS5ikx5pOMiiPqWq68+2e9l9qX4=
+  version "1.1.1"
+  resolved "http://npm.dui88.com:80/get-intrinsic/-/get-intrinsic-1.1.1.tgz#15f59f376f855c446963948f0d24cd3637b4abc6"
+  integrity sha1-FfWfN2+FXERpY5SPDSTNNje0q8Y=
   dependencies:
     function-bind "^1.1.1"
     has "^1.0.3"
