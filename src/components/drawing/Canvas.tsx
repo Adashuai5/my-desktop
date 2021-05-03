@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   useCallback,
   useEffect,
@@ -5,12 +6,12 @@ import React, {
   useState,
   CSSProperties,
   useContext,
-  useImperativeHandle,
-} from "react"
-import { Iconfont } from "../iconfont"
-import { CSSTransition } from "react-transition-group"
-import { useDialog } from "../dialog"
-import { FooterContext } from "../footer/Footer"
+  useImperativeHandle
+} from 'react'
+import { Iconfont } from '../iconfont'
+import { CSSTransition } from 'react-transition-group'
+import { useDialog } from '../dialog'
+import { FooterContext } from '../footer/Footer'
 import DrawingPng from '../footer/image/Drawing.png'
 
 interface CanvasProps {
@@ -32,19 +33,19 @@ interface ClearRectOptions {
 }
 
 const Canvas = ({ width, height, onRef }: CanvasProps) => {
-  const colorMap = ["black", "red", "green", "blue"]
+  const colorMap = ['black', 'red', 'green', 'blue']
   const optionsMap = [
-    "canvas_save",
-    "canvas_clear",
-    "turn_left_flat",
-    "turn_right_flat",
+    'canvas_save',
+    'canvas_clear',
+    'turn_left_flat',
+    'turn_right_flat'
   ]
-  const toolsMap = ["canvas_paint", "canvas_eraser"]
+  const toolsMap = ['canvas_paint', 'canvas_eraser']
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const backRef = useRef<SVGSVGElement>(null)
   const goRef = useRef<SVGSVGElement>(null)
-  const [strokeStyle, setStrokeStyle] = useState("black")
+  const [strokeStyle, setStrokeStyle] = useState('black')
   const [lineWidth, setLineWidth] = useState(5)
   const [eraserEnabled, setEraserEnabled] = useState(false)
   const [isPainting, setIsPainting] = useState(false)
@@ -60,7 +61,7 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
     }
     return {
       x: event.offsetX,
-      y: event.offsetY,
+      y: event.offsetY
     }
   }
 
@@ -78,8 +79,8 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
     }
     const back: SVGSVGElement = backRef.current
     const go: SVGSVGElement = goRef.current
-    back.classList.add("active")
-    go.classList.remove("active")
+    back.classList.add('active')
+    go.classList.remove('active')
   }, [step, canvasHistory])
 
   const startPaint = useCallback((event: MouseEvent) => {
@@ -96,10 +97,10 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
         return
       }
       const canvas: HTMLCanvasElement = canvasRef.current
-      const context = canvas.getContext("2d")
+      const context = canvas.getContext('2d')
       if (context) {
         context.strokeStyle = strokeStyle
-        context.lineJoin = "round"
+        context.lineJoin = 'round'
         context.lineWidth = lineWidth
         context.beginPath()
         context.moveTo(originalMousePosition.x, originalMousePosition.y)
@@ -116,7 +117,7 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
       return
     }
     const canvas: HTMLCanvasElement = canvasRef.current
-    const context = canvas.getContext("2d")
+    const context = canvas.getContext('2d')
     if (context) {
       context.clearRect(x, y, width, height)
     }
@@ -132,7 +133,7 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
               x: newMousePosition.x - lineWidth / 2,
               y: newMousePosition.y - lineWidth / 2,
               width: lineWidth,
-              height: lineWidth,
+              height: lineWidth
             })
           } else {
             drawLine(mousePosition, newMousePosition)
@@ -160,15 +161,15 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
       return
     }
     const canvas: HTMLCanvasElement = canvasRef.current
-    canvas.addEventListener("mousedown", startPaint)
-    canvas.addEventListener("mousemove", paint)
-    canvas.addEventListener("mouseup", exitPaint)
-    canvas.addEventListener("mouseleave", leaveCanvas)
+    canvas.addEventListener('mousedown', startPaint)
+    canvas.addEventListener('mousemove', paint)
+    canvas.addEventListener('mouseup', exitPaint)
+    canvas.addEventListener('mouseleave', leaveCanvas)
     return () => {
-      canvas.removeEventListener("mousedown", startPaint)
-      canvas.removeEventListener("mousemove", paint)
-      canvas.removeEventListener("mouseup", exitPaint)
-      canvas.removeEventListener("mouseleave", leaveCanvas)
+      canvas.removeEventListener('mousedown', startPaint)
+      canvas.removeEventListener('mousemove', paint)
+      canvas.removeEventListener('mouseup', exitPaint)
+      canvas.removeEventListener('mouseleave', leaveCanvas)
     }
   }, [startPaint, paint, exitPaint, leaveCanvas])
 
@@ -177,16 +178,16 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
     setToolboxOpen(!isToolboxOpen)
   }, [isToolboxOpen])
 
-  const onToolsClick = useCallback(([e, toolName]) => {
+  const onToolsClick = useCallback((e, toolName) => {
     const el = e.currentTarget
     if (el.classList[1]) return
-    toolName === "canvas_eraser"
+    toolName === 'canvas_eraser'
       ? setEraserEnabled(true)
       : setEraserEnabled(false)
-    el.classList.add("active")
+    el.classList.add('active')
     el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
-      if (!item.matches("svg") || item === el) return
-      item.classList.remove("active")
+      if (!item.matches('svg') || item === el) return
+      item.classList.remove('active')
     })
   }, [])
 
@@ -196,12 +197,12 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
 
   const onColorsClick = useCallback(([e, selector, color]) => {
     const el = e.target
-    if (el.className.includes("active")) return
+    if (el.className.includes('active')) return
     setStrokeStyle(color)
-    el.classList.add("active")
+    el.classList.add('active')
     el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
       if (!item.matches(selector) || item === el) return
-      item.classList.remove("active")
+      item.classList.remove('active')
     })
   }, [])
 
@@ -219,49 +220,53 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
         setDrawingOpen({ ...isDrawingOpen, type: false })
       } else if (isClearDialogOpen) return
       setCloseCanvas(true)
-    },
+    }
   }))
 
   useEffect(() => {
     if (closeCanvas) {
       if (!isClearDialogOpen) {
         setClearDialogText({
-          title: "退出将丢失该画布！",
-          message: "确认退出画板？",
+          title: '退出将丢失该画布！',
+          message: '确认退出画板？'
         })
         setClearDialogOpen(true)
       }
     } else {
       setClearDialogText({
-        title: "您确定要清空该画布吗？",
-        message: "一旦清空将无法撤回。",
+        title: '您确定要清空该画布吗？',
+        message: '一旦清空将无法撤回。'
       })
     }
   }, [closeCanvas, isClearDialogOpen])
 
   const [isDrawingOpen, setDrawingOpen] = useContext(FooterContext)
 
-  useEffect(() => (isClearDialogOpen ? openDialog() : closeDialog()), [closeDialog, isClearDialogOpen, openDialog])
+  useEffect(() => (isClearDialogOpen ? openDialog() : closeDialog()), [
+    closeDialog,
+    isClearDialogOpen,
+    openDialog
+  ])
 
   const saveCanvas = useCallback(() => {
     if (!canvasRef.current) {
       return
     }
     const canvas: HTMLCanvasElement = canvasRef.current
-    const context = canvas.getContext("2d")
+    const context = canvas.getContext('2d')
     if (context) {
       const compositeOperation = context.globalCompositeOperation
-      context.globalCompositeOperation = "destination-over"
-      context.fillStyle = "#fff"
+      context.globalCompositeOperation = 'destination-over'
+      context.fillStyle = '#fff'
       context.fillRect(0, 0, width, height)
-      const imageData = canvas.toDataURL("image/png")
+      const imageData = canvas.toDataURL('image/png')
       context.putImageData(context.getImageData(0, 0, width, height), 0, 0)
       context.globalCompositeOperation = compositeOperation
-      const a = document.createElement("a")
+      const a = document.createElement('a')
       document.body.appendChild(a)
       a.href = imageData
-      a.download = "myPaint"
-      a.target = "_blank"
+      a.download = 'myPaint'
+      a.target = '_blank'
       a.click()
     }
   }, [width, height])
@@ -272,30 +277,30 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
         return
       }
       const canvas: HTMLCanvasElement = canvasRef.current
-      const context = canvas.getContext("2d")
+      const context = canvas.getContext('2d')
       const back: SVGSVGElement = backRef.current
       const go: SVGSVGElement = goRef.current
       if (context) {
         let currentStep = -1
-        if (type === "back" && step >= 0) {
+        if (type === 'back' && step >= 0) {
           currentStep = step - 1
-          go.classList.add("active")
+          go.classList.add('active')
           if (currentStep < 0) {
-            back.classList.remove("active")
+            back.classList.remove('active')
           }
-        } else if (type === "go" && step < canvasHistory.length - 1) {
+        } else if (type === 'go' && step < canvasHistory.length - 1) {
           currentStep = step + 1
-          back.classList.add("active")
+          back.classList.add('active')
           if (currentStep === canvasHistory.length - 1) {
-            go.classList.remove("active")
+            go.classList.remove('active')
           }
         } else {
           return
         }
         context.clearRect(0, 0, width, height)
         const canvasPic = new Image()
-        canvasPic.src = canvasHistory[currentStep]
-        canvasPic.addEventListener("load", () => {
+        canvasPic.src = canvasHistory[currentStep] as string
+        canvasPic.addEventListener('load', () => {
           context.drawImage(canvasPic, 0, 0)
         })
         setStep(currentStep)
@@ -305,20 +310,20 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
   )
 
   const onOptionsClick = useCallback(
-    ([e, toolName]) => {
+    (toolName) => {
       switch (toolName) {
-        case "canvas_clear":
+        case 'canvas_clear':
           if (step === -1) return
           setClearDialogOpen(true)
           break
-        case "canvas_save":
+        case 'canvas_save':
           saveCanvas()
           break
-        case "turn_left_flat":
-          changeCanvas("back")
+        case 'turn_left_flat':
+          changeCanvas('back')
           break
-        case "turn_right_flat":
-          changeCanvas("go")
+        case 'turn_right_flat':
+          changeCanvas('go')
           break
       }
     },
@@ -326,8 +331,8 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
   )
 
   const [clearDialogText, setClearDialogText] = useState({
-    title: "您确定要清空该画布吗？",
-    message: "一旦清空将无法撤回。",
+    title: '您确定要清空该画布吗？',
+    message: '一旦清空将无法撤回。'
   })
 
   const closeClearDialog = useCallback(() => {
@@ -337,40 +342,37 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
     }
   }, [setClearDialogOpen, closeCanvas, setCloseCanvas])
 
-  const checkClearDialog = useCallback(
-    (e) => {
-      clearRect({
-        x: 0,
-        y: 0,
-        width,
-        height,
-      })
-      setCanvasHistory([])
-      setStep(-1)
-      closeClearDialog()
-      if (!backRef.current || !goRef.current) {
-        return
-      }
-      const back: SVGSVGElement = backRef.current
-      const go: SVGSVGElement = goRef.current
-      back.classList.remove("active")
-      go.classList.remove("active")
-      if (closeCanvas) {
-        setDrawingOpen({ ...isDrawingOpen, type: false })
-        setCloseCanvas(false)
-      }
-    },
-    [
-      closeClearDialog,
-      clearRect,
+  const checkClearDialog = useCallback(() => {
+    clearRect({
+      x: 0,
+      y: 0,
       width,
-      height,
-      closeCanvas,
-      setCloseCanvas,
-      isDrawingOpen,
-      setDrawingOpen,
-    ]
-  )
+      height
+    })
+    setCanvasHistory([])
+    setStep(-1)
+    closeClearDialog()
+    if (!backRef.current || !goRef.current) {
+      return
+    }
+    const back: SVGSVGElement = backRef.current
+    const go: SVGSVGElement = goRef.current
+    back.classList.remove('active')
+    go.classList.remove('active')
+    if (closeCanvas) {
+      setDrawingOpen({ ...isDrawingOpen, type: false })
+      setCloseCanvas(false)
+    }
+  }, [
+    closeClearDialog,
+    clearRect,
+    width,
+    height,
+    closeCanvas,
+    setCloseCanvas,
+    isDrawingOpen,
+    setDrawingOpen
+  ])
 
   return (
     <>
@@ -379,15 +381,15 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
         id="toolbox-open"
         style={
           {
-            borderRadius: isToolboxOpen ? null : 5,
+            borderRadius: isToolboxOpen ? null : 5
           } as CSSProperties
         }
       >
         <Iconfont
-          type={isToolboxOpen ? "icon-upward_flat" : "icon-downward_flat"}
+          type={isToolboxOpen ? 'icon-upward_flat' : 'icon-downward_flat'}
           style={{
-            width: "100%",
-            fontSize: 32,
+            width: '100%',
+            fontSize: 32
           }}
           clickEvent={toolboxOpenClick}
         />
@@ -405,17 +407,17 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
               return (
                 <Iconfont
                   svgRef={
-                    option === "turn_right_flat"
+                    option === 'turn_right_flat'
                       ? goRef
-                      : option === "turn_left_flat"
+                      : option === 'turn_left_flat'
                       ? backRef
                       : undefined
                   }
                   key={index + option}
                   className={option}
-                  type={"icon-" + option}
+                  type={'icon-' + option}
                   style={{ fontSize: 50 }}
-                  clickEvent={(e) => onOptionsClick([e, option])}
+                  clickEvent={() => onOptionsClick(option)}
                 />
               )
             })}
@@ -427,17 +429,17 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
                 <Iconfont
                   key={index + tool}
                   className={
-                    tool === "canvas_eraser"
+                    tool === 'canvas_eraser'
                       ? eraserEnabled
-                        ? "active"
-                        : ""
+                        ? 'active'
+                        : ''
                       : !eraserEnabled
-                      ? "active"
-                      : ""
+                      ? 'active'
+                      : ''
                   }
-                  type={"icon-" + tool}
+                  type={'icon-' + tool}
                   style={{ fontSize: 50 }}
-                  clickEvent={(e) => onToolsClick([e, tool])}
+                  clickEvent={(e) => onToolsClick(e, tool)}
                 />
               )
             })}
@@ -446,7 +448,7 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
             <input
               style={
                 {
-                  backgroundColor: eraserEnabled ? "#ebeff4" : strokeStyle,
+                  backgroundColor: eraserEnabled ? '#ebeff4' : strokeStyle
                 } as CSSProperties
               }
               type="range"
@@ -462,9 +464,9 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
             {colorMap.map((color, index) => {
               return (
                 <li
-                  className={color === strokeStyle ? color + " active" : color}
+                  className={color === strokeStyle ? color + ' active' : color}
                   key={index + color}
-                  onClick={(e) => onColorsClick([e, "li", color])}
+                  onClick={(e) => onColorsClick([e, 'li', color])}
                 />
               )
             })}
@@ -493,7 +495,7 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
 
 Canvas.defaultProps = {
   width: window.innerWidth,
-  height: window.innerHeight,
+  height: window.innerHeight
 }
 
 export default Canvas
