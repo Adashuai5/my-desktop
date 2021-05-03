@@ -7,13 +7,17 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
 
-      - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@master
-        env:
-          ACCESS_TOKEN: ${{ secrets.MY_WINDOW }}
-          BRANCH: gh-pages
-          FOLDER: build
-          BUILD_SCRIPT: yarn && yarn build
+      - name: Install and Build 🔧
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          token: ${{ secrets.MY_WINDOW }},
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build # The folder the action should deploy.
