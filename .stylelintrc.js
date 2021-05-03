@@ -5,7 +5,9 @@ module.exports = {
     'font-family-no-missing-generic-family-keyword': null,
     'selector-pseudo-class-no-unknown': null,
     'unit-case': null,
-    'no-descending-specificity': null
+    'no-descending-specificity': null,
+    'no-duplicate-selectors': null,
+    'at-rule-no-unknown': null
   },
   // 忽略其他文件，只校验样式相关的文件
   ignoreFiles: [

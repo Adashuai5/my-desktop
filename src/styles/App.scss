@@ -2,6 +2,7 @@
   position: relative;
   height: 100vh;
   background: url(../assets/image/sierra-4K.jpg) center/cover no-repeat;
+
   @each $member in top, bottom, left, right {
     .#{$member} {
       #{$member}: 0;

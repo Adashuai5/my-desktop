@@ -2,8 +2,10 @@
 .AppMain {
   #main-view {
     position: absolute;
+    box-shadow:
+      rgba(0, 0, 0, 0.31) 0 0 1px,
+      rgba(0, 0, 0, 0.18) 0 0 5px,
+      hsla(0, 0%, 0%, 0.3) 0 8px 50px;
     transform: translate(-50%, -50%);
-    box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px,
-    hsla(0, 0%, 0%, 0.3) 0 8px 50px;
   }
 }
