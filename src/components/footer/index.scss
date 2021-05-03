@@ -3,19 +3,19 @@
   20%,
   53%,
   to {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
     transform: translate3d(0, 0, 0);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
   40%,
   43% {
-    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
     transform: translate3d(0, -35px, 0) scaleY(1.1);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
   }
 
   70% {
-    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
     transform: translate3d(0, -35px, 0) scaleY(1.05);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
   }
 
   80% {
@@ -33,19 +33,19 @@
   20%,
   53%,
   to {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
     transform: translate3d(0, 0, 0);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
   40%,
   43% {
-    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
     transform: translate3d(0, 35px, 0) scaleY(1.1);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
   }
 
   70% {
-    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
     transform: translate3d(0, 35px, 0) scaleY(1.05);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
   }
 
   80% {
@@ -63,19 +63,19 @@
   20%,
   53%,
   to {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
     transform: translate3d(0, 0, 0);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
   40%,
   43% {
-    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
     transform: translate3d(35px, 0, 0) scaleX(1.1);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
   }
 
   70% {
-    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
     transform: translate3d(35px, 0, 0) scaleX(1.05);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
   }
 
   80% {
@@ -93,19 +93,19 @@
   20%,
   53%,
   to {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
     transform: translate3d(0, 0, 0);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
   40%,
   43% {
-    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
     transform: translate3d(-35px, 0, 0) scaleX(1.1);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
   }
 
   70% {
-    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
     transform: translate3d(-35px, 0, 0) scaleX(1.05);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
   }
 
   80% {
@@ -121,29 +121,33 @@
 #AppFooter {
   position: absolute;
   display: flex;
+
   @each $member in top, bottom {
     &.#{$member} {
-      width: 100vw;
       justify-content: center;
+      width: 100vw;
       #{$member}: 0;
     }
   }
+
   @each $member in left, right {
     &.#{$member} {
-      height: 100vh;
       align-items: center;
+      height: 100vh;
       #{$member}: 0;
     }
   }
 
   #Docker {
-    transition: margin 0.5s;
-    margin-bottom: 10px;
-    padding: 3px 4px 7px;
     display: flex;
+    padding: 3px 4px 7px;
+    margin-bottom: 10px;
     background-color: rgba(222, 223, 227, 0.7);
-    box-shadow: rgba(0, 0, 0, 0.31) 0px 0px 1px, rgba(0, 0, 0, 0.18) 0px 0px 5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 50px;
+    box-shadow:
+      rgba(0, 0, 0, 0.31) 0 0 1px,
+      rgba(0, 0, 0, 0.18) 0 0 5px,
+      rgba(0, 0, 0, 0.3) 0 8px 50px;
+    transition: margin 0.5s;
 
     &.top {
       padding: 7px 4px 3px;
@@ -167,9 +171,9 @@
 
       &.active {
         &::after {
-          content: "●";
-          font-size: 0.1em;
           position: absolute;
+          font-size: 0.1em;
+          content: "●";
         }
       }
 
@@ -177,8 +181,8 @@
         justify-content: center;
 
         &.bounce {
-          animation-duration: 2s; /* don't forget to set a duration! */
           animation-name: top; /* referring directly to the animation's @keyframe declaration */
+          animation-duration: 2s; /* don't forget to set a duration! */
         }
 
         &.active {
@@ -192,8 +196,8 @@
         justify-content: center;
 
         &.bounce {
-          animation-duration: 2s; /* don't forget to set a duration! */
           animation-name: bottom; /* referring directly to the animation's @keyframe declaration */
+          animation-duration: 2s; /* don't forget to set a duration! */
         }
 
         &.active {
@@ -208,8 +212,8 @@
           align-items: center;
 
           &.bounce {
-            animation-duration: 2s; /* don't forget to set a duration! */
             animation-name: #{$member}; /* referring directly to the animation's @keyframe declaration */
+            animation-duration: 2s; /* don't forget to set a duration! */
           }
 
           &.active {
@@ -223,8 +227,8 @@
 
     &.top {
       align-items: flex-start;
-      border-bottom-left-radius: 0.4rem;
       border-bottom-right-radius: 0.4rem;
+      border-bottom-left-radius: 0.4rem;
     }
 
     &.bottom {

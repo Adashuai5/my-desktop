@@ -52,9 +52,9 @@ const Calculate = () => {
   }
   const getResult = useCallback(
     (n1: string, n2: string, operator: string): string => {
-      let numberN1: number = parseFloat(n1)
-      let numberN2: number = parseFloat(n2)
-      let result1: number = parseFloat(result)
+      const numberN1: number = parseFloat(n1)
+      const numberN2: number = parseFloat(n2)
+      const result1: number = parseFloat(result)
       if (operator === "+") {
         return (numberN1 + numberN2).toPrecision(6)
       } else if (operator === "-") {
@@ -79,7 +79,7 @@ const Calculate = () => {
   const clickButton = useCallback(
     (event) => {
       if (event.target instanceof HTMLButtonElement) {
-        let buttonText = event.target.textContent
+        const buttonText = event.target.textContent
         if ("0123456789.".indexOf(buttonText) >= 0) {
           operator ? getNumber("n2", buttonText) : getNumber("n1", buttonText)
         } else if ("+-×÷".indexOf(buttonText) >= 0) {

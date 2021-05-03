@@ -23,18 +23,18 @@
     }
 
     .rightSet {
-      overflow: auto;
-      border-bottom-right-radius: 5px;
       flex-direction: column;
-      padding: 30px 60px;
       width: 512px;
       height: 420px;
-      background-color: #ffffff;
+      padding: 30px 60px;
+      overflow: auto;
+      background-color: #fff;
+      border-bottom-right-radius: 5px;
 
       .divide {
         width: 100%;
-        border-top: 1px solid #f0f0f0;
         margin-bottom: 10px;
+        border-top: 1px solid #f0f0f0;
       }
 
       .options {
@@ -44,8 +44,8 @@
         }
 
         input[type="range"] {
-          margin: 0 30px 20px 0;
           width: 256px;
+          margin: 0 30px 20px 0;
           -webkit-appearance: none;
 
           &:focus {
@@ -58,14 +58,14 @@
           }
 
           &::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 18px;
-            width: 18px;
-            margin-top: -8px; /*使滑块超出轨道部分的偏移量相等*/
-            background: #ffffff;
-            border-radius: 3px;
-            border: 0.6px solid #d9d9d9;
             position: relative;
+            width: 18px;
+            height: 18px;
+            margin-top: -8px; /* 使滑块超出轨道部分的偏移量相等 */
+            background: #fff;
+            border: 0.6px solid #d9d9d9;
+            border-radius: 3px;
+            -webkit-appearance: none;
           }
         }
       }

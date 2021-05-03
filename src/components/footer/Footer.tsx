@@ -6,22 +6,24 @@ import React, {
   useEffect,
   createContext,
   useReducer,
-  CSSProperties,
-} from "react"
-import "./index.scss"
-import { Setting } from "../setting/Setting"
-import { Calculator } from "../calculator"
-import { Drawing } from "../drawing"
-import { Launchpad } from "../launchpad"
-import { positionReducer, dataReducer } from "./reducer"
-import FinderPng from "./image/Finder.png"
-import LaunchpadPng from "./image/Launchpad.png"
-import PrefAppPng from "./image/PrefApp.png"
-import ChromePng from "./image/Chrome.png"
-import TerminalPng from "./image/Terminal.png"
-import CalculatorPng from "./image/Calculator.png"
-import DrawingPng from "./image/Drawing.png"
+  CSSProperties
+} from 'react'
+import './index.scss'
+import { Setting } from '../setting/Setting'
+import { Calculator } from '../calculator'
+import { Drawing } from '../drawing'
+import { Launchpad } from '../launchpad'
+import { positionReducer, dataReducer } from './reducer'
+import CalculatorIcon from './image/Calculator.png'
+import FinderIcon from './image/Finder.png'
+import LaunchpadIcon from './image/Launchpad.png'
+import PrefAppIcon from './image/PrefApp.png'
+import ChromeIcon from './image/Chrome.png'
+import TerminalIcon from './image/Terminal.png'
+import DrawingIcon from './image/Drawing.png'
+/// <reference path="image.d.ts" />
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const FooterContext = createContext<any>([])
 
 interface OpenTypes {
@@ -31,33 +33,33 @@ interface OpenTypes {
 
 const Footer = React.memo(() => {
   const [dockList] = useState<string[]>([
-    FinderPng,
-    LaunchpadPng,
-    PrefAppPng,
-    ChromePng,
-    TerminalPng,
-    CalculatorPng,
-    DrawingPng,
+    FinderIcon,
+    LaunchpadIcon,
+    PrefAppIcon,
+    ChromeIcon,
+    TerminalIcon,
+    CalculatorIcon,
+    DrawingIcon
   ])
-  const [position, setPosition] = useReducer(positionReducer, "bottom")
+  const [position, setPosition] = useReducer(positionReducer, 'bottom')
   const [dockData, setDockData] = useReducer(dataReducer, {
     length: 78,
     bigLength: 78 * 2,
     itemMargin: 0,
     distance: 0,
-    isDockBig: true,
+    isDockBig: true
   })
   const [isSettingOpen, setSettingOpen] = useState<OpenTypes>({
     type: false,
-    index: 2,
+    index: 2
   })
   const [isCalculatorOpen, setCalculatorOpen] = useState<OpenTypes>({
     type: false,
-    index: 5,
+    index: 5
   })
   const [isDrawingOpen, setDrawingOpen] = useState<OpenTypes>({
     type: false,
-    index: 6,
+    index: 6
   })
   const [isSettingShow, setSettingShow] = useState(true)
   const [isCalculatorShow, setCalculatorShow] = useState(true)
@@ -73,12 +75,12 @@ const Footer = React.memo(() => {
       const imgList = dockRef.current.childNodes
       const img = imgList[index] as HTMLDivElement
       switch (item) {
-        case ChromePng:
+        case ChromeIcon:
           if (!isChrome) {
             const chrome = window.open(
-              "http://www.google.com/",
-              "",
-              "width=1000,height=600,left=500,top=300,menubar=no,toolbar=no,status=no,scrollbars=yes"
+              'http://www.google.com/',
+              '',
+              'width=1000,height=600,left=500,top=300,menubar=no,toolbar=no,status=no,scrollbars=yes'
             )
             setChrome(chrome)
           } else {
@@ -86,61 +88,61 @@ const Footer = React.memo(() => {
             setChrome(null)
           }
           return
-        case PrefAppPng:
+        case PrefAppIcon:
           if (!isSettingOpen.type) {
             if (isLaunchpadShow) {
               setSettingOpen({ ...isSettingOpen, type: !isSettingOpen.type })
               setLaunchpadShow(false)
               return
             }
-            img.classList.add("bounce")
+            img.classList.add('bounce')
             setTimeout(() => {
               setSettingOpen({ type: !isSettingOpen.type, index })
-              img.classList.remove("bounce")
+              img.classList.remove('bounce')
             }, 2500)
             return
           }
           setSettingShow(!isSettingShow)
           return
-        case CalculatorPng:
+        case CalculatorIcon:
           if (!isCalculatorOpen.type) {
             if (isLaunchpadShow) {
               setCalculatorOpen({
                 ...isCalculatorOpen,
-                type: !isCalculatorOpen.type,
+                type: !isCalculatorOpen.type
               })
               setLaunchpadShow(false)
               return
             }
-            img.classList.add("bounce")
+            img.classList.add('bounce')
             setTimeout(() => {
               setCalculatorOpen({ type: !isCalculatorOpen.type, index })
-              img.classList.remove("bounce")
+              img.classList.remove('bounce')
             }, 2500)
             return
           }
           setCalculatorShow(!isCalculatorShow)
           return
-        case DrawingPng:
+        case DrawingIcon:
           if (!isDrawingOpen.type) {
             if (isLaunchpadShow) {
               setDrawingOpen({
                 ...isDrawingOpen,
-                type: !isDrawingOpen.type,
+                type: !isDrawingOpen.type
               })
               setLaunchpadShow(false)
               return
             }
-            img.classList.add("bounce")
+            img.classList.add('bounce')
             setTimeout(() => {
               setDrawingOpen({ type: !isDrawingOpen.type, index })
-              img.classList.remove("bounce")
+              img.classList.remove('bounce')
             }, 2500)
             return
           }
           setDrawingShow(!isDrawingShow)
           return
-        case LaunchpadPng:
+        case LaunchpadIcon:
           setLaunchpadShow(!isLaunchpadShow)
           return
       }
@@ -153,7 +155,7 @@ const Footer = React.memo(() => {
       isDrawingOpen,
       isDrawingShow,
       isLaunchpadShow,
-      isChrome,
+      isChrome
     ]
   )
 
@@ -162,8 +164,8 @@ const Footer = React.memo(() => {
   const dockRef = useRef<HTMLDivElement>(null)
 
   const getOffset = useCallback(
-    (el: HTMLElement, offset: "top" | "left"): number => {
-      const elOffset = offset === "top" ? el.offsetTop : el.offsetLeft
+    (el: HTMLElement, offset: 'top' | 'left'): number => {
+      const elOffset = offset === 'top' ? el.offsetTop : el.offsetLeft
       if (el.offsetParent == null) {
         return elOffset
       }
@@ -181,18 +183,18 @@ const Footer = React.memo(() => {
       for (let i = 0; i < imgList.length; i++) {
         const img = imgList[i] as HTMLDivElement
         let x, y
-        if (position === "bottom") {
+        if (position === 'bottom') {
           x = img.offsetLeft + dockData.length / 2 - clientX
           y =
             img.offsetTop +
-            getOffset(dockRef.current, "top") +
+            getOffset(dockRef.current, 'top') +
             img.offsetHeight / 2 -
             clientY
-        } else if (position === "right") {
+        } else if (position === 'right') {
           x = img.offsetTop + dockData.length / 2 - clientY
           y =
             img.offsetLeft +
-            getOffset(dockRef.current, "left") +
+            getOffset(dockRef.current, 'left') +
             img.offsetWidth / 2 -
             clientX
         } else {
@@ -207,7 +209,7 @@ const Footer = React.memo(() => {
         const multiplier = dockData.bigLength / dockData.length
         if (dockData.bigLength / dockData.length) {
           img.style.height = img.style.width =
-            dockData.length * multiplier * imgScale + "px"
+            dockData.length * multiplier * imgScale + 'px'
         }
       }
     },
@@ -218,49 +220,49 @@ const Footer = React.memo(() => {
     if (!dockRef.current) {
       return
     }
-    if (position === "bottom") {
+    if (position === 'bottom') {
       setDockStyle({
         height: dockData.length * 1 + 10,
-        marginBottom: dockData.distance * 1,
+        marginBottom: dockData.distance * 1
       })
-    } else if (position === "top") {
+    } else if (position === 'top') {
       setDockStyle({
         height: dockData.length * 1 + 10,
-        marginTop: dockData.distance * 1,
+        marginTop: dockData.distance * 1
       })
-    } else if (position === "left") {
+    } else if (position === 'left') {
       setDockStyle({
         width: dockData.length * 1 + 10,
-        marginLeft: dockData.distance * 1,
+        marginLeft: dockData.distance * 1
       })
     } else {
       setDockStyle({
         width: dockData.length * 1 + 10,
-        marginRight: dockData.distance * 1,
+        marginRight: dockData.distance * 1
       })
     }
     const imgList = dockRef.current.childNodes
     for (let i = 0; i < imgList.length; i++) {
       const img = imgList[i] as HTMLDivElement
-      img.style.width = img.style.height = dockData.length + "px"
+      img.style.width = img.style.height = dockData.length + 'px'
     }
   }, [position, dockData.length, dockData.distance])
 
   useEffect(mouseleave, [mouseleave])
 
   useEffect(() => {
-    const localDockData = localStorage.getItem("dockData") || null
+    const localDockData = localStorage.getItem('dockData') || null
     if (localDockData) {
       setDockData({
-        name: "change",
-        dockData: JSON.parse(localDockData),
+        name: 'change',
+        dockData: JSON.parse(localDockData)
       })
     }
-    const localPosition = localStorage.getItem("position") || null
+    const localPosition = localStorage.getItem('position') || null
     if (localPosition) {
       setPosition({
-        name: "change",
-        position: JSON.parse(localPosition),
+        name: 'change',
+        position: JSON.parse(localPosition)
       })
     }
   }, [])
@@ -274,22 +276,20 @@ const Footer = React.memo(() => {
       if (item.index) {
         const img = imgList[item.index] as HTMLDivElement
         !item.type
-          ? setTimeout(() => {
-              img?.classList.remove("active")
-            }, 500)
-          : img.classList.add("active")
+          ? setTimeout(() => img?.classList.remove('active'), 500)
+          : img.classList.add('active')
       }
     })
     if (isSettingOpen) {
-      if (localStorage.getItem("SettingView")) {
-        localStorage.removeItem("SettingView")
+      if (localStorage.getItem('SettingView')) {
+        localStorage.removeItem('SettingView')
       }
     }
-    if (isCalculatorOpen && localStorage.getItem("CalculatorView")) {
-      localStorage.removeItem("CalculatorView")
+    if (isCalculatorOpen && localStorage.getItem('CalculatorView')) {
+      localStorage.removeItem('CalculatorView')
     }
-    if (isDrawingOpen && localStorage.getItem("DrawingView")) {
-      localStorage.removeItem("DrawingView")
+    if (isDrawingOpen && localStorage.getItem('DrawingView')) {
+      localStorage.removeItem('DrawingView')
     }
   }, [isSettingOpen, isCalculatorOpen, isDrawingOpen, position])
 
@@ -298,23 +298,23 @@ const Footer = React.memo(() => {
       return
     }
     const dockBackground: HTMLDivElement = dockRef.current
-    dockBackground.addEventListener("mousemove", mousemove)
-    dockBackground.addEventListener("mouseleave", mouseleave)
+    dockBackground.addEventListener('mousemove', mousemove)
+    dockBackground.addEventListener('mouseleave', mouseleave)
     return () => {
-      dockBackground.removeEventListener("mousemove", mousemove)
-      dockBackground.removeEventListener("mouseleave", mouseleave)
+      dockBackground.removeEventListener('mousemove', mousemove)
+      dockBackground.removeEventListener('mouseleave', mouseleave)
     }
   }, [mousemove, mouseleave, dockData.isDockBig])
 
   const itemStyles = useMemo(() => {
-    return position === "top" || position === "bottom"
+    return position === 'top' || position === 'bottom'
       ? {
           marginLeft: dockData.itemMargin * 1,
-          marginRight: dockData.itemMargin * 1,
+          marginRight: dockData.itemMargin * 1
         }
       : {
           marginTop: dockData.itemMargin * 1,
-          marginBottom: dockData.itemMargin * 1,
+          marginBottom: dockData.itemMargin * 1
         }
   }, [position, dockData.itemMargin])
 
@@ -329,7 +329,7 @@ const Footer = React.memo(() => {
           position,
           setPosition,
           dockData,
-          setDockData,
+          setDockData
         ]}
       >
         <Setting />
@@ -339,7 +339,7 @@ const Footer = React.memo(() => {
           isCalculatorOpen,
           setCalculatorOpen,
           isCalculatorShow,
-          setCalculatorShow,
+          setCalculatorShow
         ]}
       >
         <Calculator />
@@ -364,22 +364,22 @@ const Footer = React.memo(() => {
               <div
                 className={
                   [
-                    "Launchpad.png",
-                    PrefAppPng,
-                    ChromePng,
-                    CalculatorPng,
-                    DrawingPng,
+                    LaunchpadIcon,
+                    PrefAppIcon,
+                    ChromeIcon,
+                    CalculatorIcon,
+                    DrawingIcon
                   ].includes(item)
-                    ? "pointer DockItem " + position
-                    : position + " DockItem"
+                    ? 'pointer DockItem ' + position
+                    : position + ' DockItem'
                 }
                 style={
                   {
-                    backgroundImage: "url(" + item + ")",
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                    ...itemStyles,
+                    backgroundImage: `url(${item})`,
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    ...itemStyles
                   } as CSSProperties
                 }
                 key={index + item}

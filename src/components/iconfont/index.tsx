@@ -1,4 +1,4 @@
-import React, { CSSProperties, RefObject } from "react"
+import { CSSProperties, RefObject } from "react"
 import "./index.scss"
 
 const scriptElem = document.createElement("script")
@@ -8,7 +8,7 @@ document.body.appendChild(scriptElem)
 interface PropsTypes {
   className?: string
   type: string
-  style?: object
+  style?: CSSProperties
   svgRef?: RefObject<SVGSVGElement>
   clickEvent?: (T: any) => void
 }

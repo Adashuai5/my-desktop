@@ -1,35 +1,86 @@
 {
   "name": "my-desktop",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/lodash": "^4.14.168",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.53",
-    "@types/react-dom": "^16.9.8",
-    "@types/react-transition-group": "^4.4.0",
-    "dayjs": "^1.10.4",
-    "lodash": "^4.17.20",
-    "mobx": "^6.1.4",
-    "mobx-react": "^7.1.0",
-    "node-sass": "npm:dart-sass",
-    "react": "^17.0.1",
-    "react-desktop": "^0.3.9",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.1",
-    "react-transition-group": "^4.4.1",
-    "typescript": "^4.0.3",
-    "web-vitals": "^0.2.4"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "cross-env NODE_ENV=development webpack --watch",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server",
+    "build": "cross-env NODE_ENV=production webpack",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx",
+    "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx ./src",
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx",
+    "lint:prettier": "prettier --check \"src/**/*\" --end-of-line auto",
+    "prettier": "prettier -c --write \"src/**/*\"",
+    "lint:style": "stylelint --fix \"src/**/*.scss\" --syntax scss"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{scss}": "stylelint --syntax scss",
+    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
+    "**/*.{js,jsx,tsx,ts,scss,md,json}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "@hot-loader/react-dom": "^16.13.0+4.12.20",
+    "@types/lodash": "^4.14.168",
+    "@types/node": "^15.0.1",
+    "@types/react": "^17.0.4",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-transition-group": "^4.4.1",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^7.0.2",
+    "css-loader": "^4.2.2",
+    "csv-loader": "^3.0.3",
+    "eslint": "^7.24.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^10.5.4",
+    "lodash-webpack-plugin": "^0.11.5",
+    "mini-css-extract-plugin": "^0.11.0",
+    "node-sass": "npm:dart-sass",
+    "prettier": "^2.2.1",
+    "sass-loader": "^10.0.1",
+    "source-map-loader": "^1.1.0",
+    "standard": "*",
+    "style-loader": "^1.2.1",
+    "stylelint": "^13.12.0",
+    "stylelint-config-recess-order": "^2.4.0",
+    "stylelint-config-standard": "^21.0.0",
+    "typescript": "^4.2.4",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-manifest-plugin": "^2.2.0",
+    "xml-loader": "^1.2.1"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.4",
+    "lodash": "^4.17.21",
+    "mobx": "^6.3.0",
+    "mobx-react": "^7.1.0",
+    "react": "^17.0.2",
+    "react-desktop": "^0.3.9",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^4.0.3",
+    "react-transition-group": "^4.4.1",
+    "web-vitals": "^0.2.4"
   },
   "eslintConfig": {
     "extends": [
@@ -49,8 +100,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://adashuai5.github.io/my-desktop/",
-  "devDependencies": {
-    "standard": "^16.0.3"
-  }
+  "homepage": "https://adashuai5.github.io/my-desktop/"
 }

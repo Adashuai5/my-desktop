@@ -1,29 +1,31 @@
 .AppFinder {
-  padding: 0 28px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: fixed;
-  width: 100%;
   top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   height: 2rem;
+  padding: 0 28px;
   background-color: rgba(222, 223, 227, 0.6);
-  box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px,
-  rgba(0, 0, 0, 0.3) 0 8px 50px;
+  box-shadow:
+    rgba(0, 0, 0, 0.31) 0 0 1px,
+    rgba(0, 0, 0, 0.18) 0 0 5px,
+    rgba(0, 0, 0, 0.3) 0 8px 50px;
 
   .FinderLeft,
   .FinderRight {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     div,
     a {
-      font-family: "PingFang SC", serif;
-      font-weight: Bold;
-      color: #000;
-      font-size: 18px;
       padding-right: 24px;
+      font-family: "PingFang SC", serif;
+      font-size: 18px;
+      font-weight: bold;
+      color: #000;
       cursor: default;
     }
 
@@ -40,19 +42,21 @@
         padding: 3px 6px;
 
         &.active {
-          background-color: #3970ea;
           color: #fff;
+          background-color: #3970ea;
         }
       }
 
       .menu {
-        width: 300px;
         display: none;
+        width: 300px;
         background-color: rgba(230, 230, 230, 1);
-        border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
-        box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px,
-        rgba(0, 0, 0, 0.18) 0 0 5px, rgba(0, 0, 0, 0.3) 0 8px 50px;
+        border-bottom-left-radius: 8px;
+        box-shadow:
+          rgba(0, 0, 0, 0.31) 0 0 1px,
+          rgba(0, 0, 0, 0.18) 0 0 5px,
+          rgba(0, 0, 0, 0.3) 0 8px 50px;
 
         &.active {
           position: absolute;
@@ -61,8 +65,8 @@
         }
 
         .line {
-          height: 2px;
           width: 100%;
+          height: 2px;
           background-color: #d9d9d9;
         }
 
@@ -72,8 +76,8 @@
           line-height: 30px;
 
           &:hover {
-            background-color: #4493fe;
             color: #fff;
+            background-color: #4493fe;
           }
         }
       }
