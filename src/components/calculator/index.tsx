@@ -1,29 +1,33 @@
-import React, { useContext, useEffect } from "react"
-import { useModal } from "../modal/UseModal"
-import { FooterContext } from "../footer/Footer"
-import { TitleBar } from "react-desktop/macOs"
-import Calculate from "./Calculator"
-import "./index.scss"
+import React, { useContext, useEffect } from 'react'
+import { useModal } from '../modal/UseModal'
+import { FooterContext } from '../footer/Footer'
+import { TitleBar } from 'react-desktop/macOs'
+import Calculate from './Calculator'
+import './index.scss'
 /// <reference path="react-desktop.d.ts" />
 
 export const Calculator = React.memo(() => {
-  const { open, close, RenderModal } = useModal("CalculatorView")
+  const { open, close, RenderModal } = useModal('CalculatorView')
   const [
     isCalculatorOpen,
     setCalculatorOpen,
     isCalculatorShow,
-    setCalculatorShow,
+    setCalculatorShow
   ] = useContext(FooterContext)
 
-  useEffect(() => (isCalculatorOpen.type ? open() : close()), [close, isCalculatorOpen, open])
+  useEffect(() => (isCalculatorOpen.type ? open() : close()), [
+    close,
+    isCalculatorOpen,
+    open
+  ])
   return (
     <RenderModal
       data={{
         width: 410,
         height: 560,
-        id: "CalculatorView",
-        moveId: "calculatorMove",
-        isShow: isCalculatorShow,
+        id: 'CalculatorView',
+        moveId: 'calculatorMove',
+        isShow: isCalculatorShow
       }}
     >
       <>
@@ -36,7 +40,7 @@ export const Calculator = React.memo(() => {
             close()
             setCalculatorOpen({
               ...isCalculatorOpen,
-              type: false,
+              type: false
             })
           }}
           onMinimizeClick={() => {

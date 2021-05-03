@@ -12,8 +12,7 @@
     "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx",
     "lint:prettier": "prettier --check \"src/**/*\" --end-of-line auto",
     "prettier": "prettier -c --write \"src/**/*\"",
-    "lint:style": "stylelint --fix \"src/**/*.scss\" --syntax scss",
-    "precommit": "lint-staged"
+    "lint:style": "stylelint --fix \"src/**/*.scss\" --syntax scss"
   },
   "husky": {
     "hooks": {
