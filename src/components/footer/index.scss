@@ -143,9 +143,7 @@
     padding: 3px 4px 7px;
     margin-bottom: 10px;
     background-color: rgba(222, 223, 227, 0.7);
-    box-shadow:
-      rgba(0, 0, 0, 0.31) 0 0 1px,
-      rgba(0, 0, 0, 0.18) 0 0 5px,
+    box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px,
       rgba(0, 0, 0, 0.3) 0 8px 50px;
     transition: margin 0.5s;
 
@@ -173,7 +171,7 @@
         &::after {
           position: absolute;
           font-size: 0.1em;
-          content: "●";
+          content: '●';
         }
       }
 

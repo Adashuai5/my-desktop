@@ -15,11 +15,10 @@ export const Calculator = React.memo(() => {
     setCalculatorShow
   ] = useContext(FooterContext)
 
-  useEffect(() => (isCalculatorOpen.type ? open() : close()), [
-    close,
-    isCalculatorOpen,
-    open
-  ])
+  useEffect(
+    () => (isCalculatorOpen.type ? open() : close()),
+    [close, isCalculatorOpen, open]
+  )
   return (
     <RenderModal
       data={{

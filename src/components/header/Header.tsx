@@ -1,20 +1,18 @@
-import React, { useState, useRef, useEffect, useCallback } from "react"
-import { Iconfont } from "../iconfont"
-import "./index.scss"
-import dayjs from "dayjs"
+import React, { useState, useRef, useEffect, useCallback } from 'react'
+import { Iconfont } from '../iconfont'
+import './index.scss'
+import dayjs from 'dayjs'
 
-require("dayjs/locale/zh-cn")
-dayjs.locale("zh-cn")
+import 'dayjs/locale/zh-cn'
+
+dayjs.locale('zh-cn')
 const Header = () => {
   const menuRef = useRef<HTMLDivElement>(null)
-  const [time, setTime] = useState(dayjs().format("M月DD日 周dd HH:mm"))
+  const [time, setTime] = useState(dayjs().format('M月DD日 周dd HH:mm'))
   const [menuShow, setMenuShow] = useState(false)
   const [inputShow, setInputShow] = useState(false)
-  const [inputValue, setInputValue] = useState("Ada")
-  window.setInterval(() => {
-    const newTime = dayjs().format("M月DD日 周dd HH:mm")
-    setTime(newTime)
-  }, 60000)
+  const [inputValue, setInputValue] = useState('Ada')
+
   const windowClick = useCallback(
     ({ target }) => {
       if (inputShow || menuShow) {
@@ -30,12 +28,19 @@ const Header = () => {
     },
     [inputShow, menuShow]
   )
+
   useEffect(() => {
-    window.addEventListener("click", windowClick)
+    const interval = setInterval(() => {
+      const newTime = dayjs().format('M月DD日 周dd HH:mm')
+      setTime(newTime)
+    }, 60000)
+    window.addEventListener('click', windowClick)
     return () => {
-      window.removeEventListener("click", windowClick)
+      window.removeEventListener('click', windowClick)
+      window.clearInterval(interval)
     }
   }, [windowClick])
+
   return (
     <header className="AppFinder">
       <div className="FinderLeft">
@@ -43,7 +48,7 @@ const Header = () => {
           <Iconfont
             type="icon-apple"
             style={{
-              fontSize: 22,
+              fontSize: 22
             }}
           />
         </div>
@@ -58,11 +63,11 @@ const Header = () => {
               onChange={(e) => setInputValue(e.target.value)}
             />
           ) : (
-            <span className={menuShow ? "text active" : "text"}>
+            <span className={menuShow ? 'text active' : 'text'}>
               {inputValue}
             </span>
           )}
-          <ul className={menuShow ? "menu active" : "menu"}>
+          <ul className={menuShow ? 'menu active' : 'menu'}>
             <li onClick={() => setInputShow(true)}>自定义标题</li>
             <div className="line" />
             <li>你好</li>
@@ -91,7 +96,7 @@ const Header = () => {
           <Iconfont
             type="icon-ren"
             style={{
-              fontSize: 22,
+              fontSize: 22
             }}
           />
         </a>
@@ -99,7 +104,7 @@ const Header = () => {
           <Iconfont
             type="icon-github"
             style={{
-              fontSize: 22,
+              fontSize: 22
             }}
           />
         </a>

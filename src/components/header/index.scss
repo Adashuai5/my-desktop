@@ -8,9 +8,7 @@
   height: 2rem;
   padding: 0 28px;
   background-color: rgba(222, 223, 227, 0.6);
-  box-shadow:
-    rgba(0, 0, 0, 0.31) 0 0 1px,
-    rgba(0, 0, 0, 0.18) 0 0 5px,
+  box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px,
     rgba(0, 0, 0, 0.3) 0 8px 50px;
 
   .FinderLeft,
@@ -22,7 +20,7 @@
     div,
     a {
       padding-right: 24px;
-      font-family: "PingFang SC", serif;
+      font-family: 'PingFang SC', serif;
       font-size: 18px;
       font-weight: bold;
       color: #000;
@@ -53,9 +51,7 @@
         background-color: rgba(230, 230, 230, 1);
         border-bottom-right-radius: 8px;
         border-bottom-left-radius: 8px;
-        box-shadow:
-          rgba(0, 0, 0, 0.31) 0 0 1px,
-          rgba(0, 0, 0, 0.18) 0 0 5px,
+        box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px,
           rgba(0, 0, 0, 0.3) 0 8px 50px;
 
         &.active {

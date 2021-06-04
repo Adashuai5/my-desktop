@@ -49,9 +49,8 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
   const [lineWidth, setLineWidth] = useState(5)
   const [eraserEnabled, setEraserEnabled] = useState(false)
   const [isPainting, setIsPainting] = useState(false)
-  const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
-    undefined
-  )
+  const [mousePosition, setMousePosition] =
+    useState<Coordinate | undefined>(undefined)
   const [step, setStep] = useState(-1)
   const [canvasHistory, setCanvasHistory] = useState<string[]>([])
 
@@ -242,11 +241,10 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
 
   const [isDrawingOpen, setDrawingOpen] = useContext(FooterContext)
 
-  useEffect(() => (isClearDialogOpen ? openDialog() : closeDialog()), [
-    closeDialog,
-    isClearDialogOpen,
-    openDialog
-  ])
+  useEffect(
+    () => (isClearDialogOpen ? openDialog() : closeDialog()),
+    [closeDialog, isClearDialogOpen, openDialog]
+  )
 
   const saveCanvas = useCallback(() => {
     if (!canvasRef.current) {
