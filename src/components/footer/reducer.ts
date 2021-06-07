@@ -1,6 +1,6 @@
 interface PositionAction {
-  name: "change"
-  position: "bottom" | "top" | "left" | "right"
+  name: 'change'
+  position: 'bottom' | 'top' | 'left' | 'right'
 }
 
 interface DockData {
@@ -12,13 +12,13 @@ interface DockData {
 }
 
 interface LengthAction {
-  name: "change"
+  name: 'change'
   dockData: DockData
 }
 
 export const positionReducer = (state: string, action: PositionAction) => {
   switch (action.name) {
-    case "change":
+    case 'change':
       return action.position
     default:
       return state
@@ -26,7 +26,7 @@ export const positionReducer = (state: string, action: PositionAction) => {
 }
 export const dataReducer = (state: DockData, action: LengthAction) => {
   switch (action.name) {
-    case "change":
+    case 'change':
       return action.dockData
     default:
       return state

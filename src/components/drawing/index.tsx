@@ -3,32 +3,30 @@ import React, {
   useEffect,
   useState,
   useCallback,
-  useRef,
-} from "react"
-import { useModal } from "../modal/UseModal"
-import { FooterContext } from "../footer/Footer"
-import { TitleBar } from "react-desktop/macOs"
-import Canvas from "./Canvas"
-import "./index.scss"
+  useRef
+} from 'react'
+import { useModal } from '../modal/UseModal'
+import { FooterContext } from '../footer/Footer'
+import { TitleBar } from 'react-desktop/macOs'
+import Canvas from './Canvas'
+import './index.scss'
 /// <reference path="react-desktop.d.ts" />
 
 export const Drawing = React.memo(() => {
-  const { open, close, RenderModal } = useModal("DrawingView")
-  const [isDrawingOpen, , isDrawingShow, setDrawingShow] = useContext(
-    FooterContext
-  )
-  const [style, setStyle] = useState({ width: 1200, height: 800 })
+  const { open, close, RenderModal } = useModal('DrawingView')
+  const [isDrawingOpen, , isDrawingShow, setDrawingShow] =
+    useContext(FooterContext)
+  const [style, setStyle] = useState({ width: 1000, height: 600 })
   const [isFullscreen, setFullscreen] = useState(false)
 
-  useEffect(() => (isDrawingOpen.type ? open() : close()), [
-    close,
-    isDrawingOpen,
-    open,
-  ])
+  useEffect(
+    () => (isDrawingOpen.type ? open() : close()),
+    [close, isDrawingOpen, open]
+  )
 
   const maximizeClick = useCallback(() => {
     if (isFullscreen) {
-      setStyle({ width: 1200, height: 800 })
+      setStyle({ width: 1000, height: 600 })
     } else {
       setStyle({ width: -1, height: -1 })
     }
@@ -47,9 +45,9 @@ export const Drawing = React.memo(() => {
       data={{
         width: style.width,
         height: style.height,
-        id: "DrawingView",
-        moveId: "DrawingMove",
-        isShow: isDrawingShow,
+        id: 'DrawingView',
+        moveId: 'DrawingMove',
+        isShow: isDrawingShow
       }}
     >
       <div className="drawing-wrapper">

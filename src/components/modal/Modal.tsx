@@ -1,6 +1,6 @@
-import ReactDOM from "react-dom"
-import React from "react"
-import Draggable from "./draggable/index"
+import ReactDOM from 'react-dom'
+import React from 'react'
+import Draggable from './draggable/index'
 
 type Props = {
   children: React.ReactChild
@@ -15,7 +15,7 @@ type Props = {
 }
 
 const Modal = React.memo(({ children, data }: Props) => {
-  const domEl = document.getElementById("main-view") as HTMLDivElement
+  const domEl = document.getElementById('main-view') as HTMLDivElement
   if (!domEl) return null
 
   return ReactDOM.createPortal(

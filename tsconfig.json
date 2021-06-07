@@ -1,45 +1,22 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
-    "incremental": true,
-    "module": "ESNext",
-    "target": "ES6",
-    "lib": [
-      "DOM",
-      "ES6",
-      "ES5",
-      "DOM.Iterable",
-      "ScriptHost",
-      "ES2016.Array.Include"
-    ],
-    "allowJs": true,
-    "checkJs": true,
-    "jsx": "react-jsx",
-    "resolveJsonModule": true,
-    "noEmit": true,
-    "strict": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "moduleResolution": "node",
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": false,
+    "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react"
   },
-  "include": [
-    "src/**/*",
-    "typings/**/*",
-    "config/**/*",
-    ".eslintrc.js",
-    ".stylelintrc.js",
-    ".prettierrc.js"
-  ],
-  "exclude": ["node_modules", "build", "dist"]
+  "include": ["./src",
+    "./typings/**/*",
+  ]
 }

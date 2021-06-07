@@ -1,23 +1,23 @@
-import React, { useMemo, useState, CSSProperties } from "react";
-import { Dialog, Button } from "react-desktop/macOs";
+import React, { useMemo, useState, CSSProperties } from 'react'
+import { Dialog, Button } from 'react-desktop/macOs'
 
 /// <reference path="react-desktop.d.ts" />
 
 interface DialogProps {
-  width: number;
-  height: number;
-  id: string;
-  title?: string;
-  message?: string;
-  imgSrc?: string;
-  onCheck: (T: any) => void;
-  onClose: (T: any) => void;
+  width: number
+  height: number
+  id: string
+  title?: string
+  message?: string
+  imgSrc?: string
+  onCheck: (T: any) => void
+  onClose: (T: any) => void
 }
 
 export const useDialog = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const openDialog = () => setIsVisible(true);
-  const closeDialog = () => setIsVisible(false);
+  const [isVisible, setIsVisible] = useState(false)
+  const openDialog = () => setIsVisible(true)
+  const closeDialog = () => setIsVisible(false)
   const RenderDialog = ({
     width,
     height,
@@ -26,7 +26,7 @@ export const useDialog = () => {
     message,
     imgSrc,
     onCheck,
-    onClose,
+    onClose
   }: DialogProps) => {
     const styles = useMemo(
       () => ({
@@ -34,22 +34,15 @@ export const useDialog = () => {
         height: height,
         left: `calc(50vw - ${width / 2}px)`,
         top: `calc(50vh - ${height}px)`,
-        borderRadius: 4,
+        borderRadius: 4
       }),
       [width, height]
-    );
+    )
 
     const renderIcon = () => {
-      if (!imgSrc) return;
-      return (
-        <img
-          src={imgSrc}
-          width="52"
-          height="52"
-          alt="tip"
-        />
-      );
-    };
+      if (!imgSrc) return
+      return <img src={imgSrc} width="52" height="52" alt="tip" />
+    }
     return (
       <>
         {isVisible && (
@@ -62,18 +55,18 @@ export const useDialog = () => {
                 <Button onClick={onClose}>取消</Button>,
                 <Button color="blue" onClick={onCheck}>
                   确认
-                </Button>,
+                </Button>
               ]}
             />
           </div>
         )}
       </>
-    );
-  };
+    )
+  }
 
   return {
     openDialog,
     closeDialog,
-    RenderDialog,
-  };
-};
+    RenderDialog
+  }
+}

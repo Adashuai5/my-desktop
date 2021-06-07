@@ -70,11 +70,10 @@ export const Setting = React.memo(() => {
   ]
   const [selected, setTitle] = useState('通用')
 
-  useEffect(() => (isSettingOpen.type ? open() : close()), [
-    close,
-    isSettingOpen,
-    open
-  ])
+  useEffect(
+    () => (isSettingOpen.type ? open() : close()),
+    [close, isSettingOpen, open]
+  )
 
   const onInputChange = useCallback(
     (value: string, item: OptionsProps) => {

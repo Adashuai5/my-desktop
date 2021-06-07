@@ -33,7 +33,7 @@ interface ClearRectOptions {
 }
 
 const Canvas = ({ width, height, onRef }: CanvasProps) => {
-  const colorMap = ['black', 'red', 'green', 'blue']
+  const colorMap = ['#000000', '#ff0000', '#00ff00', '0000ff']
   const optionsMap = [
     'canvas_save',
     'canvas_clear',
@@ -45,13 +45,12 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const backRef = useRef<SVGSVGElement>(null)
   const goRef = useRef<SVGSVGElement>(null)
-  const [strokeStyle, setStrokeStyle] = useState('black')
+  const [strokeStyle, setStrokeStyle] = useState('#000000')
   const [lineWidth, setLineWidth] = useState(5)
   const [eraserEnabled, setEraserEnabled] = useState(false)
   const [isPainting, setIsPainting] = useState(false)
-  const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
-    undefined
-  )
+  const [mousePosition, setMousePosition] =
+    useState<Coordinate | undefined>(undefined)
   const [step, setStep] = useState(-1)
   const [canvasHistory, setCanvasHistory] = useState<string[]>([])
 
@@ -242,11 +241,10 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
 
   const [isDrawingOpen, setDrawingOpen] = useContext(FooterContext)
 
-  useEffect(() => (isClearDialogOpen ? openDialog() : closeDialog()), [
-    closeDialog,
-    isClearDialogOpen,
-    openDialog
-  ])
+  useEffect(
+    () => (isClearDialogOpen ? openDialog() : closeDialog()),
+    [closeDialog, isClearDialogOpen, openDialog]
+  )
 
   const saveCanvas = useCallback(() => {
     if (!canvasRef.current) {

@@ -3,10 +3,10 @@ import React, {
   useCallback,
   useMemo,
   useEffect,
-  CSSProperties,
-} from "react"
-import { observer } from "mobx-react"
-import store from "../store"
+  CSSProperties
+} from 'react'
+import { observer } from 'mobx-react'
+import store from '../store'
 
 type Props = {
   children: React.ReactChild
@@ -29,12 +29,12 @@ const Draggable = ({ children, domEl, data }: Props) => {
     ? JSON.parse(localPosition)
     : {
         x: data.width === -1 ? 0 : (window.innerWidth - data.width) / 2,
-        y: data.height === -1 ? 0 : (window.innerHeight - data.height) / 2,
+        y: data.height === -1 ? 0 : (window.innerHeight - data.height) / 2
       }
   const [state, setState] = useState({
     isDragging: false,
     origin: { x: 0, y: 0 },
-    position: initPosition,
+    position: initPosition
   })
 
   const handleMouseDown = useCallback(
@@ -45,8 +45,8 @@ const Draggable = ({ children, domEl, data }: Props) => {
         isDragging: true,
         origin: {
           x: clientX - state.position.x,
-          y: clientY - state.position.y,
-        },
+          y: clientY - state.position.y
+        }
       }))
     },
     [zIndex]
@@ -70,7 +70,7 @@ const Draggable = ({ children, domEl, data }: Props) => {
       const newPosition = { x, y }
       setState((state) => ({
         ...state,
-        position: newPosition,
+        position: newPosition
       }))
     },
     [state.isDragging, state.origin, moveEl, dragEl]
@@ -80,7 +80,7 @@ const Draggable = ({ children, domEl, data }: Props) => {
     if (state.isDragging) {
       setState((state) => ({
         ...state,
-        isDragging: false,
+        isDragging: false
       }))
     }
   }, [state.isDragging])
@@ -90,18 +90,18 @@ const Draggable = ({ children, domEl, data }: Props) => {
       setState({
         isDragging: false,
         origin: { x: 0, y: 0 },
-        position: { x: 0, y: 0 },
+        position: { x: 0, y: 0 }
       })
     }
   }, [data.width])
 
   useEffect(() => {
     if (!domEl) return
-    domEl.addEventListener("mousemove", handleMouseMove)
-    domEl.addEventListener("mouseup", handleMouseUp)
+    domEl.addEventListener('mousemove', handleMouseMove)
+    domEl.addEventListener('mouseup', handleMouseUp)
     return () => {
-      domEl.removeEventListener("mousemove", handleMouseMove)
-      domEl.removeEventListener("mouseup", handleMouseUp)
+      domEl.removeEventListener('mousemove', handleMouseMove)
+      domEl.removeEventListener('mouseup', handleMouseUp)
       if (data.width !== -1) {
         localStorage.setItem(data.id, JSON.stringify(state.position))
       }
@@ -112,7 +112,7 @@ const Draggable = ({ children, domEl, data }: Props) => {
     handleMouseUp,
     data.id,
     data.width,
-    state.position,
+    state.position
   ])
 
   const styles = useMemo(
@@ -120,8 +120,8 @@ const Draggable = ({ children, domEl, data }: Props) => {
       left: `${state.position.x}px`,
       top: `${state.position.y}px`,
       zIndex,
-      display: data.isShow ? "block" : "none",
-      position: "absolute",
+      display: data.isShow ? 'block' : 'none',
+      position: 'absolute'
     }),
     [state.position.x, state.position.y, zIndex, data.isShow]
   )
