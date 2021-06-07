@@ -10,19 +10,17 @@
     "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx",
     "prettier": "prettier -c --write \"src/**/*\"",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx"
-
   },
-
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "**/*.{scss}": "stylelint --syntax scss",
+    "**/*.{scss}": "npm run lint:style",
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
     "**/*.{js,jsx,tsx,ts,scss,md,json}": [
-      "prettier --write"
+      "npm run prettier"
     ]
   },
   "dependencies": {

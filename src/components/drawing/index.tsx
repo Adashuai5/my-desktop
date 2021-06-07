@@ -16,7 +16,7 @@ export const Drawing = React.memo(() => {
   const { open, close, RenderModal } = useModal('DrawingView')
   const [isDrawingOpen, , isDrawingShow, setDrawingShow] =
     useContext(FooterContext)
-  const [style, setStyle] = useState({ width: 1200, height: 800 })
+  const [style, setStyle] = useState({ width: 1000, height: 600 })
   const [isFullscreen, setFullscreen] = useState(false)
 
   useEffect(
@@ -26,7 +26,7 @@ export const Drawing = React.memo(() => {
 
   const maximizeClick = useCallback(() => {
     if (isFullscreen) {
-      setStyle({ width: 1200, height: 800 })
+      setStyle({ width: 1000, height: 600 })
     } else {
       setStyle({ width: -1, height: -1 })
     }

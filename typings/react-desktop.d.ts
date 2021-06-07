@@ -1,14 +1,14 @@
 declare module "react-desktop/macOs" {
-  export const View: JSX;
-  export const Radio: JSX;
-  export const TitleBar: JSX;
-  export const Toolbar: JSX;
-  export const Text: JSX;
-  export const Box: JSX;
-  export const ListView: JSX;
-  export const ListViewRow: JSX;
-  export const Window: JSX;
-  export const Dialog: JSX;
-  export const Button: JSX;
-  export const Checkbox: JSX;
+  export const View: any;
+  export const Radio: any;
+  export const TitleBar: any;
+  export const Toolbar: any;
+  export const Text: any;
+  export const Box: any;
+  export const ListView: any;
+  export const ListViewRow: any;
+  export const Window: any;
+  export const Dialog: any;
+  export const Button: any;
+  export const Checkbox: any;
 }
