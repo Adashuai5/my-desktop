@@ -1,28 +1,32 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import './index.scss'
 
+const getKEYS = ()=> [
+  'AC',
+  '+/-',
+  '%',
+  '÷',
+  '7',
+  '8',
+  '9',
+  '×',
+  '4',
+  '5',
+  '6',
+  '-',
+  '1',
+  '2',
+  '3',
+  '+',
+  '0',
+  '.',
+  '='
+]
+const KEYS = getKEYS()
+
 const Calculate = () => {
-  const keys: Array<string> = [
-    'C',
-    '+/-',
-    '%',
-    '÷',
-    '7',
-    '8',
-    '9',
-    '×',
-    '4',
-    '5',
-    '6',
-    '-',
-    '1',
-    '2',
-    '3',
-    '+',
-    '0',
-    '.',
-    '='
-  ]
+
+  const [keys, setKeys] = useState<string[]>(KEYS)
   const [N1N2, setN1OrN2] = useState({ n1: '', n2: '' })
   const [operator, setOperator] = useState('')
   const [result, setResult] = useState('0')
@@ -30,8 +34,8 @@ const Calculate = () => {
   const getNumber = useCallback(
     (name: 'n1' | 'n2', text: string): void => {
       const getN1N2 = {
-        n1: name === 'n1' ? N1N2[name] + text : N1N2.n1,
-        n2: name === 'n2' ? N1N2[name] + text : N1N2.n2
+        n1: name === 'n1' &&  N1N2[name] !== '0'? N1N2[name] + text : N1N2.n1,
+        n2: name === 'n2' &&  N1N2[name] !== '0' ? N1N2[name] + text : N1N2.n2
       }
       setN1OrN2(getN1N2)
       setResult(
@@ -81,6 +85,11 @@ const Calculate = () => {
       if (event.target instanceof HTMLButtonElement) {
         const buttonText = event.target.textContent
         if ('0123456789.'.indexOf(buttonText) >= 0) {
+          const a  = getKEYS()
+          a.shift()
+          a.unshift('C')
+          setKeys(a)
+
           operator ? getNumber('n2', buttonText) : getNumber('n1', buttonText)
         } else if ('+-×÷'.indexOf(buttonText) >= 0) {
           setN1OrN2({ n1: N1N2.n1 ? N1N2.n1 : result, n2: N1N2.n2 })
@@ -95,6 +104,7 @@ const Calculate = () => {
           setResult('0')
           setN1OrN2({ n1: '', n2: '' })
           setOperator('')
+          setKeys(KEYS)
         } else if ("%'+/-'".indexOf(buttonText) >= 0) {
           if (N1N2.n1 || result) {
             setResult(removeZero(getResult(N1N2.n1, N1N2.n2, buttonText)))
@@ -124,7 +134,7 @@ const Calculate = () => {
                   ? 'orange button text-'
                   : 'button text-' + text
               }
-              key={index}
+              key={text}
             >
               {text}
             </button>

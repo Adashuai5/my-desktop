@@ -33,7 +33,7 @@ interface ClearRectOptions {
 }
 
 const Canvas = ({ width, height, onRef }: CanvasProps) => {
-  const colorMap = ['#000000', '#ff0000', '#00ff00', '0000ff']
+  const colorMap = ['black', 'red', 'green', 'blue']
   const optionsMap = [
     'canvas_save',
     'canvas_clear',
@@ -45,7 +45,7 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const backRef = useRef<SVGSVGElement>(null)
   const goRef = useRef<SVGSVGElement>(null)
-  const [strokeStyle, setStrokeStyle] = useState('#000000')
+  const [strokeStyle, setStrokeStyle] = useState('black')
   const [lineWidth, setLineWidth] = useState(5)
   const [eraserEnabled, setEraserEnabled] = useState(false)
   const [isPainting, setIsPainting] = useState(false)

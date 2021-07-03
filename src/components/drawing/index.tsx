@@ -64,8 +64,8 @@ export const Drawing = React.memo(() => {
         />
         <Canvas
           onRef={drawingRef}
-          height={isFullscreen ? document.body.clientHeight - 32 : style.height}
-          width={isFullscreen ? document.body.clientWidth : style.width}
+          height={isFullscreen ? window.innerHeight - 32 : style.height}
+          width={isFullscreen ? window.innerWidth : style.width}
         />
       </div>
     </RenderModal>

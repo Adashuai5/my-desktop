@@ -48,7 +48,7 @@ const Header = () => {
           <Iconfont
             type="icon-apple"
             style={{
-              fontSize: 22
+              fontSize: 16
             }}
           />
         </div>
@@ -71,15 +71,10 @@ const Header = () => {
             <li onClick={() => setInputShow(true)}>自定义标题</li>
             <div className="line" />
             <li>你好</li>
-            <div className="line" />
             <li>我是周元达</li>
-            <div className="line" />
             <li>感谢来到这里的你</li>
-            <div className="line" />
             <li>我正在找工作</li>
-            <div className="line" />
             <li>如有意请联系我</li>
-            <div className="line" />
             <li>点击右边人头可查看我的简历</li>
           </ul>
         </div>
@@ -91,8 +86,7 @@ const Header = () => {
         <div>帮助</div>
       </div>
       <div className="FinderRight">
-        <div>{time}</div>
-        <a href="https://adashuai5.github.io/resume-2020/">
+        <a href="https://adashuai5.github.io/resume-me/">
           <Iconfont
             type="icon-ren"
             style={{
@@ -108,6 +102,7 @@ const Header = () => {
             }}
           />
         </a>
+        <div>{time}</div>
       </div>
     </header>
   )

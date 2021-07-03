@@ -31,6 +31,8 @@ interface OpenTypes {
   index?: number
 }
 
+const Length = 68
+
 const Footer = React.memo(() => {
   const [dockList] = useState<string[]>([
     FinderIcon,
@@ -43,10 +45,10 @@ const Footer = React.memo(() => {
   ])
   const [position, setPosition] = useReducer(positionReducer, 'bottom')
   const [dockData, setDockData] = useReducer(dataReducer, {
-    length: 78,
-    bigLength: 78 * 2,
+    length: Length,
+    bigLength: Length * 1.5,
     itemMargin: 0,
-    distance: 0,
+    distance: 5,
     isDockBig: true
   })
   const [isSettingOpen, setSettingOpen] = useState<OpenTypes>({
@@ -222,22 +224,22 @@ const Footer = React.memo(() => {
     }
     if (position === 'bottom') {
       setDockStyle({
-        height: dockData.length * 1 + 10,
+        height: dockData.length * 1 + 12,
         marginBottom: dockData.distance * 1
       })
     } else if (position === 'top') {
       setDockStyle({
-        height: dockData.length * 1 + 10,
+        height: dockData.length * 1 + 12,
         marginTop: dockData.distance * 1
       })
     } else if (position === 'left') {
       setDockStyle({
-        width: dockData.length * 1 + 10,
+        width: dockData.length * 1 + 12,
         marginLeft: dockData.distance * 1
       })
     } else {
       setDockStyle({
-        width: dockData.length * 1 + 10,
+        width: dockData.length * 1 + 12,
         marginRight: dockData.distance * 1
       })
     }
@@ -298,10 +300,12 @@ const Footer = React.memo(() => {
       return
     }
     const dockBackground: HTMLDivElement = dockRef.current
+    dockBackground.addEventListener('mouseenter', mousemove)
     dockBackground.addEventListener('mousemove', mousemove)
     dockBackground.addEventListener('mouseleave', mouseleave)
     return () => {
-      dockBackground.removeEventListener('mousemove', mousemove)
+    dockBackground.removeEventListener('mouseenter', mousemove)
+    dockBackground.removeEventListener('mousemove', mousemove)
       dockBackground.removeEventListener('mouseleave', mouseleave)
     }
   }, [mousemove, mouseleave, dockData.isDockBig])

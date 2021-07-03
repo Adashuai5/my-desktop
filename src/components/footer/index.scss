@@ -140,29 +140,27 @@
 
   #Docker {
     display: flex;
-    padding: 3px 4px 7px;
-    margin-bottom: 10px;
-    background-color: rgba(222, 223, 227, 0.7);
-    box-shadow:
-      rgba(0, 0, 0, 0.31) 0 0 1px,
-      rgba(0, 0, 0, 0.18) 0 0 5px,
-      rgba(0, 0, 0, 0.3) 0 8px 50px;
+    padding: 4px 4px 7px;
+    background-color: rgba(60, 60, 60, 0.95);
+    border: 1px solid #7a697a;
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px, rgba(0, 0, 0, 0.3) 0 8px 50px;
     transition: margin 0.5s;
 
     &.top {
-      padding: 7px 4px 3px;
+      padding: 7px 4px 4px;
     }
 
     &.bottom {
-      padding: 3px 4px 7px;
+      padding: 4px 4px 7px;
     }
 
     &.left {
-      padding: 4px 3px 4px 7px;
+      padding: 4px 4px 4px 7px;
     }
 
     &.right {
-      padding: 4px 7px 4px 3px;
+      padding: 4px 7px 4px 4px;
     }
 
     .DockItem {
@@ -172,8 +170,11 @@
       &.active {
         &::after {
           position: absolute;
-          font-size: 0.1em;
-          content: '●';
+          width: 4px;
+          height: 4px;
+          content: "";
+          background-color: #fff;
+          border-radius: 50%;
         }
       }
 
@@ -187,7 +188,7 @@
 
         &.active {
           &::after {
-            top: -13px;
+            top: -5px;
           }
         }
       }
@@ -202,7 +203,7 @@
 
         &.active {
           &::after {
-            bottom: -7px;
+            bottom: -6px;
           }
         }
       }
@@ -227,28 +228,20 @@
 
     &.top {
       align-items: flex-start;
-      border-bottom-right-radius: 0.4rem;
-      border-bottom-left-radius: 0.4rem;
     }
 
     &.bottom {
       align-items: flex-end;
-      border-top-left-radius: 0.4rem;
-      border-top-right-radius: 0.4rem;
     }
 
     &.left {
       flex-direction: column;
       align-items: flex-start;
-      border-top-right-radius: 0.4rem;
-      border-bottom-right-radius: 0.4rem;
     }
 
     &.right {
       flex-direction: column;
       align-items: flex-end;
-      border-top-left-radius: 0.4rem;
-      border-bottom-left-radius: 0.4rem;
     }
   }
 }

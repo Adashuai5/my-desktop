@@ -1,28 +1,34 @@
 #CalculatorView {
   width: 410px;
-  font-size: 2em;
+  font-size: 1.8em;
 
   #calculatorMove {
     height: 32px;
     background-color: rgba($color: #434243, $alpha: 0.8);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border: 1px solid #7a697a;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
   }
 
   .calculator-wrapper {
     height: 528px;
     background-color: rgba($color: #434243, $alpha: 0.8);
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
 
     .output-wrapper {
       position: relative;
       width: 100%;
       height: 19%;
+      border-right: 1px solid #7a697a;
+      border-left: 1px solid #7a697a;
 
       .output {
         position: absolute;
         right: 0.6em;
         bottom: 0;
-        color: #fff;
+        color: #ececec;
 
         span {
           max-width: 100%;
@@ -34,32 +40,49 @@
     .row {
       height: 81%;
       text-align: center;
+      border-right: 1px solid #7a697a;
+      border-bottom: 1px solid #7a697a;
+      border-left: 1px solid #7a697a;
+      border-bottom-right-radius: 12px;
+      border-bottom-left-radius: 12px;
 
       .button {
         width: 25%;
         height: 20%;
-        font-size: 1em;
-        background-color: #dcdbdc;
-        border: 1px solid gray;
+        font-size: 0.8em;
+        font-weight: bold;
+        color: #ececec;
+        background-color: #828283;
+        border: 1px solid #595959;
+
+        &:active {
+          background-color: #b4b4b4;
+        }
 
         &.dark {
-          background-color: #d1d0d1;
+          background-color: #686867;
+
+          &:active {
+            background-color: #818181;
+          }
         }
 
         &.orange {
-          color: #fff;
-          background-color: #ee8739;
+          background-color: #f2a33c;
+
+          &:active {
+            background-color: #c1802e;
+          }
         }
       }
 
       .text-0 {
         width: 50%;
-        padding: 0 24.5% 0 0.5%;
-        border-bottom-left-radius: 5px;
+        border-bottom-left-radius: 12px;
       }
 
       :last-child {
-        border-bottom-right-radius: 5px;
+        border-bottom-right-radius: 12px;
       }
     }
   }
