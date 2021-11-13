@@ -1,4 +1,5 @@
-import React, {
+import {
+  memo,
   useState,
   useMemo,
   useRef,
@@ -33,7 +34,7 @@ interface OpenTypes {
 
 const Length = 68
 
-const Footer = React.memo(() => {
+const Footer = memo(() => {
   const [dockList] = useState<string[]>([
     FinderIcon,
     LaunchpadIcon,
@@ -304,8 +305,8 @@ const Footer = React.memo(() => {
     dockBackground.addEventListener('mousemove', mousemove)
     dockBackground.addEventListener('mouseleave', mouseleave)
     return () => {
-    dockBackground.removeEventListener('mouseenter', mousemove)
-    dockBackground.removeEventListener('mousemove', mousemove)
+      dockBackground.removeEventListener('mouseenter', mousemove)
+      dockBackground.removeEventListener('mousemove', mousemove)
       dockBackground.removeEventListener('mouseleave', mouseleave)
     }
   }, [mousemove, mouseleave, dockData.isDockBig])

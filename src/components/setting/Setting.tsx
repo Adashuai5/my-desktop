@@ -1,10 +1,11 @@
-import React, {
+import {
   useContext,
   useState,
   useEffect,
   CSSProperties,
   useCallback
 } from 'react'
+import * as React from 'react'
 import { useModal } from '../modal/UseModal'
 import { FooterContext } from '../footer/Footer'
 import {

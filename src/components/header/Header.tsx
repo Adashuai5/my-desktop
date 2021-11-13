@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { Iconfont } from '../iconfont'
 import './index.scss'
 import dayjs from 'dayjs'

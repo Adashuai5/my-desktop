@@ -1,10 +1,5 @@
-import React, {
-  useState,
-  useCallback,
-  useMemo,
-  useEffect,
-  CSSProperties
-} from 'react'
+import { useState, useCallback, useMemo, useEffect, CSSProperties } from 'react'
+import * as React from 'react'
 import { observer } from 'mobx-react'
 import store from '../store'
 
