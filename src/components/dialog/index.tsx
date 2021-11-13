@@ -1,4 +1,4 @@
-import React, { useMemo, useState, CSSProperties } from 'react'
+import { useMemo, useState, CSSProperties } from 'react'
 import { Dialog, Button } from 'react-desktop/macOs'
 
 /// <reference path="react-desktop.d.ts" />

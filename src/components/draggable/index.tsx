@@ -1,10 +1,5 @@
-import React, {
-  useState,
-  useCallback,
-  useMemo,
-  useEffect,
-  CSSProperties
-} from 'react'
+import { useState, useCallback, useMemo, useEffect, CSSProperties } from 'react'
+import * as React from 'react'
 
 const POSITION = { x: 0, y: 0 }
 

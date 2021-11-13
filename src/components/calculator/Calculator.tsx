@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import './index.scss'
 
-const getKEYS = ()=> [
+const getKEYS = () => [
   'AC',
   '+/-',
   '%',
@@ -25,7 +25,6 @@ const getKEYS = ()=> [
 const KEYS = getKEYS()
 
 const Calculate = () => {
-
   const [keys, setKeys] = useState<string[]>(KEYS)
   const [N1N2, setN1OrN2] = useState({ n1: '', n2: '' })
   const [operator, setOperator] = useState('')
@@ -34,8 +33,8 @@ const Calculate = () => {
   const getNumber = useCallback(
     (name: 'n1' | 'n2', text: string): void => {
       const getN1N2 = {
-        n1: name === 'n1' &&  N1N2[name] !== '0'? N1N2[name] + text : N1N2.n1,
-        n2: name === 'n2' &&  N1N2[name] !== '0' ? N1N2[name] + text : N1N2.n2
+        n1: name === 'n1' && N1N2[name] !== '0' ? N1N2[name] + text : N1N2.n1,
+        n2: name === 'n2' && N1N2[name] !== '0' ? N1N2[name] + text : N1N2.n2
       }
       setN1OrN2(getN1N2)
       setResult(
@@ -85,7 +84,7 @@ const Calculate = () => {
       if (event.target instanceof HTMLButtonElement) {
         const buttonText = event.target.textContent
         if ('0123456789.'.indexOf(buttonText) >= 0) {
-          const a  = getKEYS()
+          const a = getKEYS()
           a.shift()
           a.unshift('C')
           setKeys(a)

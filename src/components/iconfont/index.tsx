@@ -1,4 +1,3 @@
-import React from 'react'
 import { CSSProperties, RefObject } from 'react'
 import './index.scss'
 
