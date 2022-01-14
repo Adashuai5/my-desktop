@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "tsc && vite build",
     "serve": "vite preview",
     "lint:style": "stylelint --fix \"src/**/*.scss\" --syntax scss",
