@@ -68,7 +68,7 @@ const Footer = memo(() => {
   const [isCalculatorShow, setCalculatorShow] = useState(true)
   const [isDrawingShow, setDrawingShow] = useState(true)
   const [isLaunchpadShow, setLaunchpadShow] = useState(false)
-  const [isChrome, setChrome] = useState<any>(null)
+  const [isChrome, setChrome] = useState<WindowProxy| null>(null)
 
   const dockItemClick = useCallback(
     (item: string, index: number) => {

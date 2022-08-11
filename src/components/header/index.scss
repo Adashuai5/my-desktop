@@ -8,7 +8,8 @@
   height: 28px;
   padding: 0 20px;
   background-color: rgba(200, 200, 221, 0.9);
-  box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px, rgba(0, 0, 0, 0.3) 0 8px 50px;
+  box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px,
+    rgba(0, 0, 0, 0.3) 0 8px 50px;
 
   .FinderLeft,
   .FinderRight {
@@ -18,15 +19,15 @@
 
     div,
     a {
-      font-family: "PingFang SC", serif;
+      font-family: 'PingFang SC', serif;
       font-size: 14px;
       color: #000;
       cursor: default;
     }
 
     div {
-      margin-right: 20px;
       position: relative;
+      margin-right: 20px;
 
       input {
         width: 100px;
@@ -50,7 +51,8 @@
         background-color: rgba(60, 60, 60, 0.8);
         border: 1px solid #7a697a;
         border-radius: 6px;
-        box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px, rgba(0, 0, 0, 0.3) 0 8px 50px;
+        box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px,
+          rgba(0, 0, 0, 0.3) 0 8px 50px;
 
         &.active {
           position: absolute;
@@ -83,8 +85,8 @@
   .FinderRight {
     a {
       padding: 3px 10px;
-      border-radius: 4px;
       cursor: pointer;
+      border-radius: 4px;
 
       &:hover {
         background-color: rgba(155, 161, 177, 0.6);
@@ -92,8 +94,8 @@
     }
 
     div {
-      margin-left: 10px;
       margin-right: 0;
+      margin-left: 10px;
     }
   }
 }

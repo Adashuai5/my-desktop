@@ -16,7 +16,7 @@ export const Calculator = memo(() => {
   ] = useContext(FooterContext)
 
   useEffect(
-    () => (isCalculatorOpen.type ? open() : close()),
+    () => (isCalculatorOpen?.type ? open() : close()),
     [close, isCalculatorOpen, open]
   )
   return (

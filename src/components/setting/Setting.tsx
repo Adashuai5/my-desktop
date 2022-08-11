@@ -1,10 +1,4 @@
-import {
-  useContext,
-  useState,
-  useEffect,
-  CSSProperties,
-  useCallback
-} from 'react'
+import { useContext, useState, useEffect, CSSProperties } from 'react'
 import * as React from 'react'
 import { useModal } from '../modal/UseModal'
 import { FooterContext } from '../footer/Footer'
@@ -24,15 +18,15 @@ import { Iconfont } from '../iconfont'
 
 interface OptionsProps {
   title: string
-  value: number
+  value: string
   max: string
   min: string
 }
 
 export const Setting = React.memo(() => {
   const { open, close, RenderModal } = useModal('SettingView')
-  const positionMap = ['left', 'bottom', 'right', 'top']
-  const setListMap = [{ title: '通用' }]
+  const positionMap = ['left', 'bottom', 'right']
+  const setListMap = [{ title: '程序坞设置' }]
   const [
     isSettingOpen,
     setSettingOpen,
@@ -46,67 +40,41 @@ export const Setting = React.memo(() => {
   const optionsMap: Array<OptionsProps> = [
     {
       title: '图标默认大小',
-      value: dockData.length * 1,
+      value: 'length',
       max: '128',
       min: '25'
     },
     {
       title: '图标缩放后大小',
-      value: dockData.bigLength * 1,
+      value: 'bigLength',
       max: '256',
       min: '25'
     },
     {
       title: '图标之间距离大小',
-      value: dockData.itemMargin * 1,
+      value: 'itemMargin',
       max: '10',
       min: '0'
     },
     {
-      title: 'Dock 距离屏幕边缘大小',
-      value: dockData.distance * 1,
+      title: '距离屏幕边缘大小',
+      value: 'distance',
       max: '100',
       min: '0'
     }
   ]
-  const [selected, setTitle] = useState('通用')
+  const [selected, setTitle] = useState('程序坞')
+  const [focus, setFocus] = useState(true)
 
-  useEffect(
-    () => (isSettingOpen.type ? open() : close()),
-    [close, isSettingOpen, open]
-  )
-
-  const onInputChange = useCallback(
-    (value: string, item: OptionsProps) => {
-      switch (item.title) {
-        case '图标默认大小':
-          setDockData({
-            name: 'change',
-            dockData: { ...dockData, length: value }
-          })
-          return
-        case '图标缩放后大小':
-          setDockData({
-            name: 'change',
-            dockData: { ...dockData, bigLength: value }
-          })
-          return
-        case '图标之间距离大小':
-          setDockData({
-            name: 'change',
-            dockData: { ...dockData, itemMargin: value }
-          })
-          return
-        case 'Dock 距离屏幕边缘大小':
-          setDockData({
-            name: 'change',
-            dockData: { ...dockData, distance: value }
-          })
-          return
-      }
-    },
-    [dockData, setDockData]
-  )
+  useEffect(() => {
+    isSettingOpen.type ? open() : close()
+    window.onfocus = () => {
+      setFocus(true)
+    }
+    window.onblur = () => {
+      setFocus(false)
+    }
+  }, [close, isSettingOpen, open])
 
   return (
     <RenderModal
@@ -191,18 +159,22 @@ export const Setting = React.memo(() => {
                     min={item.min}
                     max={item.max}
                     type="range"
-                    value={item.value}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputChange(e.target.value, item)
-                    }}
+                    className={focus ? 'focus' : ''}
+                    value={dockData[item.value]}
+                    onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setDockData({
+                        name: 'change',
+                        dockData: { ...dockData, [item.value]: e.target.value }
+                      })
+                    }
                   />
-                  <span>{item.value}</span>
+                  <span>{dockData[item.value]}</span>
                 </div>
               )
             })}
 
             <Text bold marginBottom="10px">
-              Dock 所在屏幕位置
+              置于屏幕上的位置
             </Text>
             <View
               style={

@@ -13,6 +13,10 @@ import Canvas from './Canvas'
 import './index.scss'
 /// <reference path="react-desktop.d.ts" />
 
+interface RefObject {
+  drawingCloseClick: () => void
+}
+
 export const Drawing = memo(() => {
   const { open, close, RenderModal } = useModal('DrawingView')
   const [isDrawingOpen, , isDrawingShow, setDrawingShow] =
@@ -34,7 +38,7 @@ export const Drawing = memo(() => {
     setFullscreen(!isFullscreen)
   }, [isFullscreen])
 
-  const drawingRef = useRef<any>()
+  const drawingRef = useRef<RefObject>()
 
   const drawingCloseClick = () => {
     if (drawingRef.current) {

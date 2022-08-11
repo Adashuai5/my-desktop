@@ -10,8 +10,8 @@ interface DialogProps {
   title?: string
   message?: string
   imgSrc?: string
-  onCheck: (T: any) => void
-  onClose: (T: any) => void
+  onCheck: (T: unknown) => void
+  onClose: (T: unknown) => void
 }
 
 export const useDialog = () => {
@@ -52,7 +52,9 @@ export const useDialog = () => {
               message={message}
               icon={renderIcon()}
               buttons={[
+                // eslint-disable-next-line react/jsx-key
                 <Button onClick={onClose}>取消</Button>,
+                // eslint-disable-next-line react/jsx-key
                 <Button color="blue" onClick={onCheck}>
                   确认
                 </Button>

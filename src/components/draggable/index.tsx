@@ -6,7 +6,7 @@ const POSITION = { x: 0, y: 0 }
 type Props = {
   children: React.ReactChild
   id: number
-  onDrag: (T: any) => void
+  onDrag: (T: unknown) => void
   onDragEnd: () => void
 }
 const Draggable = ({ children, id, onDrag, onDragEnd }: Props) => {
