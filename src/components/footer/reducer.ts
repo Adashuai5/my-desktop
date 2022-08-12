@@ -11,24 +11,24 @@ interface DockData {
   isDockBig: boolean
 }
 
-interface LengthAction {
-  name: 'change'
+interface DockDataAction {
+  name: string
   dockData: DockData
 }
 
-export const positionReducer = (state: string, action: PositionAction) => {
+export const positionReducer = (_state: string, action: PositionAction) => {
   switch (action.name) {
     case 'change':
       return action.position
     default:
-      return state
+      throw new Error()
   }
 }
-export const dataReducer = (state: DockData, action: LengthAction) => {
+export const dataReducer = (state: DockData, action: DockDataAction) => {
   switch (action.name) {
     case 'change':
-      return action.dockData
+      return { ...state, ...action.dockData }
     default:
-      return state
+      throw new Error()
   }
 }

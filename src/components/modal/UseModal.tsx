@@ -18,29 +18,32 @@ export const useModal = (id: string) => {
     store.removeModal(id)
   }, [id])
 
-  const RenderModal = ({
-    children,
-    data
-  }: {
-    children: React.ReactChild
-    data: {
-      width: number
-      height: number
-      id: string
-      moveId: string
-      isShow: boolean
-    }
-  }) => {
-    return (
-      <>
-        {isVisible && (
-          <Modal data={data} closeModal={close}>
-            {children}
-          </Modal>
-        )}
-      </>
-    )
-  }
+  const RenderModal = useCallback(
+    ({
+      children,
+      data
+    }: {
+      children: React.ReactChild
+      data: {
+        width: number
+        height: number
+        id: string
+        moveId: string
+        isShow: boolean
+      }
+    }) => {
+      return (
+        <>
+          {isVisible && (
+            <Modal data={data} closeModal={close}>
+              {children}
+            </Modal>
+          )}
+        </>
+      )
+    },
+    [close, isVisible]
+  )
 
   return {
     open,

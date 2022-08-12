@@ -23,6 +23,33 @@ interface OptionsProps {
   min: string
 }
 
+const optionsMap: Array<OptionsProps> = [
+  {
+    title: '图标默认大小',
+    value: 'length',
+    max: '128',
+    min: '25'
+  },
+  {
+    title: '图标缩放后大小',
+    value: 'bigLength',
+    max: '256',
+    min: '25'
+  },
+  {
+    title: '图标之间距离大小',
+    value: 'itemMargin',
+    max: '10',
+    min: '0'
+  },
+  {
+    title: '距离屏幕边缘大小',
+    value: 'distance',
+    max: '100',
+    min: '0'
+  }
+]
+
 export const Setting = React.memo(() => {
   const { open, close, RenderModal } = useModal('SettingView')
   const positionMap = ['left', 'bottom', 'right']
@@ -37,32 +64,6 @@ export const Setting = React.memo(() => {
     dockData,
     setDockData
   ] = useContext(FooterContext)
-  const optionsMap: Array<OptionsProps> = [
-    {
-      title: '图标默认大小',
-      value: 'length',
-      max: '128',
-      min: '25'
-    },
-    {
-      title: '图标缩放后大小',
-      value: 'bigLength',
-      max: '256',
-      min: '25'
-    },
-    {
-      title: '图标之间距离大小',
-      value: 'itemMargin',
-      max: '10',
-      min: '0'
-    },
-    {
-      title: '距离屏幕边缘大小',
-      value: 'distance',
-      max: '100',
-      min: '0'
-    }
-  ]
   const [selected, setTitle] = useState('程序坞')
   const [focus, setFocus] = useState(true)
 
@@ -143,7 +144,6 @@ export const Setting = React.memo(() => {
                         setDockData({
                           name: 'change',
                           dockData: {
-                            ...dockData,
                             isDockBig: !dockData.isDockBig
                           }
                         })
@@ -164,7 +164,7 @@ export const Setting = React.memo(() => {
                     onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setDockData({
                         name: 'change',
-                        dockData: { ...dockData, [item.value]: e.target.value }
+                        dockData: { [item.value]: e.target.value }
                       })
                     }
                   />

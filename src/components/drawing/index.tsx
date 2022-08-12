@@ -25,7 +25,7 @@ export const Drawing = memo(() => {
   const [isFullscreen, setFullscreen] = useState(false)
 
   useEffect(
-    () => (isDrawingOpen.type ? open() : close()),
+    () => (isDrawingOpen?.type ? open() : close()),
     [close, isDrawingOpen, open]
   )
 

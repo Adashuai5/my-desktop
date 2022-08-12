@@ -116,7 +116,10 @@ const Draggable = ({ children, domEl, data }: Props) => {
       top: `${state.position.y}px`,
       zIndex,
       display: data.isShow ? 'block' : 'none',
-      position: 'absolute'
+      position: 'absolute',
+      'box-shadow': 'rgba(0, 0, 0, 0.24) 0 3px 8px',
+      'border-bottom-left-radius': '5px',
+      'border-bottom-right-radius': '5px'
     }),
     [state.position.x, state.position.y, zIndex, data.isShow]
   )
