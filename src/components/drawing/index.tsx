@@ -1,5 +1,7 @@
 import {
   memo,
+  lazy,
+  Suspense,
   useContext,
   useEffect,
   useState,
@@ -9,9 +11,10 @@ import {
 import { useModal } from '../modal/UseModal'
 import { FooterContext } from '../footer/Footer'
 import { TitleBar } from 'react-desktop/macOs'
-import Canvas from './Canvas'
 import './index.scss'
 /// <reference path="react-desktop.d.ts" />
+
+const Canvas = lazy(() => import('./Canvas'))
 
 interface RefObject {
   drawingCloseClick: () => void
@@ -67,11 +70,13 @@ export const Drawing = memo(() => {
           onMaximizeClick={maximizeClick}
           onResizeClick={maximizeClick}
         />
-        <Canvas
-          onRef={drawingRef}
-          height={isFullscreen ? window.innerHeight - 32 : style.height}
-          width={isFullscreen ? window.innerWidth : style.width}
-        />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Canvas
+            onRef={drawingRef}
+            height={isFullscreen ? window.innerHeight - 32 : style.height}
+            width={isFullscreen ? window.innerWidth : style.width}
+          />
+        </Suspense>
       </div>
     </RenderModal>
   )

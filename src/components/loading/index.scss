@@ -1,0 +1,43 @@
+.lds-spinner {
+  color: official;
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-40px, -80px);
+
+  div {
+    transform-origin: 40px 40px;
+    animation: lds-spinner 1.2s linear infinite;
+
+    &:after {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 3px;
+      left: 37px;
+      width: 6px;
+      height: 18px;
+      border-radius: 20%;
+      background: #fff;
+    }
+  }
+}
+
+@for $i from 1 through 12 {
+  .lds-spinner div:nth-child(#{$i}) {
+    transform: rotate(#{($i - 1) * 30}deg);
+    animation-delay: #{-1.1 + ($i - 1) * 0.1}s;
+  }
+}
+
+@keyframes lds-spinner {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

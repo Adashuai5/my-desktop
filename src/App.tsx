@@ -1,13 +1,20 @@
-import Footer from './components/footer/Footer'
-import Header from './components/header/Header'
-import Main from './components/main/Main'
 import './styles/App.scss'
+import { lazy, Suspense } from 'react'
+import Loading from './components/loading'
+
+const Footer = lazy(() => import('./components/footer/Footer'))
+const Header = lazy(() => import('./components/header/Header'))
+const Main = lazy(() => import('./components/main/Main'))
 
 const App = () => (
   <div className="App">
-    <Header />
-    <Main />
-    <Footer />
+    <Suspense fallback={<Loading />}>
+      <section>
+        <Header />
+        <Main />
+        <Footer />
+      </section>
+    </Suspense>
   </div>
 )
 

@@ -1,10 +1,11 @@
-import { memo, useContext, useEffect } from 'react'
+import { lazy, memo, useContext, useEffect, Suspense } from 'react'
 import { useModal } from '../modal/UseModal'
 import { FooterContext } from '../footer/Footer'
 import { TitleBar } from 'react-desktop/macOs'
-import Calculate from './Calculator'
 import './index.scss'
 /// <reference path="react-desktop.d.ts" />
+
+const Calculate = lazy(() => import('./Calculator'))
 
 export const Calculator = memo(() => {
   const { open, close, RenderModal } = useModal('CalculatorView')
@@ -47,7 +48,9 @@ export const Calculator = memo(() => {
           }}
           onMaximizeClick={open}
         />
-        <Calculate />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Calculate />
+        </Suspense>
       </>
     </RenderModal>
   )
