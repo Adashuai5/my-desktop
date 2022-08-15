@@ -43,10 +43,17 @@
           line-height: 16px;
         }
 
-        input[type='range'] {
+        .range-wrapper {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+        }
+
+        input[type="range"] {
           width: 256px;
-          margin: 0 30px 20px 0;
+          margin-right: 30px;
           -webkit-appearance: none;
+          height: 24px;
 
           &.focus {
             &::-webkit-slider-runnable-track {

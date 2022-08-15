@@ -10,7 +10,7 @@ import {
   CSSProperties
 } from 'react'
 import './index.scss'
-import { Setting } from '../setting/Setting'
+import Setting from '../setting/Setting'
 import { Calculator } from '../calculator'
 import { Drawing } from '../drawing'
 import { Launchpad } from '../launchpad'

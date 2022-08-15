@@ -1,9 +1,9 @@
-interface PositionAction {
+export interface PositionAction {
   name: 'change'
   position: 'bottom' | 'top' | 'left' | 'right'
 }
 
-interface DockData {
+export interface DockData {
   length: number
   bigLength: number
   itemMargin: number
@@ -11,7 +11,7 @@ interface DockData {
   isDockBig: boolean
 }
 
-interface DockDataAction {
+export interface DockDataAction {
   name: string
   dockData: DockData
 }

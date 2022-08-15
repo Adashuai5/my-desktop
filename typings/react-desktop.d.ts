@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module "react-desktop/macOs" {
   export const View: any;
   export const Radio: any;
