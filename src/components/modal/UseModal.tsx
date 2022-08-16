@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 import * as React from 'react'
 
+import { MODAL_DATA } from './type'
 import Modal from './Modal'
 import store from './store'
 
@@ -19,19 +20,7 @@ export const useModal = (id: string) => {
   }, [id])
 
   const RenderModal = useCallback(
-    ({
-      children,
-      data
-    }: {
-      children: React.ReactChild
-      data: {
-        width: number
-        height: number
-        id: string
-        moveId: string
-        isShow: boolean
-      }
-    }) => {
+    ({ children, data }: { children: React.ReactChild; data: MODAL_DATA }) => {
       return (
         <>
           {isVisible && (

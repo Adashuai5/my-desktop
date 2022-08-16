@@ -68,7 +68,7 @@ const Footer = memo(() => {
   const [isCalculatorShow, setCalculatorShow] = useState(true)
   const [isDrawingShow, setDrawingShow] = useState(true)
   const [isLaunchpadShow, setLaunchpadShow] = useState(false)
-  const [isChrome, setChrome] = useState<WindowProxy| null>(null)
+  const [isChrome, setChrome] = useState<WindowProxy | null>(null)
 
   const dockItemClick = useCallback(
     (item: string, index: number) => {
@@ -77,6 +77,7 @@ const Footer = memo(() => {
       }
       const imgList = dockRef.current.childNodes
       const img = imgList[index] as HTMLDivElement
+
       switch (item) {
         case ChromeIcon:
           if (!isChrome) {
@@ -90,7 +91,8 @@ const Footer = memo(() => {
             isChrome.close()
             setChrome(null)
           }
-          return
+          break
+
         case PrefAppIcon:
           if (!isSettingOpen.type) {
             if (isLaunchpadShow) {
@@ -105,8 +107,20 @@ const Footer = memo(() => {
             }, 2500)
             return
           }
+
+          if (isLaunchpadShow) {
+            // 这里是为了触发 handleSetNewIndex 来更新 z-index
+            setSettingShow(false)
+            setLaunchpadShow(false)
+            setTimeout(() => {
+              setSettingShow(true)
+            }, 0)
+            return
+          }
+
           setSettingShow(!isSettingShow)
-          return
+          break
+
         case CalculatorIcon:
           if (!isCalculatorOpen.type) {
             if (isLaunchpadShow) {
@@ -124,8 +138,19 @@ const Footer = memo(() => {
             }, 2500)
             return
           }
+
+          if (isLaunchpadShow) {
+            setCalculatorShow(false)
+            setLaunchpadShow(false)
+            setTimeout(() => {
+              setCalculatorShow(true)
+            }, 0)
+            return
+          }
+
           setCalculatorShow(!isCalculatorShow)
-          return
+          break
+
         case DrawingIcon:
           if (!isDrawingOpen.type) {
             if (isLaunchpadShow) {
@@ -143,11 +168,21 @@ const Footer = memo(() => {
             }, 2500)
             return
           }
+
+          if (isLaunchpadShow) {
+            setDrawingShow(false)
+            setLaunchpadShow(false)
+            setTimeout(() => {
+              setDrawingShow(true)
+            }, 0)
+            return
+          }
           setDrawingShow(!isDrawingShow)
-          return
+          break
+
         case LaunchpadIcon:
           setLaunchpadShow(!isLaunchpadShow)
-          return
+          break
       }
     },
     [
@@ -355,7 +390,7 @@ const Footer = memo(() => {
         <Drawing />
       </FooterContext.Provider>
       <FooterContext.Provider value={[isLaunchpadShow, setLaunchpadShow]}>
-        <Launchpad isVisible={isLaunchpadShow} dockItemClick={dockItemClick} />
+        <Launchpad dockItemClick={dockItemClick} />
       </FooterContext.Provider>
       <footer className={position} id="AppFooter">
         <div

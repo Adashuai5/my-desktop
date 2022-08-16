@@ -4,7 +4,7 @@
 
   #calculatorMove {
     height: 32px;
-    background-color: rgba($color: #434243, $alpha: 0.8);
+    background-color: rgba($color: #595758, $alpha: 0.9);
     border: 1px solid #7a697a;
     border-bottom: 1px solid transparent;
     border-top-left-radius: 12px;
@@ -13,7 +13,7 @@
 
   .calculator-wrapper {
     height: 528px;
-    background-color: rgba($color: #434243, $alpha: 0.8);
+    background-color: rgba($color: #595758, $alpha: 0.9);
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
 
@@ -52,7 +52,7 @@
         font-size: 0.8em;
         font-weight: bold;
         color: #ececec;
-        background-color: #828283;
+        background-color: #828181;
         border: 1px solid #595959;
 
         &:active {
@@ -60,7 +60,7 @@
         }
 
         &.dark {
-          background-color: #686867;
+          background-color: #696768;
 
           &:active {
             background-color: #818181;

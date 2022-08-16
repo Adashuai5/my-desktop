@@ -2,7 +2,12 @@ import { observable, action } from 'mobx'
 
 class Store {
   @observable
-  queue: string[] = []
+  queue = new Map()
+
+  @action
+  getIndex(id: string) {
+    return this.queue.get(id)
+  }
 
   /**
    * 弹窗入队
@@ -10,17 +15,24 @@ class Store {
    */
   @action
   addModal(id: string) {
-    !this.queue.find((i: string) => i === id) && this.queue.push(id)
+    this.queue.set(
+      id,
+      this.queue.size ? Math.max(...this.queue.values()) + 1 : 1
+    )
   }
+
+  @action
+  setNewIndex(id: string) {
+    this.queue.set(id, Math.max(...this.queue.values()) + 1)
+  }
+
   /**
    * 弹窗出队
    * @param {String} 弹窗ID
    */
   @action
   removeModal(id: string) {
-    const index = this.queue.indexOf(id)
-    if (index === -1) return
-    this.queue.splice(index, 1)
+    this.queue.delete(id)
   }
 }
 

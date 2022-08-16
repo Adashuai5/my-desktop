@@ -15,11 +15,10 @@ import DrawingPng from '../footer/image/Drawing.png'
 import './index.scss'
 
 type Props = {
-  isVisible: boolean
   dockItemClick: (item: string, index: number) => void
 }
 
-export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
+export const Launchpad = ({ dockItemClick }: Props) => {
   const [dockList] = useState<string[]>([
     PrefAppPng,
     ChromePng,
@@ -70,16 +69,16 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
 
   const handleKeydown = useCallback(
     ({ keyCode }) => {
-      if (keyCode === 27 && isVisible) {
+      if (keyCode === 27 && isLaunchpadShow) {
         setLaunchpadShow(!isLaunchpadShow)
       }
     },
-    [setLaunchpadShow, isLaunchpadShow, isVisible]
+    [setLaunchpadShow, isLaunchpadShow]
   )
 
   const handleClick = useCallback(
     ({ target }) => {
-      if (!isVisible) return
+      if (!isLaunchpadShow) return
       const LaunchpadItems = document.getElementsByClassName('LaunchpadImg')
       for (let i = 0; i < LaunchpadItems.length; i++) {
         if (LaunchpadItems[i] === target) {
@@ -88,7 +87,7 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
       }
       setLaunchpadShow(!isLaunchpadShow)
     },
-    [setLaunchpadShow, isLaunchpadShow, isVisible]
+    [setLaunchpadShow, isLaunchpadShow]
   )
 
   useEffect(() => {
@@ -102,7 +101,7 @@ export const Launchpad = ({ isVisible, dockItemClick }: Props) => {
 
   return (
     <>
-      {isVisible && (
+      {isLaunchpadShow && (
         <div id="Launchpad">
           <div id="LaunchpadItemWrapper">
             {dockList.map((item, index) => {

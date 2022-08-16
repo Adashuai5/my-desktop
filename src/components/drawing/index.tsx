@@ -70,7 +70,7 @@ export const Drawing = memo(() => {
           onMaximizeClick={maximizeClick}
           onResizeClick={maximizeClick}
         />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={null}>
           <Canvas
             onRef={drawingRef}
             height={isFullscreen ? window.innerHeight - 32 : style.height}

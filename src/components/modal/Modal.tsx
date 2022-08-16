@@ -1,17 +1,12 @@
 import ReactDOM from 'react-dom'
 import * as React from 'react'
 import Draggable from './draggable/index'
+import { MODAL_DATA } from './type'
 
 type Props = {
   children: React.ReactChild
   closeModal?: () => void
-  data: {
-    width: number
-    height: number
-    id: string
-    moveId: string
-    isShow: boolean
-  }
+  data: MODAL_DATA
 }
 
 const Modal = React.memo(({ children, data }: Props) => {

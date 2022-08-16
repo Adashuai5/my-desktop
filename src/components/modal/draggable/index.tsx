@@ -2,21 +2,16 @@ import { useState, useCallback, useMemo, useEffect, CSSProperties } from 'react'
 import * as React from 'react'
 import { observer } from 'mobx-react'
 import store from '../store'
+import { MODAL_DATA } from '../type'
 
 type Props = {
   children: React.ReactChild
   domEl: HTMLDivElement
-  data: {
-    width: number
-    height: number
-    id: string
-    moveId: string
-    isShow: boolean
-  }
+  data: MODAL_DATA
 }
-const Draggable = ({ children, domEl, data }: Props) => {
-  const [zIndex, setZIndex] = useState(1)
 
+const Draggable = ({ children, domEl, data }: Props) => {
+  const [zIndex, setZIndex] = useState(store.getIndex(data.id))
   const dragEl = document.getElementById(data.id) as HTMLDivElement
   const moveEl = document.getElementById(data.moveId) as HTMLDivElement
   const localPosition = localStorage.getItem(data.id) || null
@@ -32,9 +27,13 @@ const Draggable = ({ children, domEl, data }: Props) => {
     position: initPosition
   })
 
+  const handleSetNewIndex = useCallback(() => {
+    store.setNewIndex(data.id)
+    setZIndex(store.getIndex(data.id))
+  }, [data.id])
+
   const handleMouseDown = useCallback(
     ({ clientX, clientY }) => {
-      setZIndex(zIndex + store.queue.length + 1)
       setState((state) => ({
         ...state,
         isDragging: true,
@@ -44,7 +43,7 @@ const Draggable = ({ children, domEl, data }: Props) => {
         }
       }))
     },
-    [zIndex]
+    []
   )
 
   const handleMouseMove = useCallback(
@@ -88,7 +87,11 @@ const Draggable = ({ children, domEl, data }: Props) => {
         position: { x: 0, y: 0 }
       })
     }
-  }, [data.width])
+
+    if(data.isShow) {
+      handleSetNewIndex()
+    }
+  }, [data.isShow, data.width, handleSetNewIndex])
 
   useEffect(() => {
     if (!domEl) return
@@ -117,7 +120,6 @@ const Draggable = ({ children, domEl, data }: Props) => {
       zIndex,
       display: data.isShow ? 'block' : 'none',
       position: 'absolute',
-      'box-shadow': 'rgba(0, 0, 0, 0.24) 0 3px 8px',
       'border-bottom-left-radius': '5px',
       'border-bottom-right-radius': '5px'
     }),
@@ -129,6 +131,7 @@ const Draggable = ({ children, domEl, data }: Props) => {
       id={data.id}
       style={styles as CSSProperties}
       onMouseDown={handleMouseDown}
+      onClick={handleSetNewIndex}
     >
       {children}
     </div>

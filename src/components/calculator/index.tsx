@@ -1,5 +1,4 @@
 import { lazy, memo, useContext, useEffect, Suspense } from 'react'
-import Loading from '../loading'
 import { useModal } from '../modal/UseModal'
 import { FooterContext } from '../footer/Footer'
 import { TitleBar } from 'react-desktop/macOs'
@@ -49,7 +48,7 @@ export const Calculator = memo(() => {
           }}
           onMaximizeClick={open}
         />
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={null}>
           <Calculate />
         </Suspense>
       </>
