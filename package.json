@@ -9,7 +9,8 @@
     "lint:style": "stylelint --fix \"src/**/*.scss\" --syntax scss",
     "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx",
     "prettier": "prettier -c --write \"src/**/*\"",
-    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx"
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx",
+    "preinstall": "npx only-allow pnpm"
   },
   "husky": {
     "hooks": {
@@ -17,10 +18,10 @@
     }
   },
   "lint-staged": {
-    "**/*.{scss}": "npm run lint:style",
-    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
+    "**/*.{scss}": "pnpm run lint:style",
+    "**/*.{js,jsx,ts,tsx}": "pnpm run lint-staged:js",
     "**/*.{js,jsx,tsx,ts,scss,md,json}": [
-      "npm run prettier"
+      "pnpm run prettier"
     ]
   },
   "dependencies": {
