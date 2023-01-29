@@ -1,0 +1,1 @@
+import{j as t}from"./index.6548d999.js";const e=document.createElement("script");e.src="//at.alicdn.com/t/font_1848517_ds8sk573mfk.js";document.body.appendChild(e);const d=({className:n,type:o,style:c,svgRef:r,clickEvent:i})=>t("svg",{ref:r,className:n?"icon-font "+n:"icon-font","aria-hidden":"true",style:c,onClick:i,children:t("use",{xlinkHref:`#${o}`})});export{d as I};
