@@ -66,9 +66,9 @@ const Calculate = () => {
   )
 
   const clickButton = useCallback(
-    (event) => {
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       if (event.target instanceof HTMLButtonElement) {
-        const buttonText = event.target.textContent
+        const buttonText = event.target.textContent || ''
         if ('0123456789.'.indexOf(buttonText) >= 0) {
           const a = getKEYS()
           a.shift()

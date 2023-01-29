@@ -14,11 +14,12 @@ const Header = () => {
   const [inputValue, setInputValue] = useState('Ada')
 
   const windowClick = useCallback(
-    ({ target }) => {
+    (event: MouseEvent) => {
+      const el = event.target as HTMLElement
       if (inputShow || menuShow) {
         if (
-          target.parentNode === menuRef.current ||
-          target.parentNode.parentNode === menuRef.current
+          el?.parentNode === menuRef.current ||
+          el?.parentNode?.parentNode === menuRef.current
         ) {
           return
         }

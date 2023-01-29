@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom'
 import * as React from 'react'
 import Draggable from './draggable/index'
-import { MODAL_DATA } from './type'
+import { MODAL_DATA } from '../../typing'
 
 type Props = {
-  children: React.ReactChild
+  children: React.ReactElement
   closeModal?: () => void
   data: MODAL_DATA
 }

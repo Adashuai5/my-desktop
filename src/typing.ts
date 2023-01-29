@@ -5,3 +5,8 @@ export type MODAL_DATA = {
   moveId: string
   isShow: boolean
 }
+
+export type Coordinate = {
+  x: number
+  y: number
+}

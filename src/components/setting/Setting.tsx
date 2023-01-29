@@ -1,5 +1,10 @@
-import { useMemo, useContext, useState, useEffect, CSSProperties } from 'react'
-import * as React from 'react'
+import React, {
+  useMemo,
+  useContext,
+  useState,
+  useEffect,
+  CSSProperties
+} from 'react'
 import { useModal } from '../modal/UseModal'
 import { FooterContext } from '../footer/Footer'
 import {
@@ -13,8 +18,6 @@ import {
 } from 'react-desktop/macOs'
 import './index.scss'
 import { Iconfont } from '../iconfont'
-
-/// <reference path="react-desktop.d.ts" />
 
 interface OptionsProps {
   title: string

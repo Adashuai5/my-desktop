@@ -2,7 +2,9 @@
   #clear-dialog {
     position: fixed !important;
     background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px,
+    box-shadow:
+      rgba(0, 0, 0, 0.31) 0 0 1px,
+      rgba(0, 0, 0, 0.18) 0 0 5px,
       rgba(0, 0, 0, 0.3) 0 8px 50px;
   }
 
@@ -24,7 +26,9 @@
     background-color: #fff;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px,
+    box-shadow:
+      rgba(0, 0, 0, 0.31) 0 0 1px,
+      rgba(0, 0, 0, 0.18) 0 0 5px,
       rgba(0, 0, 0, 0.3) 0 8px 50px;
   }
 
@@ -40,7 +44,9 @@
     background-color: #fff;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 5px 5px,
+    box-shadow:
+      rgba(0, 0, 0, 0.31) 0 0 1px,
+      rgba(0, 0, 0, 0.18) 0 5px 5px,
       rgba(0, 0, 0, 0.3) 0 25px 50px;
 
     .tools,
@@ -122,19 +128,19 @@
         transition: all 0.3s;
 
         &.black {
-          background: black;
+          background: #000;
         }
 
         &.red {
-          background: red;
+          background: #f00;
         }
 
         &.green {
-          background: green;
+          background: #008000;
         }
 
         &.blue {
-          background: blue;
+          background: #00f;
         }
 
         &.active {

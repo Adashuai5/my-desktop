@@ -6,23 +6,20 @@ import {
   useState,
   CSSProperties,
   useContext,
-  useImperativeHandle
+  useImperativeHandle,
+  SetStateAction
 } from 'react'
 import { Iconfont } from '../iconfont'
 import { CSSTransition } from 'react-transition-group'
 import { useDialog } from '../dialog'
 import { FooterContext } from '../footer/Footer'
 import DrawingPng from '../footer/image/Drawing.png'
+import { Coordinate } from '../../typing'
 
 interface CanvasProps {
   width: number
   height: number
   onRef: any
-}
-
-type Coordinate = {
-  x: number
-  y: number
 }
 
 interface ClearRectOptions {
@@ -32,8 +29,9 @@ interface ClearRectOptions {
   height: number
 }
 
+const colorMap = ['black', 'red', 'green', 'blue']
+
 const Canvas = ({ width, height, onRef }: CanvasProps) => {
-  const colorMap = ['black', 'red', 'green', 'blue']
   const optionsMap = [
     'canvas_save',
     'canvas_clear',
@@ -45,12 +43,13 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const backRef = useRef<SVGSVGElement>(null)
   const goRef = useRef<SVGSVGElement>(null)
-  const [strokeStyle, setStrokeStyle] = useState('black')
+  const [strokeStyle, setStrokeStyle] = useState(colorMap[0])
   const [lineWidth, setLineWidth] = useState(5)
   const [eraserEnabled, setEraserEnabled] = useState(false)
   const [isPainting, setIsPainting] = useState(false)
-  const [mousePosition, setMousePosition] =
-    useState<Coordinate | undefined>(undefined)
+  const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
+    undefined
+  )
   const [step, setStep] = useState(-1)
   const [canvasHistory, setCanvasHistory] = useState<string[]>([])
 
@@ -173,41 +172,50 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
   }, [startPaint, paint, exitPaint, leaveCanvas])
 
   const [isToolboxOpen, setToolboxOpen] = useState(true)
-  const toolboxOpenClick = useCallback(() => {
-    setToolboxOpen(!isToolboxOpen)
-  }, [isToolboxOpen])
 
-  const onToolsClick = useCallback((e, toolName) => {
-    const el = e.currentTarget
-    if (el.classList[1]) return
-    toolName === 'canvas_eraser'
-      ? setEraserEnabled(true)
-      : setEraserEnabled(false)
-    el.classList.add('active')
-    el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
-      if (!item.matches('svg') || item === el) return
-      item.classList.remove('active')
+  const onToolsClick = useCallback(
+    (e: React.MouseEvent<SVGSVGElement, MouseEvent>, toolName: string) => {
+      const el = e?.currentTarget as SVGSVGElement
+      if (el.classList[1]) return
+      toolName === 'canvas_eraser'
+        ? setEraserEnabled(true)
+        : setEraserEnabled(false)
+      handleChangeActive(el, 'svg')
+    },
+    []
+  )
+
+  const handleChangeActive = (
+    el: SVGSVGElement | HTMLLIElement,
+    selector: string
+  ) => {
+    el?.classList.add('active')
+    el?.parentNode?.childNodes.forEach((item) => {
+      if (!(item as HTMLDivElement).matches(selector) || item === el) return
+      ;(item as HTMLDivElement).classList.remove('active')
     })
-  }, [])
+  }
 
-  const onSizesChange = useCallback((e) => {
-    setLineWidth(e.target.value)
-  }, [])
+  const onColorsClick = useCallback(
+    ([e, selector, color]: [
+      React.MouseEvent<HTMLLIElement, MouseEvent>,
+      'li',
+      string
+    ]) => {
+      const el = e.target as HTMLLIElement
+      if (el?.className.includes('active')) return
+      setStrokeStyle(color)
+      handleChangeActive(el, selector)
+    },
+    []
+  )
 
-  const onColorsClick = useCallback(([e, selector, color]) => {
-    const el = e.target
-    if (el.className.includes('active')) return
-    setStrokeStyle(color)
-    el.classList.add('active')
-    el.parentNode.childNodes.forEach((item: HTMLLIElement) => {
-      if (!item.matches(selector) || item === el) return
-      item.classList.remove('active')
-    })
-  }, [])
-
-  const onColorsChange = useCallback((e) => {
-    setStrokeStyle(e.target.value)
-  }, [])
+  const onColorsChange = useCallback(
+    (e: { target: { value: SetStateAction<string> } }) => {
+      setStrokeStyle(e.target.value)
+    },
+    []
+  )
 
   const { openDialog, closeDialog, RenderDialog } = useDialog()
   const [isClearDialogOpen, setClearDialogOpen] = useState(false)
@@ -270,7 +278,7 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
   }, [width, height])
 
   const changeCanvas = useCallback(
-    (type) => {
+    (type: string) => {
       if (!canvasRef.current || !backRef.current || !goRef.current) {
         return
       }
@@ -308,7 +316,7 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
   )
 
   const onOptionsClick = useCallback(
-    (toolName) => {
+    (toolName: string) => {
       switch (toolName) {
         case 'canvas_clear':
           if (step === -1) return
@@ -389,7 +397,9 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
             width: '100%',
             fontSize: 32
           }}
-          clickEvent={toolboxOpenClick}
+          clickEvent={() => {
+            setToolboxOpen(!isToolboxOpen)
+          }}
         />
       </div>
       <CSSTransition
@@ -455,16 +465,18 @@ const Canvas = ({ width, height, onRef }: CanvasProps) => {
               min="1"
               max="20"
               value={lineWidth}
-              onChange={onSizesChange}
+              onChange={(e) => {
+                setLineWidth(Number(e.target.value))
+              }}
             />
           </div>
           <ol className="colors">
-            {colorMap.map((color, index) => {
+            {colorMap.map((item) => {
               return (
                 <li
-                  className={color === strokeStyle ? color + ' active' : color}
-                  key={index + color}
-                  onClick={(e) => onColorsClick([e, 'li', color])}
+                  className={item === strokeStyle ? item + ' active' : item}
+                  key={item}
+                  onClick={(e) => onColorsClick([e, 'li', item])}
                 />
               )
             })}

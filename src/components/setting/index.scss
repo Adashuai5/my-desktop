@@ -1,7 +1,7 @@
 #SettingView {
-  box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px, rgba(0, 0, 0, 0.3) 0 8px 50px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px, rgba(0, 0, 0, 0.3) 0 8px 50px;
 
   #SettingMove {
     height: 48px;
@@ -55,9 +55,9 @@
 
         input[type="range"] {
           width: 256px;
+          height: 24px;
           margin-right: 30px;
           -webkit-appearance: none;
-          height: 24px;
 
           &.focus {
             &::-webkit-slider-runnable-track {
