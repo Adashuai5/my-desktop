@@ -50,10 +50,10 @@ export const useDialog = () => {
               message={message}
               icon={renderIcon()}
               buttons={[
-                // eslint-disable-next-line react/jsx-key
-                <Button onClick={onClose}>取消</Button>,
-                // eslint-disable-next-line react/jsx-key
-                <Button color="blue" onClick={onCheck}>
+                <Button onClick={onClose} key={id}>
+                  取消
+                </Button>,
+                <Button color="blue" onClick={onCheck} key={id}>
                   确认
                 </Button>
               ]}
