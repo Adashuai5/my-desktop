@@ -10,7 +10,7 @@ interface PropsTypes {
   type: string
   style?: CSSProperties
   svgRef?: RefObject<SVGSVGElement>
-  clickEvent?: (T: unknown) => void
+  clickEvent?: (T: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
 }
 
 export const Iconfont = ({

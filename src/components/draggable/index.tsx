@@ -1,31 +1,36 @@
 import { useState, useCallback, useMemo, useEffect, CSSProperties } from 'react'
 import * as React from 'react'
+import { Coordinate } from '../../typing'
 
 const POSITION = { x: 0, y: 0 }
 
 type Props = {
-  children: React.ReactChild
-  id: number
-  onDrag: (T: unknown) => void
+  children: React.ReactElement
+  onDrag: (T: Coordinate) => void
   onDragEnd: () => void
 }
-const Draggable = ({ children, id, onDrag, onDragEnd }: Props) => {
+const Draggable = ({ children, onDrag, onDragEnd }: Props) => {
   const [state, setState] = useState({
     isDragging: false,
     origin: POSITION,
     translation: POSITION
   })
 
-  const handleMouseDown = useCallback(({ clientX, clientY }) => {
-    setState((state) => ({
-      ...state,
-      isDragging: true,
-      origin: { x: clientX, y: clientY }
-    }))
-  }, [])
+  const handleMouseDown = useCallback(
+    ({ clientX, clientY }: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      setState((state) => ({
+        ...state,
+        isDragging: true,
+        origin: { x: clientX, y: clientY }
+      }))
+    },
+    []
+  )
 
   const handleMouseMove = useCallback(
-    ({ clientX, clientY }) => {
+    ({ clientX, clientY }: MouseEvent) => {
+      if (!state.isDragging) return
+
       const translation = {
         x: clientX - state.origin.x,
         y: clientY - state.origin.y
@@ -36,31 +41,27 @@ const Draggable = ({ children, id, onDrag, onDragEnd }: Props) => {
         translation
       }))
 
-      onDrag({ translation, id })
+      onDrag(translation)
     },
-    [state.origin, onDrag, id]
+    [state.isDragging, state.origin.x, state.origin.y, onDrag]
   )
 
   const handleMouseUp = useCallback(() => {
     setState((state) => ({
       ...state,
-      isDragging: false
+      isDragging: false,
+      translation: POSITION
     }))
 
     onDragEnd()
   }, [onDragEnd])
 
   useEffect(() => {
-    if (state.isDragging) {
-      window.addEventListener('mousemove', handleMouseMove)
-      window.addEventListener('mouseup', handleMouseUp)
-    } else {
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => {
       window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('mouseup', handleMouseUp)
-
-      setState((state) => ({ ...state, translation: { x: 0, y: 0 } }))
     }
-  }, [state.isDragging, handleMouseMove, handleMouseUp])
+  }, [handleMouseMove])
 
   const styles = useMemo(
     () => ({
@@ -73,7 +74,11 @@ const Draggable = ({ children, id, onDrag, onDragEnd }: Props) => {
   )
 
   return (
-    <div style={styles as CSSProperties} onMouseDown={handleMouseDown}>
+    <div
+      style={styles as CSSProperties}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+    >
       {children}
     </div>
   )

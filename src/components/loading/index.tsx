@@ -1,11 +1,8 @@
+import { ProgressCircle } from 'react-desktop/macOs'
 import './index.scss'
 
-const Loading = () => (
+export default () => (
   <div className="lds-spinner">
-    {[...new Array(12).keys()].map((item) => {
-      return <div key={item} />
-    })}
+    <ProgressCircle size={25} />
   </div>
 )
-
-export default Loading

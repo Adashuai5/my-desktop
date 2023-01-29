@@ -1,8 +1,6 @@
 import { useMemo, useState, CSSProperties } from 'react'
 import { Dialog, Button } from 'react-desktop/macOs'
 
-/// <reference path="react-desktop.d.ts" />
-
 interface DialogProps {
   width: number
   height: number

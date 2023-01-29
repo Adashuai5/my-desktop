@@ -2,10 +2,10 @@ import { useState, useCallback, useMemo, useEffect, CSSProperties } from 'react'
 import * as React from 'react'
 import { observer } from 'mobx-react'
 import store from '../store'
-import { MODAL_DATA } from '../type'
+import { MODAL_DATA } from '../../../typing'
 
 type Props = {
-  children: React.ReactChild
+  children: React.ReactElement
   domEl: HTMLDivElement
   data: MODAL_DATA
 }
@@ -33,7 +33,7 @@ const Draggable = ({ children, domEl, data }: Props) => {
   }, [data.id])
 
   const handleMouseDown = useCallback(
-    ({ clientX, clientY }) => {
+    ({ clientX, clientY }: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       setState((state) => ({
         ...state,
         isDragging: true,
@@ -47,7 +47,8 @@ const Draggable = ({ children, domEl, data }: Props) => {
   )
 
   const handleMouseMove = useCallback(
-    ({ clientX, clientY, target }) => {
+    (event: MouseEvent) => {
+      const { clientX, clientY, target } = event
       if (!state.isDragging || (moveEl && target !== moveEl)) return
       let x = clientX - state.origin.x
       let y = clientY - state.origin.y
@@ -88,7 +89,7 @@ const Draggable = ({ children, domEl, data }: Props) => {
       })
     }
 
-    if(data.isShow) {
+    if (data.isShow) {
       handleSetNewIndex()
     }
   }, [data.isShow, data.width, handleSetNewIndex])

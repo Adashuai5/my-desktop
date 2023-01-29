@@ -3,7 +3,6 @@ import { useModal } from '../modal/UseModal'
 import { FooterContext } from '../footer/Footer'
 import { TitleBar } from 'react-desktop/macOs'
 import './index.scss'
-/// <reference path="react-desktop.d.ts" />
 
 const Calculate = lazy(() => import('./Calculator'))
 

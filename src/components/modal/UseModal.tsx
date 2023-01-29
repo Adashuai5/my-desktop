@@ -1,9 +1,8 @@
-import { useState, useCallback } from 'react'
-import * as React from 'react'
+import React, { useState, useCallback } from 'react'
 
-import { MODAL_DATA } from './type'
 import Modal from './Modal'
 import store from './store'
+import { MODAL_DATA } from '../../typing'
 
 // Modal组件最基础的两个事件，open/close
 export const useModal = (id: string) => {
@@ -20,7 +19,7 @@ export const useModal = (id: string) => {
   }, [id])
 
   const RenderModal = useCallback(
-    ({ children, data }: { children: React.ReactChild; data: MODAL_DATA }) => {
+    ({ children, data }: { children: React.ReactElement; data: MODAL_DATA }) => {
       return (
         <>
           {isVisible && (

@@ -1,5 +1,4 @@
 import {
-  memo,
   useState,
   useMemo,
   useRef,
@@ -13,7 +12,7 @@ import './index.scss'
 import Setting from '../setting/Setting'
 import { Calculator } from '../calculator'
 import { Drawing } from '../drawing'
-import { Launchpad } from '../launchpad'
+import Launchpad from '../launchpad'
 import { positionReducer, dataReducer } from './reducer'
 import CalculatorIcon from './image/Calculator.png'
 import FinderIcon from './image/Finder.png'
@@ -22,7 +21,6 @@ import PrefAppIcon from './image/PrefApp.png'
 import ChromeIcon from './image/Chrome.png'
 import TerminalIcon from './image/Terminal.png'
 import DrawingIcon from './image/Drawing.png'
-/// <reference path="image.d.ts" />
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const FooterContext = createContext<any>([])
@@ -34,7 +32,7 @@ interface OpenTypes {
 
 const Length = 68
 
-const Footer = memo(() => {
+const Footer = () => {
   const [dockList] = useState<string[]>([
     FinderIcon,
     LaunchpadIcon,
@@ -186,14 +184,14 @@ const Footer = memo(() => {
       }
     },
     [
+      isLaunchpadShow,
+      isChrome,
       isSettingOpen,
       isSettingShow,
       isCalculatorOpen,
       isCalculatorShow,
       isDrawingOpen,
-      isDrawingShow,
-      isLaunchpadShow,
-      isChrome
+      isDrawingShow
     ]
   )
 
@@ -213,7 +211,7 @@ const Footer = memo(() => {
   )
 
   const mousemove = useCallback(
-    ({ clientX, clientY }) => {
+    ({ clientX, clientY }: MouseEvent) => {
       if (!dockRef.current) {
         return
       }
@@ -389,9 +387,11 @@ const Footer = memo(() => {
       >
         <Drawing />
       </FooterContext.Provider>
-      <FooterContext.Provider value={[isLaunchpadShow, setLaunchpadShow]}>
-        <Launchpad dockItemClick={dockItemClick} />
-      </FooterContext.Provider>
+      {isLaunchpadShow && (
+        <FooterContext.Provider value={[isLaunchpadShow, setLaunchpadShow]}>
+          <Launchpad dockItemClick={dockItemClick} />
+        </FooterContext.Provider>
+      )}
       <footer className={position} id="AppFooter">
         <div
           id="Docker"
@@ -431,6 +431,6 @@ const Footer = memo(() => {
       </footer>
     </>
   )
-})
+}
 
 export default Footer

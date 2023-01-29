@@ -8,7 +8,9 @@
   height: 28px;
   padding: 0 20px;
   background-color: rgba(200, 200, 221, 0.9);
-  box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px,
+  box-shadow:
+    rgba(0, 0, 0, 0.31) 0 0 1px,
+    rgba(0, 0, 0, 0.18) 0 0 5px,
     rgba(0, 0, 0, 0.3) 0 8px 50px;
 
   .FinderLeft,
@@ -51,7 +53,9 @@
         background-color: rgba(60, 60, 60, 0.8);
         border: 1px solid #7a697a;
         border-radius: 6px;
-        box-shadow: rgba(0, 0, 0, 0.31) 0 0 1px, rgba(0, 0, 0, 0.18) 0 0 5px,
+        box-shadow:
+          rgba(0, 0, 0, 0.31) 0 0 1px,
+          rgba(0, 0, 0, 0.18) 0 0 5px,
           rgba(0, 0, 0, 0.3) 0 8px 50px;
 
         &.active {
